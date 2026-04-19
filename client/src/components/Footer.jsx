@@ -18,8 +18,8 @@ const Footer = () => {
                     <ul>
                         <li onClick={() => navigate("/")}>Home</li>
                         <li onClick={() => navigate("/patient/doctors")}>Doctors</li>
-                        <li onClick={() => navigate("/about")}>About Us</li>
-                        <li onClick={() => navigate("/contact")}>Contact</li>
+                        <li onClick={() => navigate("/patient/my-appointments")}>My Appointments</li>
+                        <li onClick={() => navigate("/login")}>Login</li>
                     </ul>
                 </div>
 

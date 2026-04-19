@@ -58,33 +58,35 @@ const specialties = [
   "Pediatrician",
 ];
 
-
 const Doctors = () => {
   const navigate = useNavigate();
-  const [searchText, setSearchText] = useState("");
-  const [specialty, setSpecialty] = useState("All Specialties");
-  const [availability, setAvailability] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSpecialty, setSelectedSpecialty] = useState("All Specialties");
 
-  const filteredDoctors = doctors.filter((doctor) => {
+  const visibleDoctors = doctors.filter((doctor) => {
     const searchMatch =
-      doctor.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      doctor.specialty.toLowerCase().includes(searchText.toLowerCase());
+      doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
     const specialtyMatch =
-      specialty === "All Specialties" || doctor.specialty === specialty;
-    const availabilityMatch =
-      availability === "All" || doctor.availability === availability;
+      selectedSpecialty === "All Specialties" || doctor.specialty === selectedSpecialty;
 
-    return searchMatch && specialtyMatch && availabilityMatch;
+    return searchMatch && specialtyMatch;
   });
 
-  const resetFilters = () => {
-    setSearchText("");
-    setSpecialty("All Specialties");
-    setAvailability("All");
+  const handleSearchQueryChange = (event) => setSearchQuery(event.target.value);
+  const handleSpecialtyChange = (value) => setSelectedSpecialty(value);
+
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    setSelectedSpecialty("All Specialties");
   };
+
+  const handleOpenProfile = (doctorId) => navigate(`/patient/doctor/${doctorId}`);
+  const handleOpenBooking = (doctorId) => navigate(`/patient/book-appointment/${doctorId}`);
 
   return (
     <div className="doctor-page">
+      {/* Header */}
       <section className="doctor-hero">
         <p className="doctor-hero-tag">Find the right doctor</p>
         <h1>Browse doctors and book in a few clicks</h1>
@@ -96,13 +98,13 @@ const Doctors = () => {
           <input
             type="text"
             placeholder="Search doctor name or specialty"
-            value={searchText}
-            onChange={(event) => setSearchText(event.target.value)}
+            value={searchQuery}
+            onChange={handleSearchQueryChange}
           />
-          <button type="button">Search Doctors</button>
         </div>
       </section>
 
+      {/* Filters and Results */}
       <section className="doctor-layout">
         <aside className="doctor-sidebar">
           <div className="filter-group">
@@ -113,8 +115,8 @@ const Doctors = () => {
                   <input
                     type="radio"
                     name="specialty"
-                    checked={specialty === item}
-                    onChange={() => setSpecialty(item)}
+                    checked={selectedSpecialty === item}
+                    onChange={() => handleSpecialtyChange(item)}
                   />
                   <span>{item}</span>
                 </label>
@@ -122,27 +124,24 @@ const Doctors = () => {
             </div>
           </div>
 
-
-          <button type="button" className="clear-button" onClick={resetFilters}>
+          <button type="button" className="clear-button" onClick={handleResetFilters}>
             Clear Filters
           </button>
         </aside>
 
         <div className="doctor-results">
-          
-
           <div className="doctor-grid">
-            {filteredDoctors.map((doctor) => (
+            {visibleDoctors.map((doctor) => (
               <DoctorCard
                 key={doctor.id}
                 doctor={doctor}
-                onViewProfile={() => navigate(`/patient/doctor/${doctor.id}`)}
-                onBookNow={() => navigate(`/patient/book-appointment/${doctor.id}`)}
+                onViewProfile={() => handleOpenProfile(doctor.id)}
+                onBookNow={() => handleOpenBooking(doctor.id)}
               />
             ))}
           </div>
 
-          {filteredDoctors.length === 0 ? (
+          {visibleDoctors.length === 0 ? (
             <div className="empty-state">
               <h3>No doctors matched your search</h3>
               <p>Try a different name or clear the filters.</p>
