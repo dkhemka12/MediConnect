@@ -7,8 +7,8 @@ const Dashboard = () => {
 
       <div>
         <p>Patient: Mr.Gupta</p>
-        <p>Date: 2026-04-19</p>
-        <p>Time: 10:00 AM</p>
+        <p>Date: 2026-04-22</p>
+        <p>Time: 11:00 AM</p>
 
         <button>Accept</button>
         <button>Reject</button>
