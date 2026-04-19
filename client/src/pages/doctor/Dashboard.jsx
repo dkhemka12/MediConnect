@@ -40,24 +40,10 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Main Content */}
-      <div className="doctor-grid">
-        <section className="doctor-panel">
-          <h3>Today’s Schedule</h3>
-          <div className="doctor-schedule">
-            {schedule.map((item) => (
-              <article key={`${item.name}-${item.time}`} className="schedule-card">
-                <div>
-                  <h4>{item.name}</h4>
-                  <p>
-                    {item.date} • {item.time}
-                  </p>
-                </div>
-                <span>{item.status}</span>
-              </article>
-            ))}
-          </div>
-        </section>
+      <div>
+        <p>Patient: Mr.Gupta</p>
+        <p>Date: 2026-04-22</p>
+        <p>Time: 11:00 AM</p>
 
         <section className="doctor-panel">
           <h3>Quick Actions</h3>
