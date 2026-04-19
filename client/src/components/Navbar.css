@@ -1,0 +1,134 @@
+.navbar {
+  background: rgb(255, 255, 255);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1faf8b;
+  cursor: pointer;
+  margin: 0;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  color: #1faf8b;
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+  flex: 1;
+  margin-left: 3rem;
+}
+
+.nav-links span {
+  position: relative;
+  cursor: pointer;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Underline animation */
+.nav-links span::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -5px;
+  background-color: #1faf8b;
+  transition: width 0.3s ease;
+}
+
+.nav-links span:hover {
+  color: #1faf8b;
+}
+
+.nav-links span:hover::after {
+  width: 100%;
+}
+
+/* Actions */
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Login Button */
+.login-btn {
+  background-color: transparent;
+  color: #1faf8b;
+  border: 2px solid #1faf8b;
+  padding: 0.5rem 1.6rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #1faf8b;
+  color: white;
+  box-shadow: 0 4px 12px rgba(31, 175, 139, 0.3);
+}
+
+/* Primary Button */
+.primary-btn {
+  background: linear-gradient(135deg, #1faf8b, #77ceb7);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.6rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(31, 175, 139, 0.35);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    display: none;
+    margin: 0;
+  }
+
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  .login-btn,
+  .primary-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+}

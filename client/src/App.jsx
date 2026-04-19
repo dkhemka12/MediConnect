@@ -1,5 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
+// Components
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 // Pages
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
@@ -15,27 +19,31 @@ import DoctorDashboard from "./pages/doctor/Dashboard";
 
 function App() {
   return (
-    <Routes>
-      {/* Home */}
-      <Route path="/" element={<Home />} />
+    <>
+      <Navbar />
+      <Routes>
+        {/* Home */}
+        <Route path="/" element={<Home />} />
 
-      {/* Auth */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+        {/* Auth */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      {/* Patient */}
-      <Route path="/patient/dashboard" element={<Dashboard />} />
-      <Route path="/patient/doctors" element={<Doctors />} />
-      <Route path="/patient/doctor/:id" element={<DoctorDetails />} />
-      <Route
-        path="/patient/book-appointment/:id"
-        element={<BookAppointment />}
-      />
-      <Route path="/patient/my-appointments" element={<MyAppointments />} />
+        {/* Patient */}
+        <Route path="/patient/dashboard" element={<Dashboard />} />
+        <Route path="/patient/doctors" element={<Doctors />} />
+        <Route path="/patient/doctor/:id" element={<DoctorDetails />} />
+        <Route
+          path="/patient/book-appointment/:id"
+          element={<BookAppointment />}
+        />
+        <Route path="/patient/my-appointments" element={<MyAppointments />} />
 
-      {/* Doctor */}
-      <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
-    </Routes>
+        {/* Doctor */}
+        <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

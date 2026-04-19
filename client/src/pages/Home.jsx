@@ -7,29 +7,6 @@ const Home = () => {
 
   return (
     <div className="home">
-      
-      {/* Navbar */}
-      <div className="navbar">
-        <h2 className="logo">MediConnect</h2>
-
-        <div className="nav-links">
-          <span onClick={()=>navigate("/")}>Home</span>
-          <span onClick={()=>navigate("/patient/doctors")}>Doctors</span>
-          <span onClick={()=>navigate("/patient/services")}>Services</span>
-          <span onClick={()=>navigate("/about")}>About</span>
-        </div>
-
-        <div className="nav-actions">
-          <button className="login-btn" onClick={() => navigate("/login")}>
-            Login
-          </button>
-
-          <button className="primary-btn" onClick={() => navigate("/login")}>
-            Get Started
-          </button>
-        </div>
-      </div>
-
       {/* Hero Section */}
       <div className="hero">
         <div className="hero-left">

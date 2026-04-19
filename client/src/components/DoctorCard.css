@@ -1,0 +1,111 @@
+.doctor-card {
+  display: flex;
+  gap: 1rem;
+  background: #ffffff;
+  border: 1px solid #e7edf2;
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 10px 24px rgba(16, 32, 51, 0.06);
+}
+
+.doctor-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #1faf8b, #0d8f73);
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.doctor-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.doctor-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.doctor-name {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #102033;
+}
+
+.doctor-specialty {
+  margin: 0.25rem 0 0;
+  color: #5b6675;
+  font-size: 0.94rem;
+}
+
+.doctor-experience {
+  margin: 0.2rem 0 0;
+  color: #74808f;
+  font-size: 0.9rem;
+}
+
+.doctor-rating {
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: #eefaf6;
+  color: #0d8f73;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.doctor-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  color: #627081;
+  font-size: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #edf2f7;
+}
+
+.doctor-details strong {
+  color: #0d8f73;
+}
+
+.doctor-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.doctor-button {
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #0d8f73;
+}
+
+.doctor-button-outline {
+  background: transparent;
+  color: #0d8f73;
+}
+
+.doctor-button-solid {
+  background: #0d8f73;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .doctor-card {
+    flex-direction: column;
+  }
+
+  .doctor-top,
+  .doctor-actions {
+    flex-direction: column;
+  }
+}
