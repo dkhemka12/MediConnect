@@ -88,18 +88,21 @@ const doctors = [
 ];
 
 const DoctorDetails = () => {
-    const { id } = useParams();
+    const { id: doctorIdParam } = useParams();
     const navigate = useNavigate();
 
-    const doctorId = Number(id);
-    const doctor = doctors.find((item) => item.id === doctorId);
+    const doctorId = Number(doctorIdParam);
+    const selectedDoctor = doctors.find((item) => item.id === doctorId);
 
-    if (!doctor) {
+    const handleBackToDoctors = () => navigate("/patient/doctors");
+    const handleOpenBooking = () => navigate(`/patient/book-appointment/${selectedDoctor.id}`);
+
+    if (!selectedDoctor) {
         return (
             <div className="details-page">
                 <div className="simple-card not-found-card">
                     <h2>Doctor not found</h2>
-                    <button className="solid-btn" onClick={() => navigate("/patient/doctors")}>
+                    <button className="solid-btn" onClick={handleBackToDoctors}>
                         Back to Doctors
                     </button>
                 </div>
@@ -107,7 +110,7 @@ const DoctorDetails = () => {
         );
     }
 
-    const initials = doctor.name
+    const initials = selectedDoctor.name
         .split(" ")
         .map((word) => word[0])
         .join("")
@@ -115,10 +118,12 @@ const DoctorDetails = () => {
 
     return (
         <div className="details-page">
-            <button className="back-link" onClick={() => navigate("/patient/doctors")}>
+            {/* Back Button */}
+            <button className="back-link" onClick={handleBackToDoctors}>
                 ← Back to Doctor Listing
             </button>
 
+            {/* Main Layout */}
             <div className="details-layout">
                 <main className="left-column">
                     <section className="simple-card profile-card">
@@ -126,15 +131,15 @@ const DoctorDetails = () => {
                             <div className="doctor-photo">{initials}</div>
 
                             <div className="profile-text">
-                                <h1>{doctor.name}</h1>
-                                <p className="specialty-text">{doctor.specialty}</p>
+                                <h1>{selectedDoctor.name}</h1>
+                                <p className="specialty-text">{selectedDoctor.specialty}</p>
                                 <p className="meta-text">
-                                    ⭐ {doctor.rating} ({doctor.reviews} reviews) • {doctor.experienceYears} years exp. • {doctor.patientsTreated} patients
+                                    ⭐ {selectedDoctor.rating} ({selectedDoctor.reviews} reviews) • {selectedDoctor.experienceYears} years exp. • {selectedDoctor.patientsTreated} patients
                                 </p>
-                                <p className="location-text">📍 {doctor.location}</p>
+                                <p className="location-text">📍 {selectedDoctor.location}</p>
 
                                 <div className="tag-list">
-                                    {doctor.tags.map((tag) => (
+                                    {selectedDoctor.tags.map((tag) => (
                                         <span key={tag} className="tag-pill">
                                             {tag}
                                         </span>
@@ -146,13 +151,13 @@ const DoctorDetails = () => {
 
                     <section className="simple-card">
                         <h2>About</h2>
-                        <p>{doctor.bio}</p>
+                        <p>{selectedDoctor.bio}</p>
                     </section>
 
                     <section className="simple-card">
                         <h2>Education & Experience</h2>
                         <ul className="education-list">
-                            {doctor.education.map((item) => (
+                            {selectedDoctor.education.map((item) => (
                                 <li key={item}>{item}</li>
                             ))}
                         </ul>
@@ -162,10 +167,10 @@ const DoctorDetails = () => {
                 <aside className="right-column">
                     <section className="simple-card fee-card">
                         <p>Consultation Fee</p>
-                        <h2>{doctor.fee}</h2>
+                        <h2>{selectedDoctor.fee}</h2>
                         <button
                             className="solid-btn full-btn"
-                            onClick={() => navigate(`/patient/book-appointment/${doctor.id}`)}
+                            onClick={handleOpenBooking}
                         >
                             Book Appointment
                         </button>
@@ -175,22 +180,22 @@ const DoctorDetails = () => {
                         <h3>Quick Info</h3>
                         <div className="info-row">
                             <span>Languages</span>
-                            <strong>{doctor.languages}</strong>
+                            <strong>{selectedDoctor.languages}</strong>
                         </div>
                         <div className="info-row">
                             <span>Experience</span>
-                            <strong>{doctor.experienceYears} years</strong>
+                            <strong>{selectedDoctor.experienceYears} years</strong>
                         </div>
                         <div className="info-row">
                             <span>Patients Treated</span>
-                            <strong>{doctor.patientsTreated}</strong>
+                            <strong>{selectedDoctor.patientsTreated}</strong>
                         </div>
                     </section>
 
                     <section className="simple-card">
                         <h3>Next Available</h3>
                         <div className="slot-list">
-                            {doctor.slots.map((slot) => (
+                            {selectedDoctor.slots.map((slot) => (
                                 <div key={slot} className="slot-item">
                                     <span>{slot}</span>
                                     <span className="slot-check">✓</span>

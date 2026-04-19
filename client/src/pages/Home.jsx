@@ -4,10 +4,12 @@ import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
+  const handleOpenLogin = () => navigate("/login");
+  const handleOpenDoctors = () => navigate("/patient/doctors");
 
   return (
     <div className="home">
-      {/* Hero Section */}
+      {/* Main Hero */}
       <div className="hero">
         <div className="hero-left">
           <p className="tag">💚 Your Health, Our Priority</p>
@@ -22,17 +24,11 @@ const Home = () => {
           </p>
 
           <div className="buttons">
-            <button
-              className="primary-btn"
-              onClick={() => navigate("/login")}
-            >
+            <button className="primary-btn" onClick={handleOpenLogin}>
               Get Started Free →
             </button>
 
-            <button
-              className="outline-btn"
-              onClick={() => navigate("/patient/doctors")}
-            >
+            <button className="outline-btn" onClick={handleOpenDoctors}>
               Find a Doctor
             </button>
           </div>

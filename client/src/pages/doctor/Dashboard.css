@@ -1,0 +1,158 @@
+.doctor-page {
+  min-height: calc(100vh - 140px);
+  padding: 2rem 1rem 3rem;
+  background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
+}
+
+.doctor-hero {
+  max-width: 980px;
+  margin: 0 auto 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e3edf1;
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+.doctor-hero h2 {
+  margin: 0 0 0.35rem;
+  color: #102033;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.doctor-hero p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.doctor-hero button {
+  margin-top: 1rem;
+  border: none;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #0d8f73, #59bfa8);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.doctor-stats {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.doctor-stat-card,
+.doctor-panel {
+  background: #ffffff;
+  border: 1px solid #e3edf1;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
+}
+
+.doctor-stat-card {
+  padding: 1.2rem;
+}
+
+.doctor-stat-card span {
+  display: block;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.doctor-stat-card strong {
+  color: #102033;
+  font-size: 1.9rem;
+}
+
+.doctor-grid {
+  max-width: 980px;
+  margin: 1rem auto 0;
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr;
+  gap: 1rem;
+}
+
+.doctor-panel {
+  padding: 1.25rem;
+}
+
+.doctor-panel h3 {
+  margin: 0 0 1rem;
+  color: #102033;
+  font-size: 1.1rem;
+}
+
+.doctor-schedule {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.schedule-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid #e3edf1;
+  border-radius: 16px;
+  padding: 1rem;
+  background: #f8fcfb;
+}
+
+.schedule-card h4,
+.schedule-card p {
+  margin: 0;
+}
+
+.schedule-card h4 {
+  color: #102033;
+  font-size: 1rem;
+}
+
+.schedule-card p {
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.schedule-card span {
+  color: #0d8f73;
+  font-weight: 700;
+}
+
+.doctor-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.doctor-actions button {
+  border: 1px solid #d7e4ea;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  background: #ffffff;
+  color: #102033;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .doctor-stats,
+  .doctor-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .doctor-stats,
+  .doctor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-card {
+    align-items: start;
+    flex-direction: column;
+  }
+}
