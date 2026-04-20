@@ -2,27 +2,43 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
+//Login Component
 const Login = () => {
   const navigate = useNavigate();
+
+  // State for selected user role (patient, doctor, admin)
   const [selectedRole, setSelectedRole] = useState("patient");
+
+  // State for email input
   const [emailValue, setEmailValue] = useState("");
+
+  // State for password input
   const [passwordValue, setPasswordValue] = useState("");
 
+  /*Role Based Routes*/
   const ROLE_ROUTES = {
     patient: "/patient/dashboard",
     doctor: "/doctor/dashboard",
     admin: "/admin/dashboard",
   };
 
+  // Handle form submission
   const handleSubmitLogin = (event) => {
     event.preventDefault();
     // Temporary frontend-only flow. Replace this with API login response handling.
     navigate(ROLE_ROUTES[selectedRole]);
   };
 
+  // Handle role selection change
   const handleRoleChange = (event) => setSelectedRole(event.target.value);
+
+  // Handle email input change
   const handleEmailChange = (event) => setEmailValue(event.target.value);
+
+  // Handle password input change
   const handlePasswordChange = (event) => setPasswordValue(event.target.value);
+
+  // Handle navigation to registration page
   const handleOpenRegister = () => navigate("/register");
 
   return (
@@ -44,6 +60,7 @@ const Login = () => {
             </select>
           </label>
 
+        {/* Email input field */}
           <label>
             <span>Email</span>
             <input
@@ -54,6 +71,7 @@ const Login = () => {
             />
           </label>
 
+          {/* Password input field */}
           <label>
             <span>Password</span>
             <input
@@ -64,8 +82,10 @@ const Login = () => {
             />
           </label>
 
+          {/* Submit login button */}
           <button className="auth-primary" type="submit">Login</button>
 
+          {/* Navigate to register page */}
           <button
             className="auth-secondary"
             type="button"
@@ -80,3 +100,8 @@ const Login = () => {
 };
 
 export default Login;
+
+{/*
+    Login.jsx - A login page component for the MediConnect application. 
+    It allows users to select their role (patient, doctor, admin) and enter their email and password to log in.
+*/}

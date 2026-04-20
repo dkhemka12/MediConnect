@@ -16,11 +16,13 @@
   transition: all 0.3s ease;
 }
 
+/* Primary button hover effect */
 .primary-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(31, 175, 139, 0.3);
 }
 
+/* Outline button */
 .outline-btn {
   border: 2px solid #1faf8b;
   color: #1faf8b;
@@ -32,6 +34,7 @@
   transition: all 0.3s ease;
 }
 
+/* Outline button hover effect */
 .outline-btn:hover {
   background: #1faf8b;
   color: white;

@@ -1,43 +1,50 @@
+/* Main footer container */
 .footer {
-  background-color: #1a1a1a;
-  color: #fff;
-  padding: 3rem 2rem 1rem;
-  margin-top: 3rem;
+  background-color: #1a1a1a; /* Dark background */
+  color: #fff;  /* Light text color */
+  padding: 3rem 2rem 1rem; /* Top, sides, bottom spacing */
+  margin-top: 3rem; /* Space above footer */
 }
 
+/* Container to center and structure footer content */
 .footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+  max-width: 1200px; /* Limit width for large screens */
+  margin: 0 auto; /* Center horizontally */;
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 2rem; /* Space between sections */
+  margin-bottom: 2rem; /* Space before bottom section */
 }
 
+/* Main title (brand name) */
 .footer-section h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #1faf8b;
+  color: #1faf8b; /* Highlight color */
 }
 
+/* Section headings */
 .footer-section h4 {
   font-size: 1.1rem;
   margin-bottom: 1rem;
   color: #fff;
 }
 
+/* Paragraph text (description, contact info) */
 .footer-section p {
   margin: 0.5rem 0;
   color: #ccc;
   line-height: 1.6;
 }
 
+/* Remove default list styling */
 .footer-section ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* List items (links) */
 .footer-section ul li {
   color: #ccc;
   margin: 0.5rem 0;
@@ -45,37 +52,46 @@
   transition: color 0.3s ease;
 }
 
+/* Hover effect for links */
 .footer-section ul li:hover {
-  color: #1faf8b;
+  color: #1faf8b; /* Change to highlight color */
 }
 
+/* Bottom section (copyright area) */
 .footer-bottom {
-  border-top: 1px solid #333;
+  border-top: 1px solid #333; /* Divider line */
   padding-top: 2rem;
-  text-align: center;
-  color: #999;
+  text-align: center; /* Center text */
+  color: #999; /* Faded text */
 }
 
+/* Remove margin from paragraph */
 .footer-bottom p {
   margin: 0;
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+
+  /* Reduce padding for smaller screens */
   .footer {
     padding: 2rem 1rem 1rem;
   }
 
+  /* Stack footer sections vertically */
   .footer-container {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
+  /* Reduce title size */
   .footer-section h3 {
     font-size: 1.2rem;
   }
 
+  /* Reduce section heading size */
   .footer-section h4 {
     font-size: 1rem;
   }
 }
+

@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
+//Static data for UI (can be replaced with backend data later)
+
+// Dashboard stats (top cards)
 const stats = [
   { label: "Today’s Appointments", value: "12" },
   { label: "Pending Requests", value: "4" },
@@ -9,22 +12,32 @@ const stats = [
   { label: "Weekly Earnings", value: "$1,240" },
 ];
 
+// Sample schedule data for today (can be replaced with backend data later)
 const schedule = [
   { name: "Mr. Gupta", time: "10:00 AM", date: "Apr 19", status: "Pending" },
   { name: "Sara Khan", time: "11:30 AM", date: "Apr 19", status: "Confirmed" },
   { name: "John Mathew", time: "2:00 PM", date: "Apr 19", status: "Pending" },
 ];
 
+// Doctor Dashboard component
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  // Function to navigate to appointments page
   const handleOpenAppointments = () => navigate("/doctor/appointments");
 
   return (
     <div className="doctor-page">
       {/* Header */}
       <div className="doctor-hero">
+
+        {/* Title */}
         <h2>Dashboard</h2>
+
+        {/* Description */}
         <p>Keep track of your schedule, requests, and daily activity.</p>
+
+        {/* Action button to view appointments */}
         <button type="button" onClick={handleOpenAppointments}>
           View Appointments
         </button>
@@ -40,33 +53,50 @@ const Dashboard = () => {
         ))}
       </div>
 
+      {/* Main grid with schedule and actions */}
       <div className="doctor-grid">
+
+        {/* Schedule Panel */}
         <section className="doctor-panel">
           <h3>Today&apos;s Schedule</h3>
+
+          {/* Schedule list */}
           <div className="doctor-schedule">
             {schedule.map((appointment) => (
+
+              // Individual schedule card
               <article
                 key={`${appointment.name}-${appointment.time}`}
                 className="schedule-card"
               >
+                {/* Left: name and time */}
                 <div>
                   <h4>{appointment.name}</h4>
                   <p>
                     {appointment.date} | {appointment.time}
                   </p>
                 </div>
+
+                {/* Right: status */}
                 <span>{appointment.status}</span>
               </article>
             ))}
           </div>
         </section>
 
+        {/* Quick Actions Panel */}
         <section className="doctor-panel">
           <h3>Quick Actions</h3>
+
+          {/* Action buttons */}
           <div className="doctor-actions">
+
+            {/* Navigate to appointments */}
             <button type="button" onClick={handleOpenAppointments}>
               Open Appointments
             </button>
+
+            {/* Placeholder buttons */}
             <button type="button">Update Availability</button>
             <button type="button">View Patients</button>
             <button type="button">Messages</button>
@@ -78,3 +108,8 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+{/*Dashboard.jsx - The main dashboard page for doctors in the MediConnect application. It provides an overview of the doctor’s daily schedule, pending requests, and key stats. 
+The useNavigate hook from react-router-dom is used to allow doctors to navigate to their appointments page. 
+The component is styled with a separate CSS file (Dashboard.css) for layout and design.
+*/ }

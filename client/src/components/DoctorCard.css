@@ -1,3 +1,4 @@
+/* Main card container */
 .doctor-card {
   display: flex;
   gap: 1.25rem;
@@ -9,6 +10,7 @@
   
 }
 
+/* Doctor profile image */
 .doctor-avatar {
   width: 74px;
   height: 74px;
@@ -18,6 +20,7 @@
   background: #edf2f7;
 }
 
+/* Fallback avatar (initials) */
 .doctor-avatar-fallback {
   display: grid;
   place-items: center;
@@ -27,15 +30,18 @@
   font-weight: 700;
 }
 
+/* Container for all doctor details */
 .doctor-info {
   flex: 1;
   min-width: 0;
 }
 
+/* Top section (name, specialty, rating) */
 .doctor-top {
   margin-bottom: 0.45rem;
 }
 
+/* Doctor name */
 .doctor-name {
   margin: 0;
   font-size: 1.7rem;
@@ -43,24 +49,28 @@
   line-height: 1.1;
 }
 
+/* Specialty text */
 .doctor-specialty {
   margin: 0.25rem 0 0.2rem;
   color: #516273;
   font-size: 0.95rem;
 }
 
+/* Experience text */
 .doctor-experience {
   margin: 0.15rem 0 0;
   color: #74808f;
   font-size: 0.85rem;
 }
 
+/* Rating + reviews */
 .doctor-rating-line {
   margin: 0;
   color: #516273;
   font-size: 0.9rem;
 }
 
+/* Location + availability section */
 .doctor-meta {
   display: grid;
   gap: 0.2rem;
@@ -73,11 +83,13 @@
   font-size: 0.92rem;
 }
 
+/* Highlight next available slot */
 .doctor-slot {
   color: #0d8f73;
   font-weight: 700;
 }
 
+/* Bottom section (fee + buttons) */
 .doctor-footer {
   display: flex;
   justify-content: space-between;
@@ -88,25 +100,29 @@
   border-top: 1px solid #edf2f7;
 }
 
+/* Fee label */
 .doctor-fee span {
   display: block;
   color: #74808f;
   font-size: 0.85rem;
 }
 
+/* Fee amount */
 .doctor-fee strong {
   color: #0d8f73;
   font-size: 1.9rem;
   line-height: 1.1;
 }
 
+/* Buttons container */
 .doctor-actions {
   display: flex;
   gap: 0.55rem;
 }
 
+/* Common button styles */
 .doctor-button {
-  border-radius: 999px;
+  border-radius: 999px; /* Fully rounded buttons */
   padding: 0.52rem 0.95rem;
   font-weight: 600;
   font-size: 0.92rem;
@@ -114,31 +130,39 @@
   border: 1px solid #0d8f73;
 }
 
+/* Outline button */
 .doctor-button-outline {
   background: transparent;
   color: #0d8f73;
 }
 
+/* Filled button */
 .doctor-button-solid {
   background: #0d8f73;
   color: #ffffff;
 }
 
+/* Responsive design for smaller screens */
 @media (max-width: 768px) {
+
+  /* Stack card vertically */
   .doctor-card {
     flex-direction: column;
   }
 
+  /* Stack footer items */
   .doctor-footer,
   .doctor-actions {
     flex-direction: column;
     align-items: stretch;
   }
 
+  /* Reduce name size */
   .doctor-name {
     font-size: 1.3rem;
   }
 
+  /* Reduce fee size */
   .doctor-fee strong {
     font-size: 1.4rem;
   }

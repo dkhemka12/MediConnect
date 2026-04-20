@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./DoctorDetails.css";
 
+/// Static data for doctors (can be replaced with backend data later)
 const doctors = [
     {
         id: 1,
@@ -87,14 +88,23 @@ const doctors = [
     },
 ];
 
+// Doctor Details component
 const DoctorDetails = () => {
+
+    // Get doctor ID from URL parameters and find the corresponding doctor data
     const { id: doctorIdParam } = useParams();
     const navigate = useNavigate();
 
+    // Convert doctorIdParam to number
     const doctorId = Number(doctorIdParam);
+
+    // Find the doctor that matches the ID from the URL parameters
     const selectedDoctor = doctors.find((item) => item.id === doctorId);
 
+    // Handler to navigate back to the doctors listing page
     const handleBackToDoctors = () => navigate("/patient/doctors");
+
+    // Handler to navigate to the booking page for the selected doctor
     const handleOpenBooking = () => navigate(`/patient/book-appointment/${selectedDoctor.id}`);
 
     if (!selectedDoctor) {
@@ -110,6 +120,7 @@ const DoctorDetails = () => {
         );
     }
 
+    // Generate initials for doctor photo placeholder
     const initials = selectedDoctor.name
         .split(" ")
         .map((word) => word[0])
@@ -211,3 +222,9 @@ const DoctorDetails = () => {
 };
 
 export default DoctorDetails;
+
+{/* This component displays detailed information about a specific doctor when a patient clicks on a doctor from the listing page. 
+    It shows the doctor's name, specialty, rating, experience, location, bio, education, and available slots. 
+    It also includes buttons to book an appointment or go back to the doctor listing. 
+    The data is currently static but can be replaced with dynamic data from a backend in the future. 
+*/}

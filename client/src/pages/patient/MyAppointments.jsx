@@ -3,18 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { cancelAppointment, getMyAppointments } from "../../services/appointmentService";
 import "./MyAppointments.css";
 
+// List of appointment statuses for filtering
 const APPOINTMENT_STATUSES = ["All", "Confirmed", "Pending", "Completed", "Cancelled"];
 
+// Utility function to convert ISO date string to a more readable format
 const toLabelDate = (isoDate) => {
   if (!isoDate) {
     return "Date unavailable";
   }
 
+  // Parse the ISO date string (expected format: "YYYY-MM-DD")
   const [year, month, day] = isoDate.split("-").map(Number);
   if (!year || !month || !day) {
     return isoDate;
   }
 
+  // Create a Date object and format it to "MMM D, YYYY" (e.g., "Apr 19, 2026")
   const date = new Date(year, month - 1, day);
   return date.toLocaleDateString("en-US", {
     month: "short",
@@ -23,14 +27,26 @@ const toLabelDate = (isoDate) => {
   });
 };
 
+//  MyAppointments component for patients to view and manage their appointments
 const MyAppointments = () => {
   const navigate = useNavigate();
+  
+  // State for selected appointment status filter
   const [selectedStatus, setSelectedStatus] = useState("All");
+
+  // State for list of appointments, loading state, and error messages
   const [appointmentList, setAppointmentList] = useState([]);
+  
+  // State to indicate if appointments are being loaded
   const [isLoading, setIsLoading] = useState(true);
+
+  // State for error messages related to loading or managing appointments
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Load appointments from backend when component mounts
   useEffect(() => {
+
+    // Function to fetch appointments from backend and handle loading/error states
     const loadAppointments = async () => {
       try {
         // Service handles backend call first and fallback data when backend is unavailable.
@@ -46,6 +62,7 @@ const MyAppointments = () => {
     loadAppointments();
   }, []);
 
+  // Calculate appointment stats for display in the UI
   const stats = {
     total: appointmentList.length,
     upcoming: appointmentList.filter((item) => ["Confirmed", "Pending"].includes(item.status)).length,
@@ -53,11 +70,13 @@ const MyAppointments = () => {
     cancelled: appointmentList.filter((item) => item.status === "Cancelled").length,
   };
 
+  // Filter appointments based on selected status filter
   const visibleAppointments =
     selectedStatus === "All"
       ? appointmentList
       : appointmentList.filter((item) => item.status === selectedStatus);
 
+      // Handler to cancel an appointment and update the UI accordingly
   const handleCancelAppointment = async (appointmentId) => {
     try {
       await cancelAppointment(appointmentId);
@@ -74,8 +93,13 @@ const MyAppointments = () => {
     }
   };
 
+  // Handler to change the selected appointment status filter
   const handleStatusChange = (status) => setSelectedStatus(status);
+
+  // Handlers for navigation to other pages
   const handleOpenDoctors = () => navigate("/patient/doctors");
+
+  // Handler to navigate back to patient dashboard
   const handleOpenDashboard = () => navigate("/patient/dashboard");
 
   return (
@@ -130,6 +154,7 @@ const MyAppointments = () => {
         ))}
       </div>
 
+      {/* Loading and error states */}
       {isLoading ? <p className="my-appointments-info">Loading appointments...</p> : null}
       {!isLoading && errorMessage ? <p className="my-appointments-error">{errorMessage}</p> : null}
 
@@ -182,3 +207,10 @@ const MyAppointments = () => {
 };
 
 export default MyAppointments;
+
+{/* This component allows patients to view and manage their appointments. 
+  It fetches the appointment data from the backend when the component mounts and displays it in a list format. 
+  Patients can filter appointments by status (e.g., Confirmed, Pending, Completed, Cancelled) and cancel upcoming appointments directly from this page. 
+  The component also includes navigation buttons to book new appointments or return to the dashboard. 
+  Error handling and loading states are implemented to provide feedback to the user during data fetching and appointment management actions. 
+*/}

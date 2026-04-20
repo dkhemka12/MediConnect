@@ -1,3 +1,4 @@
+/*Login Page Container*/
 .auth-page {
   min-height: calc(100vh - 140px);
   display: flex;
@@ -7,6 +8,7 @@
   background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
 }
 
+/* Login card */
 .auth-card {
   width: min(100%, 460px);
   background: #ffffff;
@@ -16,6 +18,7 @@
   padding: 1.5rem;
 }
 
+/* Small tag (MediConnect) */
 .auth-tag {
   margin: 0 0 0.35rem;
   color: #0d8f73;
@@ -25,23 +28,27 @@
   font-size: 0.78rem;
 }
 
+/* Login heading */
 .auth-card h2 {
   margin: 0 0 0.4rem;
   color: #102033;
   font-size: 1.9rem;
 }
 
+/* Description text */
 .auth-text {
   margin: 0 0 1.25rem;
   color: #64748b;
   line-height: 1.5;
 }
 
+/* Form Styling */
 .auth-form {
   display: grid;
   gap: 0.95rem;
 }
 
+/* Label styling */
 .auth-form label {
   display: grid;
   gap: 0.4rem;
@@ -49,10 +56,12 @@
   font-weight: 600;
 }
 
+/* Label text */
 .auth-form span {
   font-size: 0.95rem;
 }
 
+/* Input and select fields */
 .auth-form input,
 .auth-form select {
   border: 1px solid #d7e4ea;
@@ -63,12 +72,14 @@
   background: #ffffff;
 }
 
+/* Focus effect on inputs */
 .auth-form input:focus,
 .auth-form select:focus {
   border-color: #0d8f73;
   box-shadow: 0 0 0 4px rgba(13, 143, 115, 0.12);
 }
 
+/* Buttons */
 .auth-primary,
 .auth-secondary {
   border: 1px solid transparent;
@@ -82,28 +93,33 @@
     background 0.2s ease;
 }
 
+/* Primary button (Login / Register) */
 .auth-primary {
   background: linear-gradient(135deg, #0d8f73, #59bfa8);
   color: #ffffff;
 }
 
+/* Secondary button */
 .auth-secondary {
   background: #f5fbf9;
   color: #0d8f73;
   border-color: #d5ebe4;
 }
 
+/* Button hover effect */
 .auth-primary:hover,
 .auth-secondary:hover {
   transform: translateY(-1px);
 }
 
+/* Responsive Login */
 @media (max-width: 640px) {
   .auth-card {
     padding: 1.25rem;
   }
 }
 
+/* Register Page Container */
 .register-page {
   min-height: calc(100vh - 140px);
   display: flex;
@@ -113,6 +129,7 @@
   background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
 }
 
+/* Register card */
 .register-card {
   width: min(100%, 460px);
   background: #ffffff;
@@ -122,18 +139,21 @@
   padding: 1.5rem;
 }
 
+/* Register heading */
 .register-card h2 {
   margin: 0 0 0.4rem;
   color: #102033;
   font-size: 1.9rem;
 }
 
+/* Register Description */
 .register-card p {
   margin: 0 0 1.25rem;
   color: #64748b;
   line-height: 1.5;
 }
 
+/* Register buttons container */
 .register-actions {
   display: grid;
   gap: 0.75rem;

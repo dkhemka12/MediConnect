@@ -4,6 +4,7 @@
   background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 24%, #ffffff 24%);
 }
 
+/* Back link */
 .back-link {
   border: none;
   background: transparent;
@@ -13,6 +14,7 @@
   cursor: pointer;
 }
 
+/* Hero section */
 .details-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 330px;
@@ -20,12 +22,14 @@
   align-items: start;
 }
 
+/* Left and right columns */
 .left-column,
 .right-column {
   display: grid;
   gap: 1rem;
 }
 
+/* Card Styling */
 .simple-card {
   background: #ffffff;
   border: 1px solid #e7edf2;
@@ -34,12 +38,14 @@
   box-shadow: 0 8px 24px rgba(16, 32, 51, 0.06);
 }
 
+/* Profile Section */
 .profile-top {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
 }
 
+/* Doctor image / initials */
 .doctor-photo {
   width: 128px;
   height: 128px;
@@ -53,24 +59,28 @@
   font-weight: 700;
 }
 
+/* Doctor name */
 .profile-text h1 {
   margin: 0;
   color: #102033;
   font-size: 2rem;
 }
 
+/* Specialty */
 .specialty-text {
   margin: 0.35rem 0;
   color: #44556a;
   font-size: 1.2rem;
 }
 
+/* Meta info (experience, etc.) */
 .meta-text,
 .location-text {
   margin: 0.5rem 0 0;
   color: #5f6f81;
 }
 
+/* Tags (skills/specialties) */
 .tag-list {
   display: flex;
   flex-wrap: wrap;
@@ -78,6 +88,7 @@
   margin-top: 0.8rem;
 }
 
+/* Individual tag */
 .tag-pill {
   background: #e8f7f3;
   color: #0d8f73;
@@ -86,11 +97,13 @@
   font-size: 0.9rem;
 }
 
+/* Headings and Text */
 .simple-card h2 {
   margin: 0 0 0.7rem;
   color: #102033;
   font-size: 2rem;
 }
+
 
 .simple-card h3 {
   margin: 0 0 0.75rem;
@@ -104,6 +117,7 @@
   line-height: 1.7;
 }
 
+/* Education list */
 .education-list {
   margin: 0;
   padding-left: 1.1rem;
@@ -112,6 +126,7 @@
   gap: 0.7rem;
 }
 
+/* Fee section */
 .fee-card {
   text-align: center;
 }
@@ -126,6 +141,7 @@
   margin-bottom: 1rem;
 }
 
+/* Info rows */
 .info-row {
   display: flex;
   justify-content: space-between;
@@ -138,12 +154,14 @@
   color: #314357;
 }
 
+/* Slots Section */
 .slot-list {
   display: grid;
   gap: 0.55rem;
   margin-bottom: 0.9rem;
 }
 
+/* Individual slot */
 .slot-item {
   display: flex;
   justify-content: space-between;
@@ -154,11 +172,13 @@
   color: #495c71;
 }
 
+/* Check mark / availability */
 .slot-check {
   color: #0d8f73;
   font-weight: 700;
 }
 
+/* Buttons */
 .solid-btn,
 .outline-btn {
   border-radius: 12px;
@@ -168,20 +188,24 @@
   border: 1px solid #0d8f73;
 }
 
+/* Filled button */
 .solid-btn {
   background: #0d8f73;
   color: #ffffff;
 }
 
+/* Outline button */
 .outline-btn {
   background: transparent;
   color: #0d8f73;
 }
 
+/* Full width button */
 .full-btn {
   width: 100%;
 }
 
+/* Not Found Section */
 .not-found-card {
   max-width: 480px;
   margin: 2rem auto;
@@ -192,12 +216,14 @@
   margin-bottom: 1rem;
 }
 
+/* Responsive adjustments for tablet */
 @media (max-width: 1100px) {
   .details-layout {
     grid-template-columns: 1fr;
   }
 }
 
+/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
   .details-page {
     padding: 1.2rem;
