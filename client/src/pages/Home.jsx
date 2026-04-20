@@ -5,7 +5,7 @@ import "./Home.css";
 // Home page component that serves as the landing page for the MediConnect application.
 const Home = () => {
   const navigate = useNavigate();
-  
+
   // Handlers for navigation to login page and doctors listing page
   const handleOpenLogin = () => navigate("/login");
 
@@ -19,9 +19,7 @@ const Home = () => {
         <div className="hero-left">
           <p className="tag">💚 Your Health, Our Priority</p>
 
-          <h1 className="hero-title">
-            Modern Healthcare at Your Fingertips
-          </h1>
+          <h1 className="hero-title">Modern Healthcare at Your Fingertips</h1>
 
           <p className="desc">
             Connect with top doctors, manage appointments, and access your
@@ -41,8 +39,9 @@ const Home = () => {
 
         <div className="hero-right">
           <img
-            src="https://res.cloudinary.com/ddmqw0xx8/image/upload/f_auto,q_auto/214ed4a0-b9c2-4488-b0f7-977a9c71161b_mi4rya"
+            src="/Gemini_Generated_Image_4cbw5m4cbw5m4cbw.png"
             alt="doctor"
+            
           />
         </div>
       </div>
@@ -52,7 +51,9 @@ const Home = () => {
 
 export default Home;
 
-{/* This component serves as the landing page for the MediConnect application. It features a hero section with a tagline, title, description, and call-to-action buttons for users to get started or find a doctor. 
+{
+  /* This component serves as the landing page for the MediConnect application. It features a hero section with a tagline, title, description, and call-to-action buttons for users to get started or find a doctor. 
  The useNavigate hook from react-router-dom is used to handle client-side routing when the buttons are clicked, allowing users to navigate to the login page or the doctors listing page seamlessly. 
  The component is styled using an external CSS file (Home.css) to create an engaging and visually appealing user interface.
-*/}
+*/
+}
