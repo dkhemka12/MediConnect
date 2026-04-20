@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
+/// Static data for UI display (can be replaced with backend data later)
 const stats = [
   { label: "Upcoming Visits", value: "3" },
   { label: "Doctors Viewed", value: "12" },
@@ -9,15 +10,21 @@ const stats = [
   { label: "Completed Visits", value: "9" },
 ];
 
+// Sample reminders for the patient (can be replaced with backend data later)
 const reminders = [
   "Book your follow-up with Dr. Sarah Johnson",
   "Review your appointment for today at 10:00 AM",
   "Check available doctors in cardiology",
 ];
 
+// Patient Dashboard component
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  // Handlers for navigation to other pages
   const handleOpenDoctors = () => navigate("/patient/doctors");
+
+  // Navigate to patient's appointments page
   const handleOpenAppointments = () => navigate("/patient/my-appointments");
 
   return (
@@ -71,3 +78,8 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+{/* This component serves as the main dashboard for patients in the MediConnect application. It provides an overview of upcoming visits, doctors viewed, saved doctors, and completed visits. 
+ It also includes reminders for the patient and quick access buttons to find doctors and view appointments. 
+ The UI is designed to be clean and user-friendly, with clear navigation paths to other parts of the application.
+*/}

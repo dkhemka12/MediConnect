@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Users.css";
 
+/* Static Users Data*/
 const users = [
   { name: "Aisha Khan", role: "Patient", email: "aisha@email.com", status: "Active" },
   { name: "Dr. Rahul Mehta", role: "Doctor", email: "rahul@email.com", status: "Active" },
@@ -11,18 +12,23 @@ const users = [
 
 const Users = () => {
   const navigate = useNavigate();
+
+  // Function to navigate back to dashboard
   const handleBackToDashboard = () => navigate("/admin/dashboard");
 
   return (
     <div className="admin-users-page">
       {/* Header */}
       <div className="admin-users-header">
+        
+       {/* Title and description */}
         <div>
           <p className="admin-tag">Admin Users</p>
           <h2>Users</h2>
           <p>Manage the people using the platform.</p>
         </div>
 
+        {/* Back button */}
         <button type="button" onClick={handleBackToDashboard}>
           Back to Dashboard
         </button>
@@ -30,6 +36,8 @@ const Users = () => {
 
       {/* Users List */}
       <div className="admin-users-list">
+
+        {/* Loop through users array and display cards */}
         {users.map((user) => (
           <div key={user.email} className="admin-user-card">
             <div>
@@ -48,3 +56,8 @@ const Users = () => {
 };
 
 export default Users;
+
+{/*
+    Users.jsx - A user management page for the admin panel of the MediConnect application. 
+    It displays a list of users (both patients and doctors) with their name, role, email, and account status.*/
+}

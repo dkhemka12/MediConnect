@@ -1,3 +1,4 @@
+
 .navbar {
   background: rgb(255, 255, 255);
   backdrop-filter: blur(10px);
@@ -7,6 +8,7 @@
   z-index: 100;
 }
 
+/* Container to center and structure navbar content */
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -27,6 +29,7 @@
   transition: transform 0.2s ease, color 0.3s ease;
 }
 
+/* Logo hover effect */
 .logo:hover {
   transform: scale(1.05);
   color: #1faf8b;
@@ -40,6 +43,7 @@
   margin-left: 3rem;
 }
 
+/* Individual nav link */
 .nav-links span {
   position: relative;
   cursor: pointer;
@@ -60,10 +64,12 @@
   transition: width 0.3s ease;
 }
 
+/* Hover effect for nav links */
 .nav-links span:hover {
   color: #1faf8b;
 }
 
+/* Expand underline on hover */
 .nav-links span:hover::after {
   width: 100%;
 }
@@ -87,6 +93,7 @@
   transition: all 0.3s ease;
 }
 
+/* Login button hover effect */
 .login-btn:hover {
   background-color: #1faf8b;
   color: white;
@@ -105,6 +112,7 @@
   transition: all 0.3s ease;
 }
 
+/* Primary button hover effect */
 .primary-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(31, 175, 139, 0.35);
@@ -112,20 +120,24 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  /* Stack navbar content vertically and center */
   .navbar-container {
     padding: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows wrapping of content */
   }
 
+  /* Hide nav links on mobile */
   .nav-links {
     display: none;
     margin: 0;
   }
 
+  /* Reduce spacing between buttons */
   .nav-actions {
     gap: 0.5rem;
   }
 
+  /* Smaller buttons on mobile */
   .login-btn,
   .primary-btn {
     padding: 0.4rem 1rem;

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DoctorCard from "../../components/DoctorCard";
 import "./Doctors.css";
 
+// Sample data for doctors (can be replaced with backend data later)
 const doctors = [
   {
     id: 1,
@@ -50,6 +51,7 @@ const doctors = [
   },
 ];
 
+// List of specialties for filtering
 const specialties = [
   "All Specialties",
   "Cardiologist",
@@ -58,30 +60,47 @@ const specialties = [
   "Pediatrician",
 ];
 
+// Doctors listing page for patients
 const Doctors = () => {
   const navigate = useNavigate();
+
+  // State for search query
   const [searchQuery, setSearchQuery] = useState("");
+
+  // State for selected specialty filter
   const [selectedSpecialty, setSelectedSpecialty] = useState("All Specialties");
 
+  // Filter doctors based on search query and selected specialty
   const visibleDoctors = doctors.filter((doctor) => {
+
+    // Check if doctor name or specialty matches the search query
     const searchMatch =
       doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Check if doctor specialty matches the selected specialty filter
     const specialtyMatch =
       selectedSpecialty === "All Specialties" || doctor.specialty === selectedSpecialty;
 
     return searchMatch && specialtyMatch;
   });
 
+  // Handlers for search input
   const handleSearchQueryChange = (event) => setSearchQuery(event.target.value);
+
+  // Handlers for specialty filter change
   const handleSpecialtyChange = (value) => setSelectedSpecialty(value);
 
+  // Handler to reset filters and search query
   const handleResetFilters = () => {
     setSearchQuery("");
     setSelectedSpecialty("All Specialties");
   };
 
+  // Handlers for navigation to doctor details
   const handleOpenProfile = (doctorId) => navigate(`/patient/doctor/${doctorId}`);
+
+  // Handler to navigate to booking page for a specific doctor
   const handleOpenBooking = (doctorId) => navigate(`/patient/book-appointment/${doctorId}`);
 
   return (
@@ -154,3 +173,9 @@ const Doctors = () => {
 };
 
 export default Doctors;
+
+{/* This component displays a list of doctors for patients to browse and book appointments with. It includes a search bar to filter doctors by name or specialty, and a sidebar with specialty filters. 
+ Each doctor is displayed in a card format with their name, specialty, experience, rating, fees, location, and availability. 
+ Patients can click on "View Profile" to see more details about the doctor or "Book Now" to start the appointment booking process. 
+ The data is currently static but can be replaced with dynamic data from a backend in the future. 
+*/}

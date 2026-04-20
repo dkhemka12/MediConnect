@@ -4,6 +4,7 @@
   background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
 }
 
+/* Header section (title + button) */
 .doctor-appointments-header {
   max-width: 960px;
   margin: 0 auto 1.5rem;
@@ -18,18 +19,21 @@
   align-items: center;
 }
 
+/* Header text section */
 .doctor-appointments-header h2 {
   margin: 0 0 0.35rem;
   color: #102033;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
 }
 
+/* Description text */
 .doctor-appointments-header p {
   margin: 0;
   color: #64748b;
   line-height: 1.6;
 }
 
+/* Action button */
 .doctor-appointments-header button {
   border: 1px solid #d7e4ea;
   border-radius: 14px;
@@ -41,6 +45,7 @@
   white-space: nowrap;
 }
 
+/* Appointments list container */
 .doctor-appointments-list {
   max-width: 960px;
   margin: 0 auto;
@@ -48,6 +53,7 @@
   gap: 0.85rem;
 }
 
+/* Individual appointment card */
 .appointment-card {
   background: #ffffff;
   border: 1px solid #e3edf1;
@@ -60,24 +66,28 @@
   align-items: center;
 }
 
+/* Appointment title */
 .appointment-card h3 {
   margin: 0 0 0.25rem;
   color: #102033;
   font-size: 1rem;
 }
 
+/* Appointment details */
 .appointment-card p,
 .appointment-card span {
   margin: 0;
   color: #64748b;
 }
 
+/* Highlighted details (e.g. status) */
 .appointment-card strong {
   display: block;
   margin-top: 0.25rem;
   color: #0d8f73;
 }
 
+/* Responsive adjustments */
 @media (max-width: 640px) {
   .doctor-appointments-header {
     flex-direction: column;
