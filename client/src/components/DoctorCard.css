@@ -1,7 +1,10 @@
 /* Main card container */
 .doctor-card {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.25rem;
+  width: 500px;
+  overflow: hidden;
   background: #ffffff;
   border: 1px solid #e6edf1;
   border-radius:  14px;
