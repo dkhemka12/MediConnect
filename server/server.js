@@ -5,6 +5,7 @@ const dotenv = require("dotenv");   // imported dotenv module to load environmen
 const connectDB = require("./config/db");// imported the connectDB function from the db.js file to establish a connection to the MongoDB database
 const authRoutes = require("./routes/authRoutes"); // imported the authentication routes from the authRoutes.js file to handle authentication-related requests
 const userRoutes = require("./routes/userRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 dotenv.config();// Load environment variables from .env file
 
@@ -24,6 +25,8 @@ app.use(express.json());// Middleware to parse JSON request bodies
 app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);// Mount the authentication routes on the /api/auth path and user routes on the /api/users path, allowing the server to handle requests related to authentication and user management.
+
+app.use("/api/appointments", appointmentRoutes); // Mount appointment routes
 
 
 app.get("/api/health", (req, res) => {// Define a simple health check route to verify that the server is running and responsive. This route can be used for monitoring and debugging purposes.
