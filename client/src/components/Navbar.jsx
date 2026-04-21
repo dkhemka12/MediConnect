@@ -17,8 +17,7 @@ const Navbar = () => {
         <div className="nav-links">
           <span onClick={() => navigate("/")}>Home</span> {/* Navigate to home page */}
           <span onClick={() => navigate("/patient/doctors")}>Doctors</span> {/* Navigate to Doctors listing */}
-          <span onClick={() => navigate("/patient/my-appointments")}>Appointments</span>  {/* Navigate to user's appointments */}
-          <span onClick={() => navigate("/login")}>Login</span> {/* Navigate to login page */}
+          <span onClick={() => navigate("/patient/about")}>About</span>  {/* Navigate to user's appointments */}
         </div>
 
         <div className="nav-actions">

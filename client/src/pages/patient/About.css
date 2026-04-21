@@ -1,0 +1,111 @@
+.about-page {
+  min-height: 100vh;
+  padding: 2rem 3rem 3rem;
+  background: linear-gradient(180deg, #eef8fb 0%, #f6fbf9 26%, #ffffff 26%);
+}
+
+.about-hero {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.about-kicker {
+  margin: 0;
+  color: #0d8f73;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+}
+
+.about-hero h1 {
+  margin: 0.6rem 0 1rem;
+  color: #102033;
+  line-height: 1.2;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.about-hero p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.about-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.about-card {
+  background: #ffffff;
+  border: 1px solid #e6eef2;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 30px rgba(16, 32, 51, 0.07);
+}
+
+.about-card h2 {
+  margin: 0 0 0.75rem;
+  color: #102033;
+}
+
+.about-card p,
+.about-card li {
+  margin: 0;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.about-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.about-highlights {
+  max-width: 1080px;
+  margin: 1.25rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.highlight-card {
+  background: linear-gradient(180deg, #0d8f73 0%, #1faf8b 100%);
+  border-radius: 18px;
+  color: #ffffff;
+  padding: 1.25rem;
+}
+
+.highlight-value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.highlight-card h3 {
+  margin: 0.35rem 0;
+  font-size: 1.05rem;
+}
+
+.highlight-card p {
+  margin: 0;
+  color: #e8fdf8;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .about-page {
+    padding: 1.25rem;
+  }
+
+  .about-grid,
+  .about-highlights {
+    grid-template-columns: 1fr;
+  }
+}

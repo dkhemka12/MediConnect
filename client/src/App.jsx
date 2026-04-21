@@ -11,6 +11,7 @@ import Register from "./pages/auth/Register";
 
 import Dashboard from "./pages/patient/Dashboard";
 import Doctors from "./pages/patient/Doctors";
+import About from "./pages/patient/About";
 import DoctorDetails from "./pages/patient/DoctorDetails";
 import BookAppointment from "./pages/patient/BookAppointment";
 import MyAppointments from "./pages/patient/MyAppointments";
@@ -35,6 +36,7 @@ function App() {
         {/* Patient */}
         <Route path="/patient/dashboard" element={<Dashboard />} />
         <Route path="/patient/doctors" element={<Doctors />} />
+        <Route path="/patient/about" element={<About />} />
         <Route path="/patient/doctor/:id" element={<DoctorDetails />} />
         <Route
           path="/patient/book-appointment/:id"
