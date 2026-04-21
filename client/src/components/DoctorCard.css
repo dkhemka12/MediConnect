@@ -10,26 +10,32 @@
   border-radius:  14px;
   padding: 1rem;
   box-shadow: 0 8px 24px rgba(16, 32, 51, 0.06);
+  flex-direction: row-reverse;
+  position: relative;
   
 }
 
 /* Doctor profile image */
 .doctor-avatar {
-  width: 74px;
-  height: 74px;
+  width: 160px;
+  height: 100%;
   border-radius: 12px;
   flex-shrink: 0;
   object-fit: cover;
   background: #edf2f7;
+  margin-left: 10px;
 }
 
 /* Fallback avatar (initials) */
 .doctor-avatar-fallback {
-  display: grid;
+  width: 200px;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
   place-items: center;
   background: linear-gradient(135deg, #1faf8b, #0d8f73);
   color: #ffffff;
-  font-size: 1.2rem;
   font-weight: 700;
 }
 
@@ -96,8 +102,7 @@
 .doctor-footer {
   display: flex;
   justify-content: space-between;
-  align-items: end;
-  gap: 0.8rem;
+  align-items: center;
   margin-top: 0.85rem;
   padding-top: 0.85rem;
   border-top: 1px solid #edf2f7;
@@ -110,11 +115,23 @@
   font-size: 0.85rem;
 }
 
+.doctor-fee {
+  text-align: right;
+}
+
+
 /* Fee amount */
 .doctor-fee strong {
   color: #0d8f73;
   font-size: 1.9rem;
   line-height: 1.1;
+}
+
+.doctor-fee{
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  text-align: right;
 }
 
 /* Buttons container */
@@ -169,4 +186,21 @@
   .doctor-fee strong {
     font-size: 1.4rem;
   }
+}
+
+/* Outline button hover */
+.doctor-button-outline:hover {
+  background: #0d8f73;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+
+/* Solid button hover */
+.doctor-button-solid:hover {
+  background: #0d8f73;
+  transform: translateY(-2px); /* slight lift effect */
+  box-shadow: 0 4px 12px rgba(48, 230, 190, 0.3);
+  transition: all 0.3s ease;
+  color: #ffffff;
 }
