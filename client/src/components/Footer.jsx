@@ -20,16 +20,12 @@ const Footer = () => {
                     <ul>
                         <li onClick={() => navigate("/")}>Home</li>  {/* Navigate to home page when "Home" is clicked */}
                         <li onClick={() => navigate("/patient/doctors")}>Doctors</li> {/* Navigate to Doctors listing */}
-                        <li onClick={() => navigate("/patient/my-appointments")}>My Appointments</li>  {/* Navigate to user's appointments */}
-                        <li onClick={() => navigate("/login")}>Login</li> {/* Navigate to login page */}
                     </ul>
                 </div>
 
                 <div className="footer-section">
                     <h4>For Users</h4>
                     <ul>
-                        <li onClick={() => navigate("/login")}>Login</li> {/*Login page */}
-                        <li onClick={() => navigate("/register")}>Sign Up</li> {/* Registration page */}
                         <li>Privacy Policy</li>
                         <li>Terms of Service</li>
                     </ul>

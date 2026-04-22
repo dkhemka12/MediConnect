@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 // Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import RequireAuth from "./components/RequireAuth";
 
 // Pages
 import Home from "./pages/Home";
@@ -40,7 +41,11 @@ function App() {
         <Route path="/patient/doctor/:id" element={<DoctorDetails />} />
         <Route
           path="/patient/book-appointment/:id"
-          element={<BookAppointment />}
+          element={
+            <RequireAuth>
+              <BookAppointment />
+            </RequireAuth>
+          }
         />
         <Route path="/patient/my-appointments" element={<MyAppointments />} />
 

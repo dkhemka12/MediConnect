@@ -1,4 +1,5 @@
 import { requestJson } from "./api";
+import { isAuthenticated } from "./auth";
 
 const STORAGE_KEY = "mediconnectAppointments";
 
@@ -64,6 +65,10 @@ const normalizeAppointment = (item) => ({
 });
 
 export const getMyAppointments = async () => {
+  if (!isAuthenticated()) {
+    throw new Error("Please log in to view your appointments.");
+  }
+
   // Backend endpoint expected from server team: GET /appointments/my
   try {
     const data = await requestJson("/appointments/my", { method: "GET" });
@@ -75,6 +80,10 @@ export const getMyAppointments = async () => {
 };
 
 export const createAppointment = async (payload) => {
+  if (!isAuthenticated()) {
+    throw new Error("Please log in to book an appointment.");
+  }
+
   // Backend endpoint expected from server team: POST /appointments
   try {
     const data = await requestJson("/appointments", {
@@ -103,6 +112,10 @@ export const createAppointment = async (payload) => {
 };
 
 export const cancelAppointment = async (appointmentId) => {
+  if (!isAuthenticated()) {
+    throw new Error("Please log in to manage appointments.");
+  }
+
   // Backend endpoint expected from server team: PATCH /appointments/:id/cancel
   try {
     await requestJson(`/appointments/${appointmentId}/cancel`, {

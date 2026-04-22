@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DoctorCard from "../../components/DoctorCard";
+import { isAuthenticated } from "../../services/auth";
 import "./Doctors.css";
 
 // Sample data for doctors (can be replaced with backend data later)
@@ -101,7 +102,14 @@ const Doctors = () => {
   const handleOpenProfile = (doctorId) => navigate(`/patient/doctor/${doctorId}`);
 
   // Handler to navigate to booking page for a specific doctor
-  const handleOpenBooking = (doctorId) => navigate(`/patient/book-appointment/${doctorId}`);
+  const handleOpenBooking = (doctorId) => {
+    if (!isAuthenticated()) {
+      navigate("/login", { state: { from: `/patient/book-appointment/${doctorId}` } });
+      return;
+    }
+
+    navigate(`/patient/book-appointment/${doctorId}`);
+  };
 
   return (
     <div className="doctor-page">

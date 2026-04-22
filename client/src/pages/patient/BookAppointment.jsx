@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createAppointment } from "../../services/appointmentService";
+import { isAuthenticated } from "../../services/auth";
 import "./BookAppointment.css";
 
 // BookAppointment component
@@ -22,8 +23,18 @@ const BookAppointment = () => {
   // State to indicate if appointment is being saved
   const [isSaving, setIsSaving] = useState(false);
 
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login", { replace: true, state: { from: `/patient/book-appointment/${doctorIdParam}` } });
+    }
+  }, [doctorIdParam, navigate]);
+
   // Handle appointment submission
   const handleSubmitAppointment = async () => {
+    if (!isAuthenticated()) {
+      navigate("/login", { state: { from: `/patient/book-appointment/${doctorIdParam}` } });
+      return;
+    }
 
     // Validate Inputs
     if (!selectedDate || !selectedTime) {
@@ -56,7 +67,7 @@ const BookAppointment = () => {
   // Handlers for input changes
   // Update selected date
   const handleDateChange = (event) => setSelectedDate(event.target.value);
-  
+
   // Update selected time
   const handleTimeChange = (event) => setSelectedTime(event.target.value);
 
@@ -84,7 +95,7 @@ const BookAppointment = () => {
           </label>
         </div>
 
-         {/* Show error message if exists */}
+        {/* Show error message if exists */}
         {errorMessage ? <p className="booking-error">{errorMessage}</p> : null}
 
         {/* Actions */}

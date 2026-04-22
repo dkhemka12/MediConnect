@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setAuthSession } from "../../services/auth";
 import "./Login.css";
 
 //Login Component
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // State for selected user role (patient, doctor, admin)
   const [selectedRole, setSelectedRole] = useState("patient");
@@ -25,6 +27,17 @@ const Login = () => {
   // Handle form submission
   const handleSubmitLogin = (event) => {
     event.preventDefault();
+    setAuthSession({
+      token: `mock-token-${Date.now()}`,
+      role: selectedRole,
+    });
+
+    const requestedPath = location.state?.from;
+    if (requestedPath) {
+      navigate(requestedPath, { replace: true });
+      return;
+    }
+
     // Temporary frontend-only flow. Replace this with API login response handling.
     navigate(ROLE_ROUTES[selectedRole]);
   };
@@ -60,7 +73,7 @@ const Login = () => {
             </select>
           </label>
 
-        {/* Email input field */}
+          {/* Email input field */}
           <label>
             <span>Email</span>
             <input
