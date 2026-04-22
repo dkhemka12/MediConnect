@@ -1,6 +1,0 @@
-Bugs#  
----
-Prob (1) without login/registration of user ,when we go to doctors page we get option to press book now button to a doctors profile ,we are still able to book and after booking request sent ,it navigates to a random patient dashboard ;
-
-Solution => if a user press book now button in the doctors profile card , it first links it to the login page ,iff logged in , then only goes the flow of user journey.
----
