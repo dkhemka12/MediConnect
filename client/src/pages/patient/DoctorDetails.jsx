@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { isAuthenticated } from "../../services/auth";
 import "./DoctorDetails.css";
 
 /// Static data for doctors (can be replaced with backend data later)
@@ -105,7 +106,14 @@ const DoctorDetails = () => {
     const handleBackToDoctors = () => navigate("/patient/doctors");
 
     // Handler to navigate to the booking page for the selected doctor
-    const handleOpenBooking = () => navigate(`/patient/book-appointment/${selectedDoctor.id}`);
+    const handleOpenBooking = () => {
+        if (!isAuthenticated()) {
+            navigate("/login", { state: { from: `/patient/book-appointment/${selectedDoctor.id}` } });
+            return;
+        }
+
+        navigate(`/patient/book-appointment/${selectedDoctor.id}`);
+    };
 
     if (!selectedDoctor) {
         return (

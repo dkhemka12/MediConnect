@@ -1,15 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { clearAuthSession, isAuthenticated } from "../services/auth";
 import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const loggedIn = isAuthenticated();
+
+  const handleLogout = () => {
+    clearAuthSession();
+    navigate("/", { replace: true });
+  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
 
-         {/* Logo / Brand name and Clicking it navigates to home page */}
+        {/* Logo / Brand name and Clicking it navigates to home page */}
         <h2 className="logo" onClick={() => navigate("/")}>
           MediConnect
         </h2>
@@ -21,14 +28,22 @@ const Navbar = () => {
         </div>
         {/* Action buttons section */}
         <div className="nav-actions">
-          <button className="login-btn" onClick={() => navigate("/login")}>
-            Login   {/* Navigate to login page */}
-          </button>
+          {loggedIn ? (
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <button className="login-btn" onClick={() => navigate("/login")}>
+                Login   {/* Navigate to login page */}
+              </button>
 
-          {/* Navigate to Registration page */}
-          <button className="primary-btn" onClick={() => navigate("/register")}>
-            Get Started    {/* Navigate to registration page */}
-          </button>
+              {/* Navigate to Registration page */}
+              <button className="primary-btn" onClick={() => navigate("/register")}>
+                Get Started    {/* Navigate to registration page */}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

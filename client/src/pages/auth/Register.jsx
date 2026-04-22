@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setAuthSession } from "../../services/auth";
 import "./Login.css";
 
 const Register = () => {
@@ -20,6 +21,11 @@ const Register = () => {
   // Handle form submission
   const handleSubmitRegister = (event) => {
     event.preventDefault();
+    setAuthSession({
+      token: `mock-token-${Date.now()}`,
+      role: selectedRole,
+    });
+
     navigate(selectedRole === "doctor" ? "/doctor/dashboard" : "/patient/dashboard");
   };
 

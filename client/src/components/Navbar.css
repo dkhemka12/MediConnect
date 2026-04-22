@@ -1,4 +1,3 @@
-
 .navbar {
   background: rgb(255, 255, 255);
   backdrop-filter: blur(10px);
@@ -26,7 +25,9 @@
   cursor: pointer;
   margin: 0;
   letter-spacing: 0.5px;
-  transition: transform 0.2s ease, color 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.3s ease;
 }
 
 /* Logo hover effect */
@@ -118,6 +119,23 @@
   box-shadow: 0 6px 18px rgba(31, 175, 139, 0.35);
 }
 
+/* Logout Button */
+.logout-btn {
+  background-color: #f4f7f7;
+  color: #1b4b43;
+  border: 1px solid #d6e4e1;
+  padding: 0.5rem 1.6rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+  background-color: #e5eeec;
+  border-color: #c5d9d4;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   /* Stack navbar content vertically and center */
@@ -139,7 +157,8 @@
 
   /* Smaller buttons on mobile */
   .login-btn,
-  .primary-btn {
+  .primary-btn,
+  .logout-btn {
     padding: 0.4rem 1rem;
     font-size: 0.85rem;
   }
