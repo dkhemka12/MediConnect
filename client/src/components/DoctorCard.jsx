@@ -42,10 +42,7 @@ const DoctorCard = ({ doctor, onViewProfile, onBookNow }) => {
                 </div>
 
                 <div className="doctor-footer">
-                    <div className="doctor-fee">
-                        <span>Consultation Fee</span>
-                        <strong>{doctor.fees}</strong>
-                    </div>
+                    
 
                     <div className="doctor-actions">
 
@@ -66,7 +63,12 @@ const DoctorCard = ({ doctor, onViewProfile, onBookNow }) => {
                         >
                             Book Now
                         </button>
+                        </div>
+                        <div className="doctor-fee">
+                        <span>Consultation Fee</span>
+                        <strong>{doctor.fees}</strong>
                     </div>
+                    
                 </div>
             </div>
         </article>
