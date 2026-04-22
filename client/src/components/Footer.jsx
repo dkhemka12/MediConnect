@@ -14,14 +14,15 @@ const Footer = () => {
                     <p>Your trusted healthcare appointment booking platform</p>
                 </div>
 
-                <div className="footer-section">
-                    {/* Section 2: Quick Navigation Links */}
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li onClick={() => navigate("/")}>Home</li>  {/* Navigate to home page when "Home" is clicked */}
-                        <li onClick={() => navigate("/patient/doctors")}>Doctors</li> {/* Navigate to Doctors listing */}
-                    </ul>
-                </div>
+                 <div className="footer-section">
+                     {/* Section 2: Quick Navigation Links */}
+                     <h4>Quick Links</h4>
+                     <ul>
+                         <li onClick={() => navigate("/")}>Home</li>  {/* Navigate to home page when "Home" is clicked */}
+                         <li onClick={() => navigate("/patient/doctors")}>Doctors</li> {/* Navigate to Doctors listing */}
+                         <li onClick={() => navigate("/about")}>About</li> {/* Navigate to About page */}
+                     </ul>
+                 </div>
 
                 <div className="footer-section">
                     <h4>For Users</h4>

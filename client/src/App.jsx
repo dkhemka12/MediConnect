@@ -30,6 +30,9 @@ function App() {
         {/* Home */}
         <Route path="/" element={<Home />} />
 
+        {/* Public */}
+        <Route path="/about" element={<About />} />
+
         {/* Auth */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
