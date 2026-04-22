@@ -16,7 +16,7 @@ import About from "./pages/patient/About";
 import DoctorDetails from "./pages/patient/DoctorDetails";
 import BookAppointment from "./pages/patient/BookAppointment";
 import MyAppointments from "./pages/patient/MyAppointments";
-
+import PaymentPage from "./pages/patient/PaymentPage";
 import DoctorDashboard from "./pages/doctor/Dashboard";
 import DoctorAppointments from "./pages/doctor/Appointments";
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -116,6 +116,14 @@ function App() {
           element={
             <RequireAuth>
               <AdminUsers />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/patient/payment/:id"
+          element={
+            <RequireAuth>
+              <PaymentPage />
             </RequireAuth>
           }
         />
