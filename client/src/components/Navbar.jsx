@@ -19,12 +19,13 @@ const Navbar = () => {
           <span onClick={() => navigate("/patient/doctors")}>Doctors</span> {/* Navigate to Doctors listing */}
           <span onClick={() => navigate("/patient/about")}>About</span>  {/* Navigate to user's appointments */}
         </div>
-
+        {/* Action buttons section */}
         <div className="nav-actions">
           <button className="login-btn" onClick={() => navigate("/login")}>
             Login   {/* Navigate to login page */}
           </button>
 
+          {/* Navigate to Registration page */}
           <button className="primary-btn" onClick={() => navigate("/register")}>
             Get Started    {/* Navigate to registration page */}
           </button>

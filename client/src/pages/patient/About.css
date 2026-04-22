@@ -1,15 +1,16 @@
+/* Main wrapper for the About page with full height and gradient background */
 .about-page {
   min-height: 100vh;
   padding: 2rem 3rem 3rem;
   background: linear-gradient(180deg, #eef8fb 0%, #f6fbf9 26%, #ffffff 26%);
 }
-
+/* Hero section container centered with max width */
 .about-hero {
   max-width: 900px;
   margin: 0 auto 2rem;
   text-align: center;
 }
-
+/* Small uppercase heading above main title */
 .about-kicker {
   margin: 0;
   color: #0d8f73;
@@ -18,20 +19,21 @@
   letter-spacing: 0.08em;
   font-size: 0.82rem;
 }
-
+/* Main heading style in hero section */
 .about-hero h1 {
   margin: 0.6rem 0 1rem;
   color: #102033;
   line-height: 1.2;
   font-size: clamp(2rem, 4vw, 3rem);
 }
-
+/* Paragraph text inside hero section */
 .about-hero p {
   margin: 0;
   color: #475569;
   line-height: 1.7;
 }
 
+/* Grid layout for about cards */
 .about-grid {
   max-width: 1080px;
   margin: 0 auto;
@@ -39,6 +41,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
 }
+/* Individual card styling inside grid */
 
 .about-card {
   background: #ffffff;
@@ -47,25 +50,27 @@
   padding: 1.5rem;
   box-shadow: 0 12px 30px rgba(16, 32, 51, 0.07);
 }
-
+/* Card heading style */
 .about-card h2 {
   margin: 0 0 0.75rem;
   color: #102033;
 }
 
+/* Paragraph and list items inside card */
 .about-card p,
 .about-card li {
   margin: 0;
   color: #475569;
   line-height: 1.7;
 }
-
+/* Unordered list styling inside card */
 .about-card ul {
   margin: 0;
   padding-left: 1.1rem;
   display: grid;
   gap: 0.6rem;
 }
+/* Grid for highlight statistic cards */
 
 .about-highlights {
   max-width: 1080px;
@@ -74,13 +79,14 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
-
+/* Styling for each highlight card */
 .highlight-card {
   background: linear-gradient(180deg, #0d8f73 0%, #1faf8b 100%);
   border-radius: 18px;
   color: #ffffff;
   padding: 1.25rem;
 }
+/* Large number/value in highlight card */
 
 .highlight-value {
   margin: 0;
@@ -88,16 +94,18 @@
   font-weight: 700;
 }
 
+/* Heading inside highlight card */
 .highlight-card h3 {
   margin: 0.35rem 0;
   font-size: 1.05rem;
 }
-
+/* Paragraph text inside highlight card */
 .highlight-card p {
   margin: 0;
   color: #e8fdf8;
   line-height: 1.5;
 }
+/* Responsive styles for screens below 900px */
 
 @media (max-width: 900px) {
   .about-page {
