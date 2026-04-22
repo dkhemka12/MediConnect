@@ -35,10 +35,38 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Patient */}
-        <Route path="/patient/dashboard" element={<Dashboard />} />
-        <Route path="/patient/doctors" element={<Doctors />} />
-        <Route path="/patient/about" element={<About />} />
-        <Route path="/patient/doctor/:id" element={<DoctorDetails />} />
+        <Route
+          path="/patient/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/patient/doctors"
+          element={
+            <RequireAuth>
+              <Doctors />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/patient/about"
+          element={
+            <RequireAuth>
+              <About />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/patient/doctor/:id"
+          element={
+            <RequireAuth>
+              <DoctorDetails />
+            </RequireAuth>
+          }
+        />
         <Route
           path="/patient/book-appointment/:id"
           element={
@@ -47,15 +75,50 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="/patient/my-appointments" element={<MyAppointments />} />
+        <Route
+          path="/patient/my-appointments"
+          element={
+            <RequireAuth>
+              <MyAppointments />
+            </RequireAuth>
+          }
+        />
 
         {/* Doctor */}
-        <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
-        <Route path="/doctor/appointments" element={<DoctorAppointments />} />
+        <Route
+          path="/doctor/dashboard"
+          element={
+            <RequireAuth>
+              <DoctorDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/doctor/appointments"
+          element={
+            <RequireAuth>
+              <DoctorAppointments />
+            </RequireAuth>
+          }
+        />
 
         {/* Admin */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <RequireAuth>
+              <AdminDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <RequireAuth>
+              <AdminUsers />
+            </RequireAuth>
+          }
+        />
       </Routes>
       <Footer />
     </>

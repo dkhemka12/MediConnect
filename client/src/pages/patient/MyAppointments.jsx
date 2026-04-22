@@ -3,22 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { cancelAppointment, getMyAppointments } from "../../services/appointmentService";
 import "./MyAppointments.css";
 
-// List of appointment statuses for filtering
-const APPOINTMENT_STATUSES = ["All", "Confirmed", "Pending", "Completed", "Cancelled"];
+const APPOINTMENT_STATUSES = ["all", "confirmed", "pending", "completed", "cancelled"];
 
-// Utility function to convert ISO date string to a more readable format
+const toStatusLabel = (status) => {
+  if (!status) return "Pending";
+  return status.charAt(0).toUpperCase() + status.slice(1);
+};
+
 const toLabelDate = (isoDate) => {
   if (!isoDate) {
     return "Date unavailable";
   }
 
-  // Parse the ISO date string (expected format: "YYYY-MM-DD")
   const [year, month, day] = isoDate.split("-").map(Number);
   if (!year || !month || !day) {
     return isoDate;
   }
 
-  // Create a Date object and format it to "MMM D, YYYY" (e.g., "Apr 19, 2026")
   const date = new Date(year, month - 1, day);
   return date.toLocaleDateString("en-US", {
     month: "short",
@@ -27,29 +28,17 @@ const toLabelDate = (isoDate) => {
   });
 };
 
-//  MyAppointments component for patients to view and manage their appointments
 const MyAppointments = () => {
   const navigate = useNavigate();
-  
-  // State for selected appointment status filter
-  const [selectedStatus, setSelectedStatus] = useState("All");
 
-  // State for list of appointments, loading state, and error messages
+  const [selectedStatus, setSelectedStatus] = useState("all");
   const [appointmentList, setAppointmentList] = useState([]);
-  
-  // State to indicate if appointments are being loaded
   const [isLoading, setIsLoading] = useState(true);
-
-  // State for error messages related to loading or managing appointments
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Load appointments from backend when component mounts
   useEffect(() => {
-
-    // Function to fetch appointments from backend and handle loading/error states
     const loadAppointments = async () => {
       try {
-        // Service handles backend call first and fallback data when backend is unavailable.
         const list = await getMyAppointments();
         setAppointmentList(list);
       } catch (err) {
@@ -62,21 +51,18 @@ const MyAppointments = () => {
     loadAppointments();
   }, []);
 
-  // Calculate appointment stats for display in the UI
   const stats = {
     total: appointmentList.length,
-    upcoming: appointmentList.filter((item) => ["Confirmed", "Pending"].includes(item.status)).length,
-    completed: appointmentList.filter((item) => item.status === "Completed").length,
-    cancelled: appointmentList.filter((item) => item.status === "Cancelled").length,
+    upcoming: appointmentList.filter((item) => ["confirmed", "pending"].includes(item.status)).length,
+    completed: appointmentList.filter((item) => item.status === "completed").length,
+    cancelled: appointmentList.filter((item) => item.status === "cancelled").length,
   };
 
-  // Filter appointments based on selected status filter
   const visibleAppointments =
-    selectedStatus === "All"
+    selectedStatus === "all"
       ? appointmentList
       : appointmentList.filter((item) => item.status === selectedStatus);
 
-      // Handler to cancel an appointment and update the UI accordingly
   const handleCancelAppointment = async (appointmentId) => {
     try {
       await cancelAppointment(appointmentId);
@@ -85,7 +71,7 @@ const MyAppointments = () => {
           if (item.id !== appointmentId) {
             return item;
           }
-          return { ...item, status: "Cancelled" };
+          return { ...item, status: "cancelled" };
         })
       );
     } catch (err) {
@@ -93,13 +79,8 @@ const MyAppointments = () => {
     }
   };
 
-  // Handler to change the selected appointment status filter
   const handleStatusChange = (status) => setSelectedStatus(status);
-
-  // Handlers for navigation to other pages
   const handleOpenDoctors = () => navigate("/patient/doctors");
-
-  // Handler to navigate back to patient dashboard
   const handleOpenDashboard = () => navigate("/patient/dashboard");
 
   return (
@@ -149,7 +130,7 @@ const MyAppointments = () => {
             className={selectedStatus === status ? "active" : ""}
             onClick={() => handleStatusChange(status)}
           >
-            {status}
+            {toStatusLabel(status)}
           </button>
         ))}
       </div>
@@ -176,12 +157,12 @@ const MyAppointments = () => {
 
               <div className="appointment-status-col">
                 <span
-                  className={`status-pill status-${appointment.status.toLowerCase()}`}
+                  className={`status-pill status-${appointment.status}`}
                 >
-                  {appointment.status}
+                  {toStatusLabel(appointment.status)}
                 </span>
 
-                {appointment.status === "Confirmed" || appointment.status === "Pending" ? (
+                {appointment.status === "confirmed" || appointment.status === "pending" ? (
                   <button type="button" onClick={() => handleCancelAppointment(appointment.id)}>
                     Cancel Appointment
                   </button>
@@ -207,10 +188,3 @@ const MyAppointments = () => {
 };
 
 export default MyAppointments;
-
-{/* This component allows patients to view and manage their appointments. 
-  It fetches the appointment data from the backend when the component mounts and displays it in a list format. 
-  Patients can filter appointments by status (e.g., Confirmed, Pending, Completed, Cancelled) and cancel upcoming appointments directly from this page. 
-  The component also includes navigation buttons to book new appointments or return to the dashboard. 
-  Error handling and loading states are implemented to provide feedback to the user during data fetching and appointment management actions. 
-*/}

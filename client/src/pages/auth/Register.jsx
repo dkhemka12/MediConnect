@@ -1,48 +1,59 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAuthSession } from "../../services/auth";
+import { registerUser } from "../../services/authService";
 import "./Login.css";
 
 const Register = () => {
   const navigate = useNavigate();
 
-  // State for selected role (patient or doctor)
-  const [selectedRole, setSelectedRole] = useState("patient");
+  const [role, setRole] = useState("patient");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // State for name input
-  const [nameValue, setNameValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // State for email input
-  const [emailValue, setEmailValue] = useState("");
-
-  // State for password input
-  const [passwordValue, setPasswordValue] = useState("");
-
-  // Handle form submission
-  const handleSubmitRegister = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setAuthSession({
-      token: `mock-token-${Date.now()}`,
-      role: selectedRole,
-    });
 
-    navigate(selectedRole === "doctor" ? "/doctor/dashboard" : "/patient/dashboard");
+    if (!name || !email || !password) {
+      setErrorMessage("Please fill all fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const response = await registerUser({
+        name,
+        email,
+        password,
+        role,
+      });
+
+      const roleFromApi = response?.data?.role || role;
+
+      setAuthSession({
+        token: response?.token,
+        role: roleFromApi,
+      });
+
+      navigate(roleFromApi === "doctor" ? "/doctor/dashboard" : "/patient/dashboard");
+    } catch (error) {
+      setErrorMessage(error.message || "Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // Handle role selection change
-  const handleRoleChange = (event) => setSelectedRole(event.target.value);
-
-  // Handle name input change
-  const handleNameChange = (event) => setNameValue(event.target.value);
-
-  // Handle email input change
-  const handleEmailChange = (event) => setEmailValue(event.target.value);
-
-  // Handle password input change
-  const handlePasswordChange = (event) => setPasswordValue(event.target.value);
-
-  // Handle navigation to login page
-  const handleOpenLogin = () => navigate("/login");
+  const handleRoleChange = (event) => setRole(event.target.value);
+  const handleNameChange = (event) => setName(event.target.value);
+  const handleEmailChange = (event) => setEmail(event.target.value);
+  const handlePasswordChange = (event) => setPassword(event.target.value);
+  const goToLogin = () => navigate("/login");
 
   return (
     <div className="register-page">
@@ -52,53 +63,51 @@ const Register = () => {
         <h2>Create Account</h2>
         <p>Create an account to access personalized healthcare services.</p>
 
-        {/* Form */}
-        <form className="auth-form" onSubmit={handleSubmitRegister}>
-
-          {/* Role selection */}
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label>
             <span>Role</span>
-            <select value={selectedRole} onChange={handleRoleChange}>
+            <select value={role} onChange={handleRoleChange}>
               <option value="patient">Patient</option>
               <option value="doctor">Doctor</option>
             </select>
           </label>
 
-          {/* Name input field */}
           <label>
             <span>Name</span>
             <input
-              value={nameValue}
+              value={name}
               onChange={handleNameChange}
               placeholder="Your name"
             />
           </label>
 
-          {/* Email input field */}
           <label>
             <span>Email</span>
             <input
               type="email"
-              value={emailValue}
+              value={email}
               onChange={handleEmailChange}
               placeholder="you@example.com"
             />
           </label>
 
-          {/* Password input field */}
           <label>
             <span>Password</span>
             <input
               type="password"
-              value={passwordValue}
+              value={password}
               onChange={handlePasswordChange}
               placeholder="Create a password"
             />
           </label>
 
+          {errorMessage ? <p className="auth-error">{errorMessage}</p> : null}
+
           <div className="register-actions">
-            <button className="auth-primary" type="submit">Create account</button>
-            <button className="auth-secondary" type="button" onClick={handleOpenLogin}>Back to login</button>
+            <button className="auth-primary" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating account..." : "Create account"}
+            </button>
+            <button className="auth-secondary" type="button" onClick={goToLogin}>Back to login</button>
           </div>
         </form>
       </div>
@@ -107,8 +116,3 @@ const Register = () => {
 };
 
 export default Register;
-
-{/*
-    Register.jsx - A registration page component for the MediConnect application. 
-    It allows new users to create an account by selecting their role (patient or doctor) and entering their name, email, and password.
-*/}

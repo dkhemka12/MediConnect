@@ -2,9 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
-//Static data for UI (can be replaced with backend data later)
-
-// Dashboard stats (top cards)
 const stats = [
   { label: "Today’s Appointments", value: "12" },
   { label: "Pending Requests", value: "4" },
@@ -12,18 +9,15 @@ const stats = [
   { label: "Weekly Earnings", value: "$1,240" },
 ];
 
-// Sample schedule data for today (can be replaced with backend data later)
 const schedule = [
   { name: "Mr. Gupta", time: "10:00 AM", date: "Apr 19", status: "Pending" },
   { name: "Sara Khan", time: "11:30 AM", date: "Apr 19", status: "Confirmed" },
   { name: "John Mathew", time: "2:00 PM", date: "Apr 19", status: "Pending" },
 ];
 
-// Doctor Dashboard component
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  // Function to navigate to appointments page
   const handleOpenAppointments = () => navigate("/doctor/appointments");
 
   return (
@@ -108,8 +102,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-{/*Dashboard.jsx - The main dashboard page for doctors in the MediConnect application. It provides an overview of the doctor’s daily schedule, pending requests, and key stats. 
-The useNavigate hook from react-router-dom is used to allow doctors to navigate to their appointments page. 
-The component is styled with a separate CSS file (Dashboard.css) for layout and design.
-*/ }

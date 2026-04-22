@@ -1,0 +1,29 @@
+MediConnect Server TODO
+Last updated: 2026-04-22
+
+Auth and authorization
+[ ] Add role authorization middleware usage to sensitive routes (doctor/admin only endpoints).
+[ ] Standardize auth response and error payloads.
+[ ] Add logout strategy guidance (JWT blacklist or short token + refresh strategy if needed).
+
+Appointments API contract
+[x] Canonical endpoints currently used: GET /api/appointments and PUT /api/appointments/:id.
+[ ] Enforce ownership checks on appointment update/cancel.
+[ ] Validate doctorId as a valid doctor user before creating appointment.
+[ ] Prevent duplicate slot booking (same doctor/date/time conflict check).
+
+Data model and validation
+[x] Frontend/backend status mismatch is handled in client normalization.
+[ ] Decide one final status set across server model and UI labels.
+[ ] Add request body validation middleware (Joi/Zod/express-validator).
+[ ] Consider Date type for appointment date/time instead of plain strings.
+
+Operational readiness
+[ ] Add centralized error middleware and remove repetitive try/catch response shaping.
+[ ] Add request logging middleware and basic rate limiting.
+[ ] Add health checks for DB readiness (not only server alive).
+
+Testing
+[ ] Add unit tests for auth middleware and role middleware.
+[ ] Add API tests for register/login and appointment CRUD/permissions.
+[ ] Add test seed scripts for patient/doctor/admin users.
