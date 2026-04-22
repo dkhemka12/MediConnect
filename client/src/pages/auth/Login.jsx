@@ -1,58 +1,66 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setAuthSession } from "../../services/auth";
+import { loginUser } from "../../services/authService";
 import "./Login.css";
 
-//Login Component
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // State for selected user role (patient, doctor, admin)
-  const [selectedRole, setSelectedRole] = useState("patient");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // State for email input
-  const [emailValue, setEmailValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // State for password input
-  const [passwordValue, setPasswordValue] = useState("");
-
-  /*Role Based Routes*/
   const ROLE_ROUTES = {
     patient: "/patient/dashboard",
     doctor: "/doctor/dashboard",
     admin: "/admin/dashboard",
   };
 
-  // Handle form submission
-  const handleSubmitLogin = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setAuthSession({
-      token: `mock-token-${Date.now()}`,
-      role: selectedRole,
-    });
 
-    const requestedPath = location.state?.from;
-    if (requestedPath) {
-      navigate(requestedPath, { replace: true });
+    if (!email || !password) {
+      setErrorMessage("Please enter both email and password.");
       return;
     }
 
-    // Temporary frontend-only flow. Replace this with API login response handling.
-    navigate(ROLE_ROUTES[selectedRole]);
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const response = await loginUser({
+        email,
+        password,
+      });
+
+      const roleFromApi = response?.data?.role || "patient";
+
+      setAuthSession({
+        token: response?.token,
+        role: roleFromApi,
+      });
+
+      const requestedPath = location.state?.from;
+      if (requestedPath) {
+        navigate(requestedPath, { replace: true });
+        return;
+      }
+
+      navigate(ROLE_ROUTES[roleFromApi] || "/patient/dashboard");
+    } catch (error) {
+      setErrorMessage(error.message || "Login failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // Handle role selection change
-  const handleRoleChange = (event) => setSelectedRole(event.target.value);
-
-  // Handle email input change
-  const handleEmailChange = (event) => setEmailValue(event.target.value);
-
-  // Handle password input change
-  const handlePasswordChange = (event) => setPasswordValue(event.target.value);
-
-  // Handle navigation to registration page
-  const handleOpenRegister = () => navigate("/register");
+  const handleEmailChange = (event) => setEmail(event.target.value);
+  const handlePasswordChange = (event) => setPassword(event.target.value);
+  const goToRegister = () => navigate("/register");
 
   return (
     <div className="auth-page">
@@ -62,47 +70,37 @@ const Login = () => {
         <h2>Login</h2>
         <p className="auth-text">Choose a role and enter your login details.</p>
 
-        {/* Form */}
-        <form className="auth-form" onSubmit={handleSubmitLogin}>
-          <label>
-            <span>Role</span>
-            <select value={selectedRole} onChange={handleRoleChange}>
-              <option value="patient">Patient</option>
-              <option value="doctor">Doctor</option>
-              <option value="admin">Admin</option>
-            </select>
-          </label>
-
-          {/* Email input field */}
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label>
             <span>Email</span>
             <input
               type="email"
-              value={emailValue}
+              value={email}
               onChange={handleEmailChange}
               placeholder="you@example.com"
             />
           </label>
 
-          {/* Password input field */}
           <label>
             <span>Password</span>
             <input
               type="password"
-              value={passwordValue}
+              value={password}
               onChange={handlePasswordChange}
               placeholder="Your password"
             />
           </label>
 
-          {/* Submit login button */}
-          <button className="auth-primary" type="submit">Login</button>
+          {errorMessage ? <p className="auth-error">{errorMessage}</p> : null}
 
-          {/* Navigate to register page */}
+          <button className="auth-primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Login"}
+          </button>
+
           <button
             className="auth-secondary"
             type="button"
-            onClick={handleOpenRegister}
+            onClick={goToRegister}
           >
             Register
           </button>
@@ -113,8 +111,3 @@ const Login = () => {
 };
 
 export default Login;
-
-{/*
-    Login.jsx - A login page component for the MediConnect application. 
-    It allows users to select their role (patient, doctor, admin) and enter their email and password to log in.
-*/}

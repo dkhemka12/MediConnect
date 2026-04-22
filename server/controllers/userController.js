@@ -18,9 +18,48 @@ const getUsers = async (req, res) => {
 	}
 };
 
+const getDoctors = async (req, res) => {
+	try {
+		const doctors = await User.find({ role: "doctor" })
+			.select("-password")
+			.sort({ createdAt: -1 });
+
+		return res.status(200).json({
+			success: true,
+			message: "Doctors fetched successfully",
+			count: doctors.length,
+			data: doctors,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: error.message,
+		});
+	}
+};
+
+const getPatients = async (req, res) => {
+	try {
+		const patients = await User.find({ role: "patient" })
+			.select("-password")
+			.sort({ createdAt: -1 });
+
+		return res.status(200).json({
+			success: true,
+			message: "Patients fetched successfully",
+			count: patients.length,
+			data: patients,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: error.message,
+		});
+	}
+};
+
 module.exports = {
 	getUsers,
+	getDoctors,
+	getPatients,
 };
-// The whole point of this file is to define a controller function (getUsers) that handles the logic for fetching all users from the database.
-//  The function uses the User model to query the database, excluding the password field for security reasons, and sorts the results by creation date in descending order. 
-// The function then returns a JSON response with the success status, a message, the count of users fetched, and the user data itself. If there is an error during the process, it catches the error and returns a 500 status code with an error message. Finally, we export the getUsers function to be used in the user routes (userRoutes.js) where it will be called when a GET request is made to fetch all users.

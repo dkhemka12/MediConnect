@@ -11,7 +11,7 @@ const seedAppointments = [
     date: "2026-04-24",
     time: "10:00 AM",
     location: "Heart Care Clinic, New York",
-    status: "Confirmed",
+    status: "confirmed",
   },
   {
     id: "apt-1002",
@@ -20,7 +20,7 @@ const seedAppointments = [
     date: "2026-04-27",
     time: "11:30 AM",
     location: "Family Health Center, Los Angeles",
-    status: "Pending",
+    status: "pending",
   },
   {
     id: "apt-1003",
@@ -29,7 +29,7 @@ const seedAppointments = [
     date: "2026-04-17",
     time: "02:30 PM",
     location: "Skin Wellness Center, Chicago",
-    status: "Completed",
+    status: "completed",
   },
 ];
 
@@ -53,15 +53,39 @@ const saveStoredAppointments = (appointments) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(appointments));
 };
 
+const normalizeStatus = (status) => {
+  if (!status) return "pending";
+
+  const value = String(status).toLowerCase();
+  if (value === "approved") return "confirmed";
+  if (value === "cancelled") return "cancelled";
+  if (value === "pending") return "pending";
+  if (value === "completed") return "completed";
+  if (value === "confirmed") return "confirmed";
+
+  return "pending";
+};
+
 const normalizeAppointment = (item) => ({
-  // Keep this mapper as the single adaptation layer for backend payload changes.
   id: item._id || item.id,
-  doctorName: item.doctorName || item.doctor?.name || "Unknown Doctor",
-  specialty: item.specialty || item.doctor?.specialty || "Specialist",
+  doctorName:
+    item.doctorName ||
+    item.doctor?.name ||
+    item.doctorId?.name ||
+    `Doctor #${item.doctorId || "N/A"}`,
+  specialty:
+    item.specialty ||
+    item.doctor?.specialty ||
+    item.doctorId?.specialty ||
+    "Specialist",
   date: item.date || item.appointmentDate || "",
   time: item.time || item.slot || "",
-  location: item.location || item.doctor?.location || "Online / Clinic",
-  status: item.status || "Pending",
+  location:
+    item.location ||
+    item.doctor?.location ||
+    item.doctorId?.location ||
+    "Online / Clinic",
+  status: normalizeStatus(item.status),
 });
 
 export const getMyAppointments = async () => {
@@ -69,10 +93,9 @@ export const getMyAppointments = async () => {
     throw new Error("Please log in to view your appointments.");
   }
 
-  // Backend endpoint expected from server team: GET /appointments/my
   try {
-    const data = await requestJson("/appointments/my", { method: "GET" });
-    const list = Array.isArray(data) ? data : data?.appointments || [];
+    const data = await requestJson("/appointments", { method: "GET" });
+    const list = Array.isArray(data) ? data : data?.data || [];
     return list.map(normalizeAppointment);
   } catch {
     return getStoredAppointments();
@@ -84,14 +107,13 @@ export const createAppointment = async (payload) => {
     throw new Error("Please log in to book an appointment.");
   }
 
-  // Backend endpoint expected from server team: POST /appointments
   try {
     const data = await requestJson("/appointments", {
       method: "POST",
       body: JSON.stringify(payload),
     });
 
-    const created = normalizeAppointment(data?.appointment || data);
+    const created = normalizeAppointment(data?.data || data);
     return created;
   } catch {
     const existing = getStoredAppointments();
@@ -102,7 +124,7 @@ export const createAppointment = async (payload) => {
       date: payload.date,
       time: payload.time,
       location: payload.location || "Clinic",
-      status: "Pending",
+      status: "pending",
     };
 
     const updated = [created, ...existing];
@@ -116,16 +138,16 @@ export const cancelAppointment = async (appointmentId) => {
     throw new Error("Please log in to manage appointments.");
   }
 
-  // Backend endpoint expected from server team: PATCH /appointments/:id/cancel
   try {
-    await requestJson(`/appointments/${appointmentId}/cancel`, {
-      method: "PATCH",
+    await requestJson(`/appointments/${appointmentId}`, {
+      method: "PUT",
+      body: JSON.stringify({ status: "cancelled" }),
     });
     return;
   } catch {
     const existing = getStoredAppointments();
     const updated = existing.map((item) =>
-      item.id === appointmentId ? { ...item, status: "Cancelled" } : item,
+      item.id === appointmentId ? { ...item, status: "cancelled" } : item,
     );
     saveStoredAppointments(updated);
   }

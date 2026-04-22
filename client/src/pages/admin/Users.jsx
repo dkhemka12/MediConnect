@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchUsers } from "../../services/userService";
 import "./Users.css";
-
-/* Static Users Data*/
-const users = [
-  { name: "Aisha Khan", role: "Patient", email: "aisha@email.com", status: "Active" },
-  { name: "Dr. Rahul Mehta", role: "Doctor", email: "rahul@email.com", status: "Active" },
-  { name: "Nora Ali", role: "Patient", email: "nora@email.com", status: "Pending" },
-  { name: "Dr. Priya Sharma", role: "Doctor", email: "priya@email.com", status: "Active" },
-];
 
 const Users = () => {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Function to navigate back to dashboard
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await fetchUsers();
+        setUsers(data);
+      } catch (error) {
+        setErrorMessage(error.message || "Could not load users.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadUsers();
+  }, []);
+
+  const userList = useMemo(
+    () => users.map((user) => ({
+      id: user._id,
+      name: user.name,
+      role: user.role ? `${user.role.charAt(0).toUpperCase()}${user.role.slice(1)}` : "User",
+      email: user.email,
+      status: user.isActive ? "Active" : "Inactive",
+    })),
+    [users],
+  );
+
   const handleBackToDashboard = () => navigate("/admin/dashboard");
 
   return (
@@ -34,12 +55,12 @@ const Users = () => {
         </button>
       </div>
 
-      {/* Users List */}
       <div className="admin-users-list">
+        {isLoading ? <p>Loading users...</p> : null}
+        {errorMessage ? <p>{errorMessage}</p> : null}
 
-        {/* Loop through users array and display cards */}
-        {users.map((user) => (
-          <div key={user.email} className="admin-user-card">
+        {userList.map((user) => (
+          <div key={user.id} className="admin-user-card">
             <div>
               <h3>{user.name}</h3>
               <p>{user.role}</p>
@@ -50,14 +71,11 @@ const Users = () => {
             </div>
           </div>
         ))}
+
+        {!isLoading && !errorMessage && userList.length === 0 ? <p>No users found.</p> : null}
       </div>
     </div>
   );
 };
 
 export default Users;
-
-{/*
-    Users.jsx - A user management page for the admin panel of the MediConnect application. 
-    It displays a list of users (both patients and doctors) with their name, role, email, and account status.*/
-}

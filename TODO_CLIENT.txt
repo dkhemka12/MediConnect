@@ -1,0 +1,33 @@
+MediConnect Client TODO
+Last updated: 2026-04-22
+
+Auth and session
+[x] Replace mock login flow in auth pages with real API calls.
+[x] Store auth payload consistently (token, role).
+[ ] Handle invalid/expired token by redirecting to login.
+[ ] Add role-based route protection wrapper (PatientRoute/DoctorRoute/AdminRoute).
+
+Routing and guards
+[ ] Guard all private pages (patient dashboard, my appointments, doctor/admin areas).
+[ ] Redirect authenticated users away from login/register to their dashboard.
+
+Appointments and doctors
+[x] Fix appointment service route mismatch with backend.
+[x] Normalize backend response parsing for current backend shape.
+[x] Keep one internal status style in client (lowercase).
+[ ] Replace hard-coded doctor data with API-driven data.
+[ ] Show doctor name and specialty from backend in booking summary.
+
+UX polish
+[ ] Add success message after booking and cancellation.
+[x] Disable submit buttons while request is pending on auth and booking forms.
+[ ] Add friendly empty states for doctor, admin, and patient pages.
+
+Code hygiene
+[ ] Remove remaining long explanatory block comments and keep concise comments only.
+[ ] Add reusable API error handler utility to avoid repeated catch-message logic.
+
+Tests
+[ ] Add component tests for auth guard behavior.
+[ ] Add integration test: guest clicks Book Now -> redirected to login -> login -> returns to booking page.
+
