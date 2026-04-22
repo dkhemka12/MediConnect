@@ -1,7 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { clearAuthSession, isAuthenticated } from "../services/auth";
+import { clearAuthSession, isAuthenticated, getUserRole } from "../services/auth";
 import "./Navbar.css";
+
+// Define user roles
+const role = getUserRole();
+
+// Define dashboard routes based on user roles
+const DASHBOARD_ROUTES = {
+  patient: "/patient/dashboard",
+  doctor: "/doctor/dashboard",
+  admin: "/admin/dashboard",
+};
+
+const dashboardPath = DASHBOARD_ROUTES[role] || "/";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -22,10 +34,22 @@ const Navbar = () => {
         </h2>
 
         <div className="nav-links">
-          <span onClick={() => navigate("/")}>Home</span> {/* Navigate to home page */}
-          <span onClick={() => navigate("/patient/doctors")}>Doctors</span> {/* Navigate to Doctors listing */}
-          <span onClick={() => navigate("/patient/about")}>About</span>  {/* Navigate to user's appointments */}
-        </div>
+  {/* Dynamic Home → Dashboard */}
+    <span
+    onClick={() =>
+      navigate(
+        loggedIn
+          ? dashboardPath
+          : "/"
+      )
+    }
+    >
+    {loggedIn ? "Dashboard" : "Home"}
+  </span>
+
+  <span onClick={() => navigate("/patient/doctors")}>Doctors</span>
+  <span onClick={() => navigate("/patient/about")}>About</span>
+</div>
         {/* Action buttons section */}
         <div className="nav-actions">
           {loggedIn ? (
