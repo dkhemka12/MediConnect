@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { createAppointment } from "../../services/appointmentService";
+
 import { isAuthenticated } from "../../services/auth";
 import "./BookAppointment.css";
 
@@ -12,7 +12,6 @@ const BookAppointment = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -31,21 +30,10 @@ const BookAppointment = () => {
       return;
     }
 
-    setIsSaving(true);
-    setErrorMessage("");
-
-    try {
-      await createAppointment({
-        doctorId: doctorIdParam,
-        date: selectedDate,
-        time: selectedTime,
-      });
-      navigate("/patient/my-appointments");
-    } catch (err) {
-      setErrorMessage(err.message || "Could not book appointment.");
-    } finally {
-      setIsSaving(false);
-    }
+    // Navigate to payment page instead of booking directly
+    navigate(`/patient/payment/${doctorIdParam}`, {
+      state: { selectedDate, selectedTime }
+    });
   };
 
   const handleDateChange = (event) => setSelectedDate(event.target.value);
@@ -78,8 +66,8 @@ const BookAppointment = () => {
 
         {/* Actions */}
         <div className="booking-actions">
-          <button className="booking-primary" onClick={handleSubmitAppointment} disabled={isSaving}>
-            {isSaving ? "Booking..." : "Confirm Appointment"}
+          <button className="booking-primary" onClick={handleSubmitAppointment}>
+            Proceed to Payment
           </button>
           <button className="booking-secondary" onClick={handleCancelBooking}>Cancel</button>
         </div>

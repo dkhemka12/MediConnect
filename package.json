@@ -1,7 +1,6 @@
 {
   "name": "doctors-appoinment-system",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "server": "npm run dev --prefix server",
@@ -14,5 +13,6 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.2.1"
-  }
+  },
+  "description": ""
 }
