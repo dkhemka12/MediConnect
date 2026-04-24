@@ -6,11 +6,10 @@ import "./Dashboard.css";
    Static Data (for UI)
    ======================= */
 
-
 const stats = [
   { label: "Total Doctors", value: "24" },
   { label: "Total Patients", value: "186" },
-  { label: "Total Revenue", value: "$12,450" },
+  { label: "Total Revenue", value: "₹12,450" },
   { label: "Pending Requests", value: "8" },
 ];
 
@@ -35,17 +34,17 @@ const Dashboard = () => {
     <div className="admin-page">
       {/* Header */}
       <div className="admin-hero">
-
-         {/* Title and description */}
+        {/* Title and description */}
         <div className="admin-header">
           <p className="admin-tag">Admin Overview</p>
           <h2>Dashboard</h2>
           <p>
-            A simple snapshot of doctors, patients, revenue, and system activity.
+            A simple snapshot of doctors, patients, revenue, and system
+            activity.
           </p>
         </div>
 
-          {/* Action button */}
+        {/* Action button */}
         <div className="admin-hero-actions">
           <button type="button" onClick={handleOpenUsers}>
             Manage Users
@@ -74,7 +73,7 @@ const Dashboard = () => {
           </ul>
         </section>
 
-            {/* System status with mini stats */}
+        {/* System status with mini stats */}
         <section className="admin-panel">
           <h3>System Status</h3>
           <div className="admin-mini-stats">
@@ -93,8 +92,10 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-{  /*
+{
+  /*
     Dashboard.jsx - The main dashboard page for the admin panel of the MediConnect application. 
     It provides an overview of key metrics such as total doctors, patients, revenue, and pending requests. 
     The dashboard also includes sections for recent activity and system status, giving admins a quick snapshot of the platform's performance and user engagement.
-*/ }
+*/
+}

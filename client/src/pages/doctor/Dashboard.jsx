@@ -6,7 +6,7 @@ const stats = [
   { label: "Today’s Appointments", value: "12" },
   { label: "Pending Requests", value: "4" },
   { label: "Patients Seen", value: "28" },
-  { label: "Weekly Earnings", value: "$1,240" },
+  { label: "Weekly Earnings", value: "₹1,240" },
 ];
 
 const schedule = [
@@ -24,7 +24,6 @@ const Dashboard = () => {
     <div className="doctor-page">
       {/* Header */}
       <div className="doctor-hero">
-
         {/* Title */}
         <h2>Dashboard</h2>
 
@@ -49,7 +48,6 @@ const Dashboard = () => {
 
       {/* Main grid with schedule and actions */}
       <div className="doctor-grid">
-
         {/* Schedule Panel */}
         <section className="doctor-panel">
           <h3>Today&apos;s Schedule</h3>
@@ -57,7 +55,6 @@ const Dashboard = () => {
           {/* Schedule list */}
           <div className="doctor-schedule">
             {schedule.map((appointment) => (
-
               // Individual schedule card
               <article
                 key={`${appointment.name}-${appointment.time}`}
@@ -84,7 +81,6 @@ const Dashboard = () => {
 
           {/* Action buttons */}
           <div className="doctor-actions">
-
             {/* Navigate to appointments */}
             <button type="button" onClick={handleOpenAppointments}>
               Open Appointments
