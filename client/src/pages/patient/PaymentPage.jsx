@@ -169,5 +169,6 @@ const PaymentPage = () => {
     </div>
   );
 };
+console.log("razorpay working");
 
 export default PaymentPage;
