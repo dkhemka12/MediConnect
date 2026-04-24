@@ -14,10 +14,16 @@ const PaymentPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { selectedDate, selectedTime } = location.state || {};
+  const mockFee = 150.0;
+  const mockTax = 12.5;
+  const total = mockFee + mockTax;
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      navigate("/login", { replace: true, state: { from: `/patient/book-appointment/${doctorIdParam}` } });
+      navigate("/login", {
+        replace: true,
+        state: { from: `/patient/book-appointment/${doctorIdParam}` },
+      });
     } else if (!selectedDate || !selectedTime) {
       // If user navigates directly without passing through config flow, redirect back
       navigate(`/patient/book-appointment/${doctorIdParam}`, { replace: true });
@@ -29,24 +35,76 @@ const PaymentPage = () => {
     setErrorMessage("");
 
     try {
-      // 1. Simulate a payment delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setPaymentSuccess(true);
+      const res = await fetch(
+        "http://localhost:5000/api/payments/create-order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: total }),
+        },
+      );
 
-      // 2. Actually create the appointment in the backend
-      await createAppointment({
-        doctorId: doctorIdParam,
-        date: selectedDate,
-        time: selectedTime,
-      });
+      const data = await res.json();
 
-      // 3. Redirect to appointments
-      setTimeout(() => {
-        navigate("/patient/my-appointments");
-      }, 1500);
+      if (!res.ok) {
+        throw new Error(
+          data?.message || data?.error || "Could not create payment order.",
+        );
+      }
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: "INR",
+        name: "MediConnect",
+        description: "Doctor Appointment",
+        order_id: data.id,
+        modal: {
+          ondismiss: () => {
+            setErrorMessage("Payment cancelled by user.");
+          },
+        },
+        handler: async (response) => {
+          try {
+            setPaymentSuccess(true);
+            await createAppointment({
+              doctorId: doctorIdParam,
+              date: selectedDate,
+              time: selectedTime,
+              paymentId: response.razorpay_payment_id,
+            });
+            setTimeout(() => {
+              navigate("/patient/appointments");
+            }, 2000);
+          } catch (err) {
+            setErrorMessage(
+              err.message || "Could not book appointment after payment.",
+            );
+          }
+        },
+        prefill: {
+          name: "John Doe",
+          email: "john.doe@example.com",
+        },
+        theme: {
+          color: "#16a085",
+        },
+      };
+
+      if (!window.Razorpay) {
+        setErrorMessage("Payment gateway not loaded.");
+        setIsProcessing(false);
+        return;
+      }
+
+      const razor = new window.Razorpay(options);
+      razor.open();
     } catch (err) {
-      setErrorMessage(err.message || "Could not book appointment after payment.");
-      setPaymentSuccess(false);
+      console.error(err);
+      setErrorMessage(err.message || "Payment failed. Please try again.");
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -59,45 +117,42 @@ const PaymentPage = () => {
     return null; // Will redirect in useEffect
   }
 
-  // Mocking the doctor's fee completely
-  const mockFee = 150.0;
-  const mockTax = 12.5;
-  const total = mockFee + mockTax;
-
   return (
     <div className="payment-page">
       <div className="payment-card">
         <p className="payment-tag">Checkout</p>
         <h2>Complete your Payment</h2>
-        
+
         {!paymentSuccess ? (
           <>
             <div className="bill-summary">
               <div className="bill-row">
                 <span>Consultation Fee</span>
-                <span>${mockFee.toFixed(2)}</span>
+                <span>₹{mockFee.toFixed(2)}</span>
               </div>
               <div className="bill-row">
                 <span>Taxes & Platform Fees</span>
-                <span>${mockTax.toFixed(2)}</span>
+                <span>₹{mockTax.toFixed(2)}</span>
               </div>
               <div className="bill-total">
                 <span>Total Amount</span>
-                <span>${total.toFixed(2)}</span>
+                <span>₹{total.toFixed(2)}</span>
               </div>
             </div>
 
             {errorMessage && <p className="payment-error">{errorMessage}</p>}
 
-            <button 
-              className="pay-btn" 
-              onClick={handlePayNow} 
+            <button
+              className="pay-btn"
+              onClick={handlePayNow}
               disabled={isProcessing}
             >
-              {isProcessing ? "Processing Payment..." : `Pay $${total.toFixed(2)}`}
+              {isProcessing
+                ? "Processing Payment..."
+                : `Pay ₹${total.toFixed(2)}`}
             </button>
-            <button 
-              className="cancel-btn" 
+            <button
+              className="cancel-btn"
               onClick={handleCancelPayment}
               disabled={isProcessing}
             >

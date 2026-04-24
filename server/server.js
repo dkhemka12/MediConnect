@@ -24,6 +24,8 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
 
+app.use("/api/payments", require("./routes/paymentRoutes"));
+
 app.use("/api/appointments", appointmentRoutes);
 
 app.get("/api/health", (req, res) => {

@@ -35,7 +35,7 @@ const Home = () => {
 
         <div className="hero-right">
           <img
-            src="/Gemini_Generated_Image_4cbw5m4cbw5m4cbw.png"
+            src="/virus.png"
             alt="doctor"
 
           />

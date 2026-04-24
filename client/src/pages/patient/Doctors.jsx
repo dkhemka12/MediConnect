@@ -24,7 +24,7 @@ const Doctors = () => {
           experience: doctor.experience || "5 years experience",
           rating: doctor.rating || "4.7",
           reviews: doctor.reviews || 100,
-          fees: doctor.fees || "$120",
+          fees: doctor.fees || "₹120",
           location: doctor.location || "Clinic",
           availability: doctor.availability || "Available",
         }));
@@ -50,7 +50,8 @@ const Doctors = () => {
       doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
 
     const specialtyMatch =
-      selectedSpecialty === "All Specialties" || doctor.specialty === selectedSpecialty;
+      selectedSpecialty === "All Specialties" ||
+      doctor.specialty === selectedSpecialty;
 
     return searchMatch && specialtyMatch;
   });
@@ -63,11 +64,14 @@ const Doctors = () => {
     setSelectedSpecialty("All Specialties");
   };
 
-  const handleOpenProfile = (doctorId) => navigate(`/patient/doctor/${doctorId}`);
+  const handleOpenProfile = (doctorId) =>
+    navigate(`/patient/doctor/${doctorId}`);
 
   const handleOpenBooking = (doctorId) => {
     if (!isAuthenticated()) {
-      navigate("/login", { state: { from: `/patient/book-appointment/${doctorId}` } });
+      navigate("/login", {
+        state: { from: `/patient/book-appointment/${doctorId}` },
+      });
       return;
     }
 
@@ -80,7 +84,8 @@ const Doctors = () => {
         <p className="doctor-hero-tag">Find the right doctor</p>
         <h1>Browse doctors and book in a few clicks</h1>
         <p className="doctor-hero-text">
-          Search by name or specialty, use the filters on the left, and keep the layout simple for future backend data.
+          Search by name or specialty, use the filters on the left, and keep the
+          layout simple for future backend data.
         </p>
 
         <div className="doctor-search">
@@ -112,14 +117,26 @@ const Doctors = () => {
             </div>
           </div>
 
-          <button type="button" className="clear-button" onClick={handleResetFilters}>
+          <button
+            type="button"
+            className="clear-button"
+            onClick={handleResetFilters}
+          >
             Clear Filters
           </button>
         </aside>
 
         <div className="doctor-results">
-          {isLoading ? <div className="empty-state"><p>Loading doctors...</p></div> : null}
-          {errorMessage ? <div className="empty-state"><p>{errorMessage}</p></div> : null}
+          {isLoading ? (
+            <div className="empty-state">
+              <p>Loading doctors...</p>
+            </div>
+          ) : null}
+          {errorMessage ? (
+            <div className="empty-state">
+              <p>{errorMessage}</p>
+            </div>
+          ) : null}
 
           <div className="doctor-grid">
             {visibleDoctors.map((doctor) => (
