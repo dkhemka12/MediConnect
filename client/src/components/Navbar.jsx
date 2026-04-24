@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { clearAuthSession, isAuthenticated, getUserRole } from "../services/auth";
 import "./Navbar.css";
 
-// Define user roles
+
+const Navbar = () => {
+  const navigate = useNavigate();
+  const loggedIn = isAuthenticated();
+
+  // Define user roles
 const role = getUserRole();
 
 // Define dashboard routes based on user roles
@@ -15,9 +20,6 @@ const DASHBOARD_ROUTES = {
 
 const dashboardPath = DASHBOARD_ROUTES[role] || "/";
 
-const Navbar = () => {
-  const navigate = useNavigate();
-  const loggedIn = isAuthenticated();
 
   const handleLogout = () => {
     clearAuthSession();
