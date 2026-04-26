@@ -1,0 +1,261 @@
+MediConnect Project Explanation (Simple Version)
+
+Date: April 26, 2026
+Project Type: Full-stack doctor appointment booking system
+
+==================================================
+1) What this project does
+==================================================
+MediConnect is a healthcare web app where:
+- Patients can register, login, browse doctors, and book appointments.
+- Doctors can login and view their dashboard and appointment list.
+- Admin can login and view dashboard + all users.
+- Payments are handled using Razorpay before appointment booking is completed.
+
+In short:
+This project connects patients and doctors through one platform.
+
+
+==================================================
+2) Tech stack
+==================================================
+Frontend:
+- React (Vite)
+- React Router
+- CSS
+
+Backend:
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT authentication
+- bcrypt password hashing
+- Razorpay payment gateway
+
+
+==================================================
+3) Main folder structure
+==================================================
+Root:
+- client/  -> frontend React app
+- server/  -> backend API
+
+Important client areas:
+- src/pages/auth/        -> Login and Register
+- src/pages/patient/     -> Patient pages (dashboard, doctors, booking, payment, appointments)
+- src/pages/doctor/      -> Doctor pages
+- src/pages/admin/       -> Admin pages
+- src/components/        -> Navbar, Footer, auth guard
+- src/services/          -> API calling logic
+
+Important server areas:
+- routes/                -> API endpoints
+- controllers/           -> endpoint business logic
+- models/                -> MongoDB schemas
+- middleware/            -> auth and role checks
+- config/db.js           -> database connection
+
+
+==================================================
+4) How the system works (high-level workflow)
+==================================================
+Step 1: User opens app
+- Home page is shown.
+- Navbar and Footer are always visible.
+
+Step 2: User registers or logs in
+- Register API creates user and returns token.
+- Login API validates credentials and returns token.
+- Token and role are saved in localStorage.
+
+Step 3: Role-based navigation
+- Patient goes to patient dashboard.
+- Doctor goes to doctor dashboard.
+- Admin goes to admin dashboard.
+
+Step 4: Patient booking flow
+- Patient opens doctors list.
+- Patient views doctor profile.
+- Patient selects date and time.
+- Patient proceeds to payment page.
+- Razorpay order is created from backend.
+- On successful payment, appointment is created.
+
+Step 5: Appointment management
+- Patient can see own appointments and cancel.
+- Doctor can view appointments (doctor-side UI currently uses sample static data).
+- Admin can view system users.
+
+
+==================================================
+5) Frontend route map (React Router)
+==================================================
+Public routes:
+- /                      -> Home
+- /about                 -> About (public)
+- /login                 -> Login
+- /register              -> Register
+
+Protected patient routes (RequireAuth):
+- /patient/dashboard
+- /patient/doctors
+- /patient/about
+- /patient/doctor/:id
+- /patient/book-appointment/:id
+- /patient/my-appointments
+- /patient/payment/:id
+
+Protected doctor routes:
+- /doctor/dashboard
+- /doctor/appointments
+
+Protected admin routes:
+- /admin/dashboard
+- /admin/users
+
+Note:
+RequireAuth checks if token exists. If not logged in, user is redirected to login.
+
+
+==================================================
+6) Backend API route map
+==================================================
+Base URL:
+- http://localhost:5000/api
+
+Health:
+- GET /health
+
+Auth routes:
+- POST /auth/register
+- POST /auth/login
+
+User routes:
+- GET /users              -> all users
+- GET /users/doctors      -> only doctors
+- GET /users/patients     -> only patients
+
+Appointment routes (protected with JWT):
+- POST /appointments      -> create appointment
+- GET /appointments       -> get appointments by role
+- PUT /appointments/:id   -> update status (example: cancelled)
+
+Payment routes:
+- POST /payments/create-order -> create Razorpay order
+
+
+==================================================
+7) Data models
+==================================================
+User model:
+- name
+- email
+- password (hashed)
+- role (patient / doctor / admin)
+- phone
+- isActive
+- timestamps
+
+Appointment model:
+- patientId (User reference)
+- doctorId (User reference)
+- date
+- time
+- status (pending / approved / cancelled)
+- timestamps
+
+
+==================================================
+8) Security and auth logic
+==================================================
+- Passwords are hashed using bcrypt before saving.
+- JWT token is generated on login/register.
+- Protected APIs read token from Authorization header.
+- authMiddleware validates token and attaches user to request.
+- Appointment list is filtered by role:
+  - patient sees only own appointments
+  - doctor sees appointments where doctorId = own id
+  - admin can see all appointments
+
+
+==================================================
+9) Service layer in frontend
+==================================================
+API helper:
+- api.js builds headers and adds Bearer token automatically.
+
+Auth services:
+- loginUser, registerUser
+- localStorage session helpers in auth.js
+
+User services:
+- fetchDoctors, fetchPatients, fetchUsers
+
+Appointment services:
+- getMyAppointments, createAppointment, cancelAppointment
+- has fallback to localStorage sample data if backend fails
+
+
+==================================================
+10) Payments flow (simple)
+==================================================
+1. Patient chooses slot.
+2. Payment page requests backend to create Razorpay order.
+3. Razorpay checkout opens.
+4. If payment succeeds, frontend calls create appointment API.
+5. User is shown success and redirected.
+
+
+==================================================
+11) What is already implemented well
+==================================================
+- Full frontend + backend project structure
+- Authentication with JWT
+- Password hashing
+- Role-based dashboards
+- Doctor browsing and details page
+- Booking and payment integration flow
+- Appointment API with role-based filtering
+- Admin users list page
+- Protected routes on frontend
+
+
+==================================================
+12) Current limitations / known gaps (important for team discussion)
+==================================================
+- Some doctor/admin dashboards use static demo data (not fully dynamic yet).
+- user routes are currently open (no auth middleware there).
+- Payment success redirect points to /patient/appointments while app route is /patient/my-appointments.
+- Appointment status values differ slightly between backend model (approved) and frontend labels (confirmed/completed in UI logic).
+
+These are normal project-stage issues and can be fixed quickly.
+
+
+==================================================
+13) How to run this project
+==================================================
+From root:
+1. Install dependencies in root, client, and server.
+2. Add server .env values:
+   - PORT
+   - MONGO_URI
+   - JWT_SECRET
+   - CLIENT_URL
+   - RAZORPAY_KEY_ID
+   - RAZORPAY_KEY_SECRET
+3. Start both apps from root using npm run dev.
+4. Frontend runs on Vite (usually localhost:5173).
+5. Backend runs on localhost:5000.
+
+
+==================================================
+14) One-minute presentation summary
+==================================================
+MediConnect is a role-based healthcare appointment platform.
+Patients can sign up, browse doctors, choose a slot, pay online, and book appointments.
+Doctors get a dashboard and appointment management screens.
+Admins get system overview and user management.
+The backend uses Express, MongoDB, JWT auth, and Razorpay integration.
+The frontend is built with React and protected routing.
+Overall, this project demonstrates full-stack architecture, authentication, routing, API design, and payment workflow in one real-world use case.
+
+End of file.

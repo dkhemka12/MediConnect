@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createAppointment } from "../../services/appointmentService";
 import { isAuthenticated } from "../../services/auth";
+import { requestJson } from "../../services/api";
 import "./PaymentPage.css";
 
 const PaymentPage = () => {
@@ -35,24 +36,10 @@ const PaymentPage = () => {
     setErrorMessage("");
 
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/payments/create-order",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ amount: total }),
-        },
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(
-          data?.message || data?.error || "Could not create payment order.",
-        );
-      }
+      const data = await requestJson("/payments/create-order", {
+        method: "POST",
+        body: JSON.stringify({ amount: total }),
+      });
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -76,7 +63,7 @@ const PaymentPage = () => {
               paymentId: response.razorpay_payment_id,
             });
             setTimeout(() => {
-              navigate("/patient/appointments");
+              navigate("/patient/my-appointments");
             }, 2000);
           } catch (err) {
             setErrorMessage(
