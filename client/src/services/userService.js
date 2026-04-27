@@ -5,11 +5,6 @@ export const fetchDoctors = async () => {
   return response?.data || [];
 };
 
-export const fetchPatients = async () => {
-  const response = await requestJson("/users/patients", { method: "GET" });
-  return response?.data || [];
-};
-
 export const fetchUsers = async () => {
   const response = await requestJson("/users", { method: "GET" });
   return response?.data || [];

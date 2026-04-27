@@ -29,5 +29,3 @@ export const requestJson = async (path, options = {}) => {
 
   return data;
 };
-
-export { API_BASE_URL };
