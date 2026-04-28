@@ -26,6 +26,7 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const isActive = role === "doctor" ? false : true;
 
     const user = await User.create({
       name,
@@ -33,13 +34,16 @@ const register = async (req, res) => {
       password: hashedPassword,
       role,
       phone,
+      isActive,
     });
 
-    const token = generateToken(user);
+    const token = user.isActive ? generateToken(user) : null;
 
     return res.status(201).json({
       success: true,
-      message: "User registered successfully",
+      message: user.isActive
+        ? "User registered successfully"
+        : "Doctor account created. Waiting for admin activation.",
       token,
       data: {
         id: user._id,
@@ -47,6 +51,7 @@ const register = async (req, res) => {
         email: user.email,
         role: user.role,
         phone: user.phone,
+        isActive: user.isActive,
       },
     });
   } catch (error) {
@@ -87,6 +92,13 @@ const login = async (req, res) => {
       });
     }
 
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Account is inactive. Please wait for admin approval.",
+      });
+    }
+
     const token = generateToken(user);
 
     return res.status(200).json({
@@ -99,6 +111,7 @@ const login = async (req, res) => {
         email: user.email,
         role: user.role,
         phone: user.phone,
+        isActive: user.isActive,
       },
     });
   } catch (error) {

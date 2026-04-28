@@ -67,7 +67,7 @@
   font-size: 1rem;
 }
 
-/* User details */ 
+/* User details */
 .admin-user-card p,
 .admin-user-card span {
   margin: 0;
@@ -79,6 +79,22 @@
   display: block;
   margin-top: 0.25rem;
   color: #0d8f73;
+}
+
+.admin-user-card button {
+  margin-top: 0.65rem;
+  border: 1px solid #d7e4ea;
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  background: #ffffff;
+  color: #102033;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-user-card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 /*Responsive adjustments for user cards */

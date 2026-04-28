@@ -15,8 +15,8 @@ const PaymentPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { selectedDate, selectedTime } = location.state || {};
-  const mockFee = 150.0;
-  const mockTax = 12.5;
+  const mockFee = 1000.0;
+  const mockTax = 180.0;
   const total = mockFee + mockTax;
 
   useEffect(() => {

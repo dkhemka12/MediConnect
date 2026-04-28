@@ -25,6 +25,13 @@ const protect = async (req, res, next) => {
       });
     }
 
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Account is inactive. Please contact the admin.",
+      });
+    }
+
     req.user = user;
     return next();
   } catch (error) {
@@ -35,4 +42,17 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+const requireRole =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Not authorized",
+      });
+    }
+
+    return next();
+  };
+
+module.exports = { protect, requireRole };

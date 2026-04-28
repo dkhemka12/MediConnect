@@ -87,6 +87,33 @@
   color: #0d8f73;
 }
 
+.appointment-actions {
+  margin-top: 0.65rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.appointment-actions button,
+.admin-user-card button {
+  border: 1px solid #d7e4ea;
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  background: #ffffff;
+  color: #102033;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.appointment-actions button:first-child {
+  background: linear-gradient(135deg, #0d8f73, #59bfa8);
+  color: #ffffff;
+}
+
+.appointment-actions button:last-child {
+  color: #b42318;
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .doctor-appointments-header {

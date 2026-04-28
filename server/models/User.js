@@ -29,7 +29,9 @@ const userSchema = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      default: true,
+      default: function () {
+        return this.role === "doctor" ? false : true;
+      },
     },
   },
   {
