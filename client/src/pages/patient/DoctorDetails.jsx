@@ -166,7 +166,7 @@ const DoctorDetails = () => {
         <aside className="right-column">
           <section className="simple-card fee-card">
             <p>Consultation Fee</p>
-            <h2>{doctorView.fee}</h2>
+            <h2>₹1000</h2>
             <button className="solid-btn full-btn" onClick={handleOpenBooking}>
               Book Appointment
             </button>
