@@ -68,6 +68,8 @@ const normalizeStatus = (status) => {
 
 const normalizeAppointment = (item) => ({
   id: item._id || item.id,
+  patientName:
+    item.patientName || item.patient?.name || item.patientId?.name || "Patient",
   doctorName:
     item.doctorName ||
     item.doctor?.name ||
