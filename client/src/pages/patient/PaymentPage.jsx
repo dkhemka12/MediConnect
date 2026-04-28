@@ -4,7 +4,7 @@ import { createAppointment } from "../../services/appointmentService";
 import { isAuthenticated } from "../../services/auth";
 import { requestJson } from "../../services/api";
 import "./PaymentPage.css";
-
+//  this is the payment page where patient can pay for the appointment after selecting date and time. It uses Razorpay as the payment gateway and handles the payment process, including success and error scenarios.
 const PaymentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
