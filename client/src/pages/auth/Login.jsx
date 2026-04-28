@@ -13,6 +13,7 @@ const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const pendingMessage = location.state?.message || "";
 
   const ROLE_ROUTES = {
     patient: "/patient/dashboard",
@@ -69,6 +70,7 @@ const Login = () => {
         <p className="auth-tag">MediConnect</p>
         <h2>Login</h2>
         <p className="auth-text">Choose a role and enter your login details.</p>
+        {pendingMessage ? <p className="auth-text">{pendingMessage}</p> : null}
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <label>

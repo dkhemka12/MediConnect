@@ -1,22 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getMyAppointments } from "../../services/appointmentService";
 import "./Dashboard.css";
 
-const stats = [
-  { label: "Today’s Appointments", value: "12" },
-  { label: "Pending Requests", value: "4" },
-  { label: "Patients Seen", value: "28" },
-  { label: "Weekly Earnings", value: "₹1,240" },
-];
+const toLabelDate = (isoDate) => {
+  if (!isoDate) {
+    return "Date unavailable";
+  }
 
-const schedule = [
-  { name: "Mr. Gupta", time: "10:00 AM", date: "Apr 19", status: "Pending" },
-  { name: "Sara Khan", time: "11:30 AM", date: "Apr 19", status: "Confirmed" },
-  { name: "John Mathew", time: "2:00 PM", date: "Apr 19", status: "Pending" },
-];
+  const [year, month, day] = isoDate.split("-").map(Number);
+  if (!year || !month || !day) {
+    return isoDate;
+  }
+
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
+
+const formatStatus = (status) =>
+  status ? status.charAt(0).toUpperCase() + status.slice(1) : "Pending";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [stats, setStats] = useState([
+    { label: "Today’s Appointments", value: "0" },
+    { label: "Pending Requests", value: "0" },
+    { label: "Accepted Patients", value: "0" },
+    { label: "Total Patients", value: "0" },
+  ]);
+  const [schedule, setSchedule] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        const appointmentList = await getMyAppointments();
+        const todayKey = new Date().toISOString().slice(0, 10);
+        const todaysAppointments = appointmentList.filter(
+          (item) => item.date === todayKey,
+        );
+        const pendingCount = appointmentList.filter(
+          (item) => item.status === "pending",
+        ).length;
+        const acceptedCount = appointmentList.filter(
+          (item) => item.status === "confirmed",
+        ).length;
+        const uniquePatients = new Set(
+          appointmentList.map((item) => item.patientName).filter(Boolean),
+        ).size;
+
+        setStats([
+          { label: "Today’s Appointments", value: String(todaysAppointments.length) },
+          { label: "Pending Requests", value: String(pendingCount) },
+          { label: "Accepted Patients", value: String(acceptedCount) },
+          { label: "Total Patients", value: String(uniquePatients) },
+        ]);
+        setSchedule(appointmentList.slice(0, 3));
+      } catch (error) {
+        setErrorMessage(error.message || "Could not load dashboard data.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadDashboard();
+  }, []);
 
   const handleOpenAppointments = () => navigate("/doctor/appointments");
 
@@ -36,6 +87,9 @@ const Dashboard = () => {
         </button>
       </div>
 
+      {isLoading ? <p>Loading dashboard data...</p> : null}
+      {!isLoading && errorMessage ? <p>{errorMessage}</p> : null}
+
       {/* Stats */}
       <div className="doctor-stats">
         {stats.map((item) => (
@@ -52,26 +106,23 @@ const Dashboard = () => {
         <section className="doctor-panel">
           <h3>Today&apos;s Schedule</h3>
 
-          {/* Schedule list */}
           <div className="doctor-schedule">
             {schedule.map((appointment) => (
-              // Individual schedule card
               <article
-                key={`${appointment.name}-${appointment.time}`}
+                key={appointment.id}
                 className="schedule-card"
               >
-                {/* Left: name and time */}
                 <div>
-                  <h4>{appointment.name}</h4>
+                  <h4>{appointment.patientName}</h4>
                   <p>
-                    {appointment.date} | {appointment.time}
+                    {toLabelDate(appointment.date)} | {appointment.time}
                   </p>
                 </div>
 
-                {/* Right: status */}
-                <span>{appointment.status}</span>
+                <span>{formatStatus(appointment.status)}</span>
               </article>
             ))}
+            {!isLoading && schedule.length === 0 ? <p>No appointments yet.</p> : null}
           </div>
         </section>
 
@@ -81,12 +132,10 @@ const Dashboard = () => {
 
           {/* Action buttons */}
           <div className="doctor-actions">
-            {/* Navigate to appointments */}
             <button type="button" onClick={handleOpenAppointments}>
               Open Appointments
             </button>
 
-            {/* Placeholder buttons */}
             <button type="button">Update Availability</button>
             <button type="button">View Patients</button>
             <button type="button">Messages</button>

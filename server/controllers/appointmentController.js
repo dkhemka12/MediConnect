@@ -1,5 +1,23 @@
 const Appointment = require("../models/Appointment");
 
+const normalizeStatus = (status) => {
+  const value = String(status || "").toLowerCase();
+
+  if (["approved", "confirmed"].includes(value)) {
+    return "approved";
+  }
+
+  if (value === "cancelled" || value === "canceled") {
+    return "cancelled";
+  }
+
+  if (value === "pending") {
+    return "pending";
+  }
+
+  return null;
+};
+
 // @desc    Book a new appointment
 // @route   POST /api/appointments
 // @access  Private
@@ -78,20 +96,16 @@ const updateAppointmentStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+    const normalizedStatus = normalizeStatus(status);
 
-    if (!status) {
+    if (!normalizedStatus) {
       return res.status(400).json({
         success: false,
-        message: "Status is required",
+        message: "Valid status is required",
       });
     }
 
-    // Find the appointment by ID and update the status
-    const appointment = await Appointment.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true, runValidators: true }, // Returns the updated document
-    );
+    const appointment = await Appointment.findById(id);
 
     if (!appointment) {
       return res.status(404).json({
@@ -100,9 +114,48 @@ const updateAppointmentStatus = async (req, res) => {
       });
     }
 
+    const isAdmin = req.user.role === "admin";
+    const isDoctor = req.user.role === "doctor";
+    const isPatient = req.user.role === "patient";
+    const isDoctorOwner =
+      isDoctor && appointment.doctorId.toString() === req.user._id.toString();
+    const isPatientOwner =
+      isPatient && appointment.patientId.toString() === req.user._id.toString();
+
+    if (!isAdmin && isDoctor && !isDoctorOwner) {
+      return res.status(403).json({
+        success: false,
+        message: "Not authorized to update this appointment",
+      });
+    }
+
+    if (!isAdmin && isPatient && !isPatientOwner) {
+      return res.status(403).json({
+        success: false,
+        message: "Not authorized to update this appointment",
+      });
+    }
+
+    if (isDoctor && !["approved", "cancelled"].includes(normalizedStatus)) {
+      return res.status(400).json({
+        success: false,
+        message: "Doctors can only accept or reject appointments",
+      });
+    }
+
+    if (isPatient && normalizedStatus !== "cancelled") {
+      return res.status(400).json({
+        success: false,
+        message: "Patients can only cancel appointments",
+      });
+    }
+
+    appointment.status = normalizedStatus;
+    await appointment.save();
+
     return res.status(200).json({
       success: true,
-      message: `Appointment status updated to ${status}`,
+      message: `Appointment status updated to ${normalizedStatus}`,
       data: appointment,
     });
   } catch (error) {

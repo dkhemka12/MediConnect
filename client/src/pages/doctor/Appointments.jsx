@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyAppointments } from "../../services/appointmentService";
+import {
+  getMyAppointments,
+  updateAppointmentStatus,
+} from "../../services/appointmentService";
 import "./Appointments.css";
 
 const Appointments = () => {
@@ -9,6 +12,7 @@ const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [actionError, setActionError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,12 +42,24 @@ const Appointments = () => {
   const formatStatus = (status) =>
     status ? status[0].toUpperCase() + status.slice(1) : "Pending";
 
+  const handleDecision = async (appointmentId, status) => {
+    try {
+      setActionError("");
+      const updated = await updateAppointmentStatus(appointmentId, status);
+      setAppointments((current) =>
+        current.map((item) => (item.id === appointmentId ? updated : item)),
+      );
+    } catch (err) {
+      setActionError(err.message || "Could not update appointment.");
+    }
+  };
+
   return (
     <div className="doctor-appointments-page">
       <div className="doctor-appointments-header">
         <div>
           <h2>Appointments</h2>
-          <p>A simple list of upcoming patient visits.</p>
+          <p>Review requests, accept patients, or reject appointments that do not fit your schedule.</p>
         </div>
 
         <button onClick={() => navigate("/doctor/dashboard")}>
@@ -53,6 +69,7 @@ const Appointments = () => {
 
       {loading && <p className="doctor-appointments-empty">Loading...</p>}
       {error && !loading && <p className="doctor-appointments-empty">{error}</p>}
+      {actionError && !loading && <p className="doctor-appointments-empty">{actionError}</p>}
       {!loading && !error && appointments.length === 0 && (
         <p className="doctor-appointments-empty">No appointments found.</p>
       )}
@@ -69,6 +86,12 @@ const Appointments = () => {
               <div>
                 <span>{a.time}</span>
                 <strong>{formatStatus(a.status)}</strong>
+                {a.status === "pending" ? (
+                  <div className="appointment-actions">
+                    <button type="button" onClick={() => handleDecision(a.id, "approved")}>Accept</button>
+                    <button type="button" onClick={() => handleDecision(a.id, "cancelled")}>Reject</button>
+                  </div>
+                ) : null}
               </div>
             </div>
           ))}

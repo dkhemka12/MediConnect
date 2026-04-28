@@ -66,7 +66,7 @@ const DoctorCard = ({ doctor, onViewProfile, onBookNow }) => {
                         </div>
                         <div className="doctor-fee">
                         <span>Consultation Fee</span>
-                        <strong>{doctor.fees}</strong>
+                        <strong>₹1000</strong>
                     </div>
                     
                 </div>

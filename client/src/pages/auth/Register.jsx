@@ -35,13 +35,26 @@ const Register = () => {
       });
 
       const roleFromApi = response?.data?.role || role;
+      const isActive = response?.data?.isActive ?? true;
 
-      setAuthSession({
-        token: response?.token,
-        role: roleFromApi,
+      if (response?.token && isActive) {
+        setAuthSession({
+          token: response.token,
+          role: roleFromApi,
+        });
+
+        navigate(
+          roleFromApi === "doctor" ? "/doctor/dashboard" : "/patient/dashboard",
+        );
+        return;
+      }
+
+      navigate("/login", {
+        replace: true,
+        state: {
+          message: "Doctor account created. An admin must activate it before login.",
+        },
       });
-
-      navigate(roleFromApi === "doctor" ? "/doctor/dashboard" : "/patient/dashboard");
     } catch (error) {
       setErrorMessage(error.message || "Registration failed. Please try again.");
     } finally {
