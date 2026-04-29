@@ -1,165 +1,127 @@
 .navbar {
-  background: rgb(255, 255, 255);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: all 0.2s ease;
 }
 
-/* Container to center and structure navbar content */
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Logo */
 .logo {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #1faf8b;
+  color: var(--primary);
   cursor: pointer;
   margin: 0;
-  letter-spacing: 0.5px;
-  transition:
-    transform 0.2s ease,
-    color 0.3s ease;
+  letter-spacing: -0.5px;
+  transition: color 0.2s ease;
 }
 
-/* Logo hover effect */
 .logo:hover {
-  transform: scale(1.05);
-  color: #1faf8b;
+  color: var(--primary-dark);
 }
 
-/* Nav Links */
 .nav-links {
   display: flex;
-  gap: 2.2rem;
+  gap: 2.5rem;
   flex: 1;
   margin-left: 3rem;
 }
 
-/* Individual nav link */
 .nav-links span {
   position: relative;
   cursor: pointer;
-  color: #333;
+  color: var(--text-main);
   font-weight: 500;
-  transition: color 0.3s ease;
+  font-size: 1rem;
+  transition: color 0.2s ease;
 }
 
-/* Underline animation */
-.nav-links span::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  left: 0;
-  bottom: -5px;
-  background-color: #1faf8b;
-  transition: width 0.3s ease;
-}
-
-/* Hover effect for nav links */
 .nav-links span:hover {
-  color: #1faf8b;
+  color: var(--primary);
 }
 
-/* Expand underline on hover */
-.nav-links span:hover::after {
-  width: 100%;
-}
-
-/* Actions */
 .nav-actions {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-/* Login Button */
 .login-btn {
   background-color: transparent;
-  color: #1faf8b;
-  border: 2px solid #1faf8b;
-  padding: 0.5rem 1.6rem;
-  border-radius: 25px;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.6rem 1.8rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
-/* Login button hover effect */
 .login-btn:hover {
-  background-color: #1faf8b;
-  color: white;
-  box-shadow: 0 4px 12px rgba(31, 175, 139, 0.3);
+  background-color: var(--bg-alt);
 }
 
-/* Primary Button */
 .primary-btn {
-  background: linear-gradient(135deg, #1faf8b, #77ceb7);
+  background: var(--primary);
   color: white;
   border: none;
-  padding: 0.5rem 1.6rem;
-  border-radius: 25px;
+  padding: 0.6rem 1.8rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+  font-family: inherit;
 }
 
-/* Primary button hover effect */
 .primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(31, 175, 139, 0.35);
+  background: var(--primary-dark);
 }
 
-/* Logout Button */
 .logout-btn {
-  background-color: #f4f7f7;
-  color: #1b4b43;
-  border: 1px solid #d6e4e1;
-  padding: 0.5rem 1.6rem;
-  border-radius: 25px;
+  background-color: white;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  padding: 0.6rem 1.8rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.25s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .logout-btn:hover {
-  background-color: #e5eeec;
-  border-color: #c5d9d4;
+  background-color: #fef2f2;
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
-  /* Stack navbar content vertically and center */
   .navbar-container {
     padding: 1rem;
-    flex-wrap: wrap; /* Allows wrapping of content */
   }
-
-  /* Hide nav links on mobile */
   .nav-links {
     display: none;
-    margin: 0;
   }
-
-  /* Reduce spacing between buttons */
   .nav-actions {
     gap: 0.5rem;
   }
-
-  /* Smaller buttons on mobile */
   .login-btn,
   .primary-btn,
   .logout-btn {
-    padding: 0.4rem 1rem;
-    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }
