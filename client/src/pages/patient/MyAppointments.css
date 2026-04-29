@@ -1,72 +1,85 @@
 .my-appointments-page {
-  min-height: calc(100vh - 140px);
-  padding: 2rem 1rem 3rem;
-  background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
+  min-height: calc(100vh - 80px);
+  padding: 3rem 1rem;
+  background: var(--bg-main);
 }
 
 /* Hero section (title + description + actions) */
 .my-appointments-hero {
   max-width: 980px;
-  margin: 0 auto 1.25rem;
-  background: #ffffff;
-  border: 1px solid #e3edf1;
-  border-radius: 24px;
-  padding: 1.5rem;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  margin: 0 auto 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
 /* Tag above title */
 .my-appointments-tag {
-  margin: 0 0 0.35rem;
-  color: #0d8f73;
-  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
 }
 
 /* Hero title */
 .my-appointments-hero h2 {
-  margin: 0 0 0.35rem;
-  color: #102033;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  margin: 0 0 0.5rem;
+  color: var(--text-main);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 700;
 }
 
 /* Hero description */
 .my-appointments-hero p {
   margin: 0;
-  color: #64748b;
+  color: var(--text-muted);
   line-height: 1.6;
+  font-size: 1.1rem;
 }
 
 /* Hero action buttons */
 .my-appointments-actions {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 /* Hero action buttons styling */
 .my-appointments-actions button {
   border: none;
-  border-radius: 14px;
-  padding: 0.85rem 1rem;
-  font-weight: 700;
+  border-radius: 4px;
+  padding: 0.9rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 /* Primary action button */
 .my-appointments-actions button:first-child {
-  background: linear-gradient(135deg, #0d8f73, #59bfa8);
-  color: #ffffff;
+  background: var(--primary);
+  color: white;
+}
+
+.my-appointments-actions button:first-child:hover {
+  background: var(--primary-dark);
 }
 
 /* Secondary action button */
 .my-appointments-actions button:last-child {
-  background: #f5fbf9;
-  color: #0d8f73;
-  border: 1px solid #d5ebe4;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.my-appointments-actions button:last-child:hover {
+  background: var(--bg-alt);
 }
 
 /* Stats section */
@@ -75,185 +88,205 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .my-appointments-stats article {
-  background: #ffffff;
-  border: 1px solid #e3edf1;
-  border-radius: 18px;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
-  padding: 1.1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
 }
 
 .my-appointments-stats span {
   display: block;
-  color: #64748b;
-  margin-bottom: 0.45rem;
-  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .my-appointments-stats strong {
-  color: #102033;
-  font-size: 1.8rem;
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 /* Filter row */
 .filter-row {
   max-width: 980px;
-  margin: 1rem auto 0;
+  margin: 2rem auto 0;
   display: flex;
-  gap: 0.6rem;
+  gap: 0.8rem;
   flex-wrap: wrap;
 }
 
 .filter-row button {
-  border: 1px solid #d6e5ec;
-  border-radius: 999px;
-  background: #ffffff;
-  color: #32465c;
-  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-surface);
+  color: var(--text-main);
+  padding: 0.7rem 1.2rem;
   font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .filter-row button.active {
-  background: #0d8f73;
-  border-color: #0d8f73;
-  color: #ffffff;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
 }
 
 /* Info and error messages */
 .my-appointments-info,
 .my-appointments-error {
   max-width: 980px;
-  margin: 0.9rem auto 0;
+  margin: 1.5rem auto 0;
 }
 
-/* Info message */
 .my-appointments-info {
-  color: #334155;
+  color: var(--text-main);
 }
 
-/* Error message */
 .my-appointments-error {
-  color: #b42318;
+  color: #b91c1c;
   font-weight: 600;
+  background: #fef2f2;
+  padding: 1rem;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
 }
 
 /* Appointments list */
 .my-appointments-list {
   max-width: 980px;
-  margin: 1rem auto 0;
+  margin: 1.5rem auto 0;
   display: grid;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 /* Individual appointment card */
 .my-appointment-card {
-  background: #ffffff;
-  border: 1px solid #e3edf1;
-  border-radius: 18px;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
-  padding: 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
   display: grid;
   grid-template-columns: 1.5fr 1fr auto;
-  gap: 0.8rem;
+  gap: 1rem;
   align-items: center;
 }
 
 /* Appointment main info (title + patient name) */
 .appointment-main h3 {
   margin: 0;
-  color: #102033;
+  color: var(--text-main);
+  font-size: 1.1rem;
 }
 
-
 .appointment-main p {
-  margin: 0.25rem 0 0;
-  color: #5f6f81;
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
 }
 
 /* Appointment meta info (date, time, etc) */
 .appointment-meta {
   display: grid;
-  gap: 0.3rem;
-  color: #334155;
-  font-weight: 600;
+  gap: 0.4rem;
+  color: var(--text-main);
+  font-weight: 500;
 }
 
 /* Status column (status text + action button) */
 .appointment-status-col {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.8rem;
   justify-items: end;
 }
 
 /* Status text styling */
 .status-pill {
-  border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 700;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid transparent;
 }
 
 /* Status variants */
 .status-confirmed {
-  background: #dcfce7;
+  background: #f0fdf4;
   color: #166534;
+  border-color: #bbf7d0;
 }
 
 /* Pending status */
 .status-pending {
-  background: #fef9c3;
+  background: #fefce8;
   color: #854d0e;
+  border-color: #fef08a;
 }
 
 /* Completed status */
 .status-completed {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
 }
 
 /* Cancelled status */
 .status-cancelled {
-  background: #fee2e2;
+  background: #fef2f2;
   color: #b91c1c;
+  border-color: #fecaca;
 }
 
-/* Action button for certain statuses (e.g. "Reschedule" for pending appointments) */
+/* Action button for certain statuses */
 .appointment-status-col button,
 .my-appointments-empty button {
-  border: 1px solid #f2cccc;
-  background: #fff5f5;
-  color: #b42318;
-  border-radius: 10px;
-  padding: 0.55rem 0.75rem;
-  font-weight: 700;
+  border: 1px solid #fca5a5;
+  background: #fef2f2;
+  color: #b91c1c;
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
   cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease;
+}
+
+.appointment-status-col button:hover,
+.my-appointments-empty button:hover {
+  background: #fee2e2;
 }
 
 /* Empty state when no appointments are found */
 .my-appointments-empty {
   max-width: 980px;
-  margin: 1rem auto 0;
-  background: #ffffff;
-  border: 1px dashed #b7d8d1;
-  border-radius: 18px;
-  padding: 1.5rem;
+  margin: 2rem auto 0;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 3rem 2rem;
   text-align: center;
 }
 
 /* Empty state title */
 .my-appointments-empty h3 {
-  margin: 0 0 0.5rem;
-  color: #102033;
+  margin: 0 0 0.8rem;
+  color: var(--text-main);
+  font-size: 1.2rem;
 }
 
 /* Empty state description */
 .my-appointments-empty p {
-  margin: 0 0 1rem;
-  color: #64748b;
+  margin: 0 0 1.5rem;
+  color: var(--text-muted);
 }
 
 /* Responsive adjustments */
@@ -261,12 +294,10 @@
   .my-appointments-stats {
     grid-template-columns: 1fr 1fr;
   }
-
   .my-appointment-card {
     grid-template-columns: 1fr;
     justify-items: start;
   }
-
   .appointment-status-col {
     justify-items: start;
   }
@@ -274,6 +305,9 @@
 
 /* Further adjustments for smaller screens */
 @media (max-width: 640px) {
+  .my-appointments-page {
+    padding: 1.5rem 1rem;
+  }
   .my-appointments-stats {
     grid-template-columns: 1fr;
   }

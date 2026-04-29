@@ -1,170 +1,161 @@
-/*Login Page Container*/
-.auth-page {
-  min-height: calc(100vh - 140px);
+/* Auth Page Container */
+.auth-page,
+.register-page {
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem 3rem;
-  background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
+  padding: 3rem 1rem;
+  background: var(--bg-main);
 }
 
-/* Login card */
-.auth-card {
+/* Auth card */
+.auth-card,
+.register-card {
   width: min(100%, 460px);
-  background: #ffffff;
-  border: 1px solid #e3edf1;
-  border-radius: 24px;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.09);
-  padding: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 2.5rem;
 }
 
-/* Small tag (MediConnect) */
-.auth-tag {
-  margin: 0 0 0.35rem;
-  color: #0d8f73;
-  font-weight: 700;
+/* Small tag */
+.auth-tag,
+.register-tag {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
 }
 
-/* Login heading */
-.auth-card h2 {
-  margin: 0 0 0.4rem;
-  color: #102033;
-  font-size: 1.9rem;
+/* Heading */
+.auth-card h2,
+.register-card h2 {
+  margin: 0 0 0.5rem;
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 /* Description text */
-.auth-text {
-  margin: 0 0 1.25rem;
-  color: #64748b;
+.auth-text,
+.register-card p {
+  margin: 0 0 2rem;
+  color: var(--text-muted);
   line-height: 1.5;
+  font-size: 1rem;
 }
 
 /* Form Styling */
-.auth-form {
+.auth-form,
+.register-form {
   display: grid;
-  gap: 0.95rem;
+  gap: 1.2rem;
 }
 
 /* Label styling */
-.auth-form label {
+.auth-form label,
+.register-form label {
   display: grid;
-  gap: 0.4rem;
-  color: #334155;
-  font-weight: 600;
+  gap: 0.5rem;
+  color: var(--text-main);
+  font-weight: 500;
 }
 
 /* Label text */
-.auth-form span {
+.auth-form span,
+.register-form span {
   font-size: 0.95rem;
 }
 
 /* Input and select fields */
 .auth-form input,
-.auth-form select {
-  border: 1px solid #d7e4ea;
-  border-radius: 14px;
-  padding: 0.9rem 1rem;
+.auth-form select,
+.register-form input,
+.register-form select {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
   font-size: 1rem;
   outline: none;
-  background: #ffffff;
+  background: var(--bg-surface);
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+  color: var(--text-main);
 }
 
 /* Focus effect on inputs */
 .auth-form input:focus,
-.auth-form select:focus {
-  border-color: #0d8f73;
-  box-shadow: 0 0 0 4px rgba(13, 143, 115, 0.12);
+.auth-form select:focus,
+.register-form input:focus,
+.register-form select:focus {
+  border-color: var(--primary);
 }
 
-.auth-error {
+.auth-error,
+.register-error {
   margin: 0;
   color: #b91c1c;
   background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 12px;
-  padding: 0.7rem 0.8rem;
-  font-size: 0.92rem;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
 }
 
 /* Buttons */
 .auth-primary,
-.auth-secondary {
+.auth-secondary,
+.register-actions button {
   border: 1px solid transparent;
-  border-radius: 14px;
-  padding: 0.85rem 1rem;
-  font-weight: 700;
+  border-radius: 4px;
+  padding: 0.9rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  font-family: inherit;
 }
 
 /* Primary button (Login / Register) */
-.auth-primary {
-  background: linear-gradient(135deg, #0d8f73, #59bfa8);
-  color: #ffffff;
+.auth-primary,
+.register-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.auth-primary:hover,
+.register-primary:hover {
+  background: var(--primary-dark);
 }
 
 /* Secondary button */
-.auth-secondary {
-  background: #f5fbf9;
-  color: #0d8f73;
-  border-color: #d5ebe4;
+.auth-secondary,
+.register-secondary {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
-/* Button hover effect */
-.auth-primary:hover,
-.auth-secondary:hover {
-  transform: translateY(-1px);
+.auth-secondary:hover,
+.register-secondary:hover {
+  background: var(--bg-alt);
+}
+
+/* Register actions grid */
+.register-actions {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 /* Responsive Login */
 @media (max-width: 640px) {
-  .auth-card {
-    padding: 1.25rem;
+  .auth-card,
+  .register-card {
+    padding: 1.5rem;
   }
-}
-
-/* Register Page Container */
-.register-page {
-  min-height: calc(100vh - 140px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem 3rem;
-  background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 30%, #ffffff 100%);
-}
-
-/* Register card */
-.register-card {
-  width: min(100%, 460px);
-  background: #ffffff;
-  border: 1px solid #e3edf1;
-  border-radius: 24px;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.09);
-  padding: 1.5rem;
-}
-
-/* Register heading */
-.register-card h2 {
-  margin: 0 0 0.4rem;
-  color: #102033;
-  font-size: 1.9rem;
-}
-
-/* Register Description */
-.register-card p {
-  margin: 0 0 1.25rem;
-  color: #64748b;
-  line-height: 1.5;
-}
-
-/* Register buttons container */
-.register-actions {
-  display: grid;
-  gap: 0.75rem;
 }

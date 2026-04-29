@@ -1,36 +1,43 @@
-/* Main wrapper for the About page with full height and gradient background */
 .about-page {
-  min-height: 100vh;
-  padding: 2rem 3rem 3rem;
-  background: linear-gradient(180deg, #eef8fb 0%, #f6fbf9 26%, #ffffff 26%);
+  min-height: calc(100vh - 80px);
+  padding: 4rem 3rem;
+  background: var(--bg-main);
 }
-/* Hero section container centered with max width */
+
+/* Hero section container */
 .about-hero {
   max-width: 900px;
-  margin: 0 auto 2rem;
+  margin: 0 auto 3rem;
   text-align: center;
 }
-/* Small uppercase heading above main title */
+
+/* Small uppercase heading */
 .about-kicker {
   margin: 0;
-  color: #0d8f73;
-  font-weight: 700;
+  color: var(--primary);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
 }
-/* Main heading style in hero section */
+
+/* Main heading style */
 .about-hero h1 {
-  margin: 0.6rem 0 1rem;
-  color: #102033;
+  margin: 1rem 0 1.5rem;
+  color: var(--text-main);
   line-height: 1.2;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
 }
-/* Paragraph text inside hero section */
+
+/* Paragraph text */
 .about-hero p {
   margin: 0;
-  color: #475569;
+  color: var(--text-muted);
   line-height: 1.7;
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 /* Grid layout for about cards */
@@ -39,79 +46,87 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 2rem;
 }
-/* Individual card styling inside grid */
 
+/* Individual card styling */
 .about-card {
-  background: #ffffff;
-  border: 1px solid #e6eef2;
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: 0 12px 30px rgba(16, 32, 51, 0.07);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
 }
+
 /* Card heading style */
 .about-card h2 {
-  margin: 0 0 0.75rem;
-  color: #102033;
+  margin: 0 0 1rem;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
-/* Paragraph and list items inside card */
+/* Paragraph and list items */
 .about-card p,
 .about-card li {
   margin: 0;
-  color: #475569;
+  color: var(--text-muted);
   line-height: 1.7;
-}
-/* Unordered list styling inside card */
-.about-card ul {
-  margin: 0;
-  padding-left: 1.1rem;
-  display: grid;
-  gap: 0.6rem;
-}
-/* Grid for highlight statistic cards */
-
-.about-highlights {
-  max-width: 1080px;
-  margin: 1.25rem auto 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-/* Styling for each highlight card */
-.highlight-card {
-  background: linear-gradient(180deg, #0d8f73 0%, #1faf8b 100%);
-  border-radius: 18px;
-  color: #ffffff;
-  padding: 1.25rem;
-}
-/* Large number/value in highlight card */
-
-.highlight-value {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-/* Heading inside highlight card */
-.highlight-card h3 {
-  margin: 0.35rem 0;
   font-size: 1.05rem;
 }
-/* Paragraph text inside highlight card */
+
+/* Unordered list styling */
+.about-card ul {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+/* Grid for highlight statistic cards */
+.about-highlights {
+  max-width: 1080px;
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* Styling for each highlight card */
+.highlight-card {
+  background: var(--primary);
+  border-radius: 8px;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Large number/value */
+.highlight-value {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+/* Heading inside highlight */
+.highlight-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Paragraph text */
 .highlight-card p {
   margin: 0;
-  color: #e8fdf8;
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.5;
 }
-/* Responsive styles for screens below 900px */
 
+/* Responsive styles */
 @media (max-width: 900px) {
   .about-page {
-    padding: 1.25rem;
+    padding: 2rem 1.5rem;
   }
-
   .about-grid,
   .about-highlights {
     grid-template-columns: 1fr;
