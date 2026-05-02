@@ -30,7 +30,8 @@ const userSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: function () {
-        return this.role === "doctor" ? false : true;
+        return this.role === "doctor" ? false : true;// By default, doctor accounts are inactive until approved by an admin, while patient accounts are active immediately.
+        
       },
     },
   },

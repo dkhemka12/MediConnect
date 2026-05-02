@@ -5,8 +5,10 @@ import { fetchDoctors } from "../../services/userService";
 import "./DoctorDetails.css";
 
 const DoctorDetails = () => {
+  // Extract doctor ID from URL params
   const { id: doctorIdParam } = useParams();
   const navigate = useNavigate();
+  // Fetch and cache doctor list
   const [doctorList, setDoctorList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,11 +28,13 @@ const DoctorDetails = () => {
     loadDoctors();
   }, []);
 
+  // Memoize doctor lookup to avoid unnecessary re-renders
   const selectedDoctor = useMemo(
     () => doctorList.find((item) => item._id === doctorIdParam),
     [doctorIdParam, doctorList],
   );
 
+  // Transform doctor data into display format with fallback values
   const doctorView = selectedDoctor
     ? {
         id: selectedDoctor._id,

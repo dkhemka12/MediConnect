@@ -97,7 +97,7 @@
 
 .hero-right img {
   width: 100%;
-  max-width: 500px;
+  max-width: 1000px;
   height: auto;
   border-radius: 12px;
   box-shadow: var(--shadow-md);

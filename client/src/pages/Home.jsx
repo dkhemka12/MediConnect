@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
+  // useNavigate hook enables programmatic navigation between routes
   const navigate = useNavigate();
 
+  // Handler functions for CTA button navigation
   const handleOpenLogin = () => navigate("/login");
   const handleOpenDoctors = () => navigate("/patient/doctors");
 
@@ -34,11 +36,7 @@ const Home = () => {
         </div>
 
         <div className="hero-right">
-          <img
-            src="/virus.png"
-            alt="doctor"
-
-          />
+          <img src="/virus.png" alt="doctor" />
         </div>
       </div>
     </div>

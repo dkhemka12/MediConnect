@@ -5,9 +5,11 @@ import "./Users.css";
 
 const Users = () => {
   const navigate = useNavigate();
+  // User list state and error handling
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  // User action feedback and loading states
   const [actionMessage, setActionMessage] = useState("");
   const [updatingUserId, setUpdatingUserId] = useState("");
 
@@ -26,29 +28,37 @@ const Users = () => {
     loadUsers();
   }, []);
 
+  // Memoize user list transformation to avoid unnecessary re-renders
   const userList = useMemo(
-    () => users.map((user) => ({
-      id: user._id,
-      name: user.name,
-      role: user.role ? `${user.role.charAt(0).toUpperCase()}${user.role.slice(1)}` : "User",
-      email: user.email,
-      status: user.isActive ? "Active" : "Inactive",
-      isActive: Boolean(user.isActive),
-    })),
+    () =>
+      users.map((user) => ({
+        id: user._id,
+        name: user.name,
+        role: user.role
+          ? `${user.role.charAt(0).toUpperCase()}${user.role.slice(1)}`
+          : "User",
+        email: user.email,
+        status: user.isActive ? "Active" : "Inactive",
+        isActive: Boolean(user.isActive),
+      })),
     [users],
   );
 
   const handleBackToDashboard = () => navigate("/admin/dashboard");
 
+  // Toggle user active/inactive status and sync with backend
   const handleToggleActivation = async (user) => {
     try {
       setActionMessage("");
       setUpdatingUserId(user.id);
       const updatedUser = await setUserActivation(user.id, !user.isActive);
 
+      // Update user activation status in state
       setUsers((current) =>
         current.map((item) =>
-          item._id === user.id ? { ...item, isActive: updatedUser.isActive } : item,
+          item._id === user.id
+            ? { ...item, isActive: updatedUser.isActive }
+            : item,
         ),
       );
       setActionMessage(
@@ -65,7 +75,6 @@ const Users = () => {
     <div className="admin-users-page">
       {/* Header */}
       <div className="admin-users-header">
-
         {/* Title and description */}
         <div>
           <p className="admin-tag">Admin Users</p>
@@ -108,7 +117,9 @@ const Users = () => {
           </div>
         ))}
 
-        {!isLoading && !errorMessage && userList.length === 0 ? <p>No users found.</p> : null}
+        {!isLoading && !errorMessage && userList.length === 0 ? (
+          <p>No users found.</p>
+        ) : null}
       </div>
     </div>
   );
