@@ -23,6 +23,8 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminUsers from "./pages/admin/Users";
 
 function App() {
+  // Main router component that defines all application routes
+  // Routes wrapped with RequireAuth enforce authentication
   return (
     <>
       <Navbar />

@@ -8,11 +8,14 @@ import "./Login.css";
 const Register = () => {
   const navigate = useNavigate();
 
+  // Role selection state (patient or doctor) - determines activation flow
   const [role, setRole] = useState("patient");
+  // Form input state management
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Error and loading state
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,6 +42,7 @@ const Register = () => {
       const isActive = response?.data?.isActive ?? true;// checks if the account is active based on the API response. If the isActive field is not provided, it defaults to true, allowing immediate login for patients while doctors may require admin activation.
 
 
+      // Auto-login if immediately active; otherwise redirect to login with activation message
       if (response?.token && isActive) {
         setAuthSession({
           token: response.token,
@@ -51,14 +55,18 @@ const Register = () => {
         return;
       }
 
+      // Doctor accounts require admin activation before login
       navigate("/login", {
         replace: true,
         state: {
-          message: "Doctor account created. An admin must activate it before login.",
+          message:
+            "Doctor account created. An admin must activate it before login.",
         },
       });
     } catch (error) {
-      setErrorMessage(error.message || "Registration failed. Please try again.");
+      setErrorMessage(
+        error.message || "Registration failed. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -119,10 +127,20 @@ const Register = () => {
           {errorMessage ? <p className="auth-error">{errorMessage}</p> : null}
 
           <div className="register-actions">
-            <button className="auth-primary" type="submit" disabled={isSubmitting}>
+            <button
+              className="auth-primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Creating account..." : "Create account"}
             </button>
-            <button className="auth-secondary" type="button" onClick={goToLogin}>Back to login</button>
+            <button
+              className="auth-secondary"
+              type="button"
+              onClick={goToLogin}
+            >
+              Back to login
+            </button>
           </div>
         </form>
       </div>

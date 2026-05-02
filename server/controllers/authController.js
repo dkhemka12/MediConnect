@@ -43,15 +43,12 @@ const register = async (req, res) => {
       phone,
       isActive,
     });
-    //Generates token if IsActive = true
-    const token = user.isActive ? generateToken(user) : null;
 
-    return res.status(201).json({  //user created successfully for doctors.   
+    const responsePayload = {
       success: true,
       message: user.isActive
         ? "User registered successfully"
         : "Doctor account created. Waiting for admin activation.",
-      token,
       data: {
         id: user._id,
         name: user.name,
@@ -60,7 +57,13 @@ const register = async (req, res) => {
         phone: user.phone,
         isActive: user.isActive,
       },
-    });
+    };
+
+    if (user.isActive) {
+      responsePayload.token = generateToken(user);
+    }
+
+    return res.status(201).json(responsePayload);
   } catch (error) {
     return res.status(500).json({
       success: false,

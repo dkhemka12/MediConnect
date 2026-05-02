@@ -7,15 +7,18 @@ import "./Doctors.css";
 
 const Doctors = () => {
   const navigate = useNavigate();
+
   const [doctorList, setDoctorList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("All Specialties");
 
+  // useEffect runs on component mount to fetch doctor list
   useEffect(() => {
     const loadDoctors = async () => {
       try {
+        // Fetch doctors and map to UI format
         const data = await fetchDoctors();
         const mapped = data.map((doctor) => ({
           id: doctor._id,
@@ -39,16 +42,20 @@ const Doctors = () => {
     loadDoctors();
   }, []);
 
+  // Extract unique specialties from doctor list for filter options
   const specialties = [
     "All Specialties",
     ...new Set(doctorList.map((doctor) => doctor.specialty).filter(Boolean)),
   ];
 
+  // Filter doctors based on search query and selected specialty
   const visibleDoctors = doctorList.filter((doctor) => {
+    // Match search against name or specialty (case-insensitive)
     const searchMatch =
       doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
 
+    // Match selected specialty filter
     const specialtyMatch =
       selectedSpecialty === "All Specialties" ||
       doctor.specialty === selectedSpecialty;
@@ -81,12 +88,14 @@ const Doctors = () => {
   return (
     <div className="doctor-page">
       <section className="doctor-hero">
-        <p className="doctor-hero-tag">Find the right doctor</p>
-        <h1>Browse doctors and book in a few clicks</h1>
-        <p className="doctor-hero-text">
-          Search by name or specialty, use the filters on the left, and keep the
-          layout simple for future backend data.
-        </p>
+        <div className="doctor-hero-inner">
+          <p className="doctor-hero-tag">Find the right doctor</p>
+          <h1>Browse doctors and book in a few clicks</h1>
+          <p className="doctor-hero-text">
+            Search by name or specialty, use the filters on the left, and keep
+            the layout simple for future backend data.
+          </p>
+        </div>
 
         <div className="doctor-search">
           <input

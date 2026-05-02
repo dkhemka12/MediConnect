@@ -1,129 +1,146 @@
 .details-page {
   min-height: 100vh;
-  padding: 2rem 3rem 3rem;
-  background: linear-gradient(180deg, #eef8fb 0%, #f7fbfc 24%, #ffffff 24%);
+  padding: 3rem 3rem;
+  background: var(--bg-main);
 }
 
 /* Back link */
 .back-link {
   border: none;
   background: transparent;
-  color: #516173;
+  color: var(--text-muted);
   font-size: 1rem;
-  margin-bottom: 1rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
   cursor: pointer;
+  padding: 8px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-link:hover {
+  color: var(--primary);
 }
 
 /* Hero section */
 .details-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 330px;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 2rem;
   align-items: start;
 }
 
-/* Left and right columns */
 .left-column,
 .right-column {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 /* Card Styling */
 .simple-card {
-  background: #ffffff;
-  border: 1px solid #e7edf2;
-  border-radius: 18px;
-  padding: 1.2rem;
-  box-shadow: 0 8px 24px rgba(16, 32, 51, 0.06);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
 }
 
 /* Profile Section */
 .profile-top {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: flex-start;
 }
 
 /* Doctor image / initials */
 .doctor-photo {
-  width: 128px;
-  height: 128px;
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
-  border-radius: 16px;
+  border-radius: 8px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #1faf8b, #0d8f73);
-  color: #ffffff;
-  font-size: 2.2rem;
+  background: var(--bg-alt);
+  color: var(--primary);
+  font-size: 2.5rem;
   font-weight: 700;
+  border: 1px solid var(--border-color);
 }
 
 /* Doctor name */
 .profile-text h1 {
   margin: 0;
-  color: #102033;
+  color: var(--text-main);
   font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 /* Specialty */
 .specialty-text {
-  margin: 0.35rem 0;
-  color: #44556a;
-  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-/* Meta info (experience, etc.) */
+/* Meta info */
 .meta-text,
 .location-text {
   margin: 0.5rem 0 0;
-  color: #5f6f81;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
-/* Tags (skills/specialties) */
+/* Tags */
 .tag-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.8rem;
+  margin-top: 1rem;
 }
 
-/* Individual tag */
 .tag-pill {
-  background: #e8f7f3;
-  color: #0d8f73;
-  border-radius: 999px;
-  padding: 0.32rem 0.7rem;
-  font-size: 0.9rem;
+  background: var(--bg-alt);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 /* Headings and Text */
 .simple-card h2 {
-  margin: 0 0 0.7rem;
-  color: #102033;
-  font-size: 2rem;
+  margin: 0 0 1rem;
+  color: var(--text-main);
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-
 .simple-card h3 {
-  margin: 0 0 0.75rem;
-  color: #102033;
-  font-size: 1.5rem;
+  margin: 0 0 1rem;
+  color: var(--text-main);
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .simple-card p {
   margin: 0;
-  color: #4d5d70;
-  line-height: 1.7;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-size: 1rem;
 }
 
 /* Education list */
 .education-list {
   margin: 0;
-  padding-left: 1.1rem;
-  color: #34465a;
+  padding-left: 1.2rem;
+  color: var(--text-muted);
   display: grid;
-  gap: 0.7rem;
+  gap: 0.8rem;
+  font-size: 1rem;
 }
 
 /* Fee section */
@@ -132,13 +149,16 @@
 }
 
 .fee-card p {
-  color: #5a6b7f;
-  margin-bottom: 0.4rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
 .fee-card h2 {
-  color: #0d8f73;
-  margin-bottom: 1rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 /* Info rows */
@@ -146,100 +166,106 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.45rem 0;
-  color: #5e6f82;
+  padding: 0.8rem 0;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+  border-bottom: none;
 }
 
 .info-row strong {
-  color: #314357;
+  color: var(--text-main);
 }
 
 /* Slots Section */
 .slot-list {
   display: grid;
-  gap: 0.55rem;
-  margin-bottom: 0.9rem;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Individual slot */
 .slot-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #e3ebf2;
-  border-radius: 11px;
-  padding: 0.6rem 0.8rem;
-  color: #495c71;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  color: var(--text-main);
+  font-weight: 500;
 }
 
-/* Check mark / availability */
 .slot-check {
-  color: #0d8f73;
+  color: var(--primary);
   font-weight: 700;
 }
 
 /* Buttons */
 .solid-btn,
 .outline-btn {
-  border-radius: 12px;
-  padding: 0.8rem 1rem;
-  font-weight: 700;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  border: 1px solid #0d8f73;
+  font-family: inherit;
+  transition: all 0.2s ease;
 }
 
-/* Filled button */
 .solid-btn {
-  background: #0d8f73;
-  color: #ffffff;
+  background: var(--primary);
+  color: white;
+  border: none;
 }
 
-/* Outline button */
+.solid-btn:hover {
+  background: var(--primary-dark);
+}
+
 .outline-btn {
   background: transparent;
-  color: #0d8f73;
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
-/* Full width button */
+.outline-btn:hover {
+  background: var(--bg-alt);
+}
+
 .full-btn {
   width: 100%;
 }
 
-/* Not Found Section */
 .not-found-card {
   max-width: 480px;
-  margin: 2rem auto;
+  margin: 4rem auto;
   text-align: center;
 }
 
 .not-found-card h2 {
   margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
-/* Responsive adjustments for tablet */
 @media (max-width: 1100px) {
   .details-layout {
     grid-template-columns: 1fr;
   }
 }
 
-/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
   .details-page {
-    padding: 1.2rem;
+    padding: 2rem 1rem;
   }
-
   .profile-top {
     flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-
-  .doctor-photo {
-    width: 96px;
-    height: 96px;
-    font-size: 1.8rem;
-  }
-
-  .profile-text h1 {
-    font-size: 1.6rem;
+  .tag-list {
+    justify-content: center;
   }
 }

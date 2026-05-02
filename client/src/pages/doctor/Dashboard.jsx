@@ -24,13 +24,16 @@ const formatStatus = (status) =>
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  // Initialize stats with default values for display
   const [stats, setStats] = useState([
     { label: "Today’s Appointments", value: "0" },
     { label: "Pending Requests", value: "0" },
     { label: "Accepted Patients", value: "0" },
     { label: "Total Patients", value: "0" },
   ]);
+  // Display today's and recent appointments
   const [schedule, setSchedule] = useState([]);
+  // Loading and error state management
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,6 +41,7 @@ const Dashboard = () => {
     const loadDashboard = async () => {
       try {
         const appointmentList = await getMyAppointments();
+        // Filter appointments for today only
         const todayKey = new Date().toISOString().slice(0, 10);
         const todaysAppointments = appointmentList.filter(
           (item) => item.date === todayKey,
@@ -53,7 +57,10 @@ const Dashboard = () => {
         ).size;
 
         setStats([
-          { label: "Today’s Appointments", value: String(todaysAppointments.length) },
+          {
+            label: "Today’s Appointments",
+            value: String(todaysAppointments.length),
+          },
           { label: "Pending Requests", value: String(pendingCount) },
           { label: "Accepted Patients", value: String(acceptedCount) },
           { label: "Total Patients", value: String(uniquePatients) },
@@ -108,10 +115,7 @@ const Dashboard = () => {
 
           <div className="doctor-schedule">
             {schedule.map((appointment) => (
-              <article
-                key={appointment.id}
-                className="schedule-card"
-              >
+              <article key={appointment.id} className="schedule-card">
                 <div>
                   <h4>{appointment.patientName}</h4>
                   <p>
@@ -122,7 +126,9 @@ const Dashboard = () => {
                 <span>{formatStatus(appointment.status)}</span>
               </article>
             ))}
-            {!isLoading && schedule.length === 0 ? <p>No appointments yet.</p> : null}
+            {!isLoading && schedule.length === 0 ? (
+              <p>No appointments yet.</p>
+            ) : null}
           </div>
         </section>
 
