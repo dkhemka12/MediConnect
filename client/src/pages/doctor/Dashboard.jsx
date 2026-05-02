@@ -25,6 +25,7 @@ const formatStatus = (status) =>
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const userName = getUserName() || "Doctor";
   // Initialize stats with default values for display
   const [stats, setStats] = useState([
     { label: "Today’s Appointments", value: "0" },
