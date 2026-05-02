@@ -33,7 +33,7 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      const response = await loginUser({
+      const response = await loginUser({//calls the loginUser function from authService to send the login credentials to the server and receive a response containing the authentication token and user role.
         email,
         password,
       });
