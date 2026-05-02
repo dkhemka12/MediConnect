@@ -14,9 +14,11 @@ const Doctors = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("All Specialties");
 
+  // useEffect runs on component mount to fetch doctor list
   useEffect(() => {
     const loadDoctors = async () => {
       try {
+        // Fetch doctors and map to UI format
         const data = await fetchDoctors();
         const mapped = data.map((doctor) => ({
           id: doctor._id,
@@ -40,16 +42,20 @@ const Doctors = () => {
     loadDoctors();
   }, []);
 
+  // Extract unique specialties from doctor list for filter options
   const specialties = [
     "All Specialties",
     ...new Set(doctorList.map((doctor) => doctor.specialty).filter(Boolean)),
   ];
 
+  // Filter doctors based on search query and selected specialty
   const visibleDoctors = doctorList.filter((doctor) => {
+    // Match search against name or specialty (case-insensitive)
     const searchMatch =
       doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
 
+    // Match selected specialty filter
     const specialtyMatch =
       selectedSpecialty === "All Specialties" ||
       doctor.specialty === selectedSpecialty;
