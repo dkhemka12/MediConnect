@@ -40,7 +40,7 @@ const DoctorDetails = () => {
         reviews: selectedDoctor.reviews || 100,
         experienceYears: selectedDoctor.experienceYears || 5,
         patientsTreated: selectedDoctor.patientsTreated || "500+",
-        fee: selectedDoctor.fees || "₹120",
+        fee: selectedDoctor.fees || "₹1000",
         location: selectedDoctor.location || "Clinic",
         bio:
           selectedDoctor.bio ||

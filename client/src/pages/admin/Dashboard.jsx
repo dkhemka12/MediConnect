@@ -1,50 +1,125 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getMyAppointments } from "../../services/appointmentService";
+import { getUserName } from "../../services/auth";
+import { fetchUsers } from "../../services/userService";
 import "./Dashboard.css";
 
-/* =======================
-   Static Data (for UI)
-   ======================= */
+const formatDate = (value) => {
+  if (!value) {
+    return "Unknown date";
+  }
 
-const stats = [
-  { label: "Total Doctors", value: "24" },
-  { label: "Total Patients", value: "186" },
-  { label: "Total Revenue", value: "₹12,450" },
-  { label: "Pending Requests", value: "8" },
-];
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "Unknown date";
+  }
 
-const recentItems = [
-  "3 new doctors joined this week",
-  "18 new patient accounts created",
-  "Revenue increased by 12% this month",
-  "8 appointment requests waiting for review",
-];
-
-const systemStats = [
-  { label: "Appointments Today", value: "42" },
-  { label: "Active Doctors", value: "19" },
-  { label: "New Signups", value: "11" },
-];
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const userName = getUserName() || "Admin";
+  const [users, setUsers] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        const [userList, appointmentList] = await Promise.all([
+          fetchUsers(),
+          getMyAppointments(),
+        ]);
+
+        setUsers(userList);
+        setAppointments(appointmentList);
+      } catch (error) {
+        setErrorMessage(error.message || "Could not load admin data.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadDashboard();
+  }, []);
+
+  const dashboardStats = useMemo(() => {
+    const doctors = users.filter((user) => user.role === "doctor");
+    const patients = users.filter((user) => user.role === "patient");
+    const pendingAppointments = appointments.filter(
+      (item) => item.status === "pending",
+    );
+
+    return [
+      { label: "Total Doctors", value: String(doctors.length) },
+      { label: "Total Patients", value: String(patients.length) },
+      { label: "Total Appointments", value: String(appointments.length) },
+      { label: "Pending Requests", value: String(pendingAppointments.length) },
+    ];
+  }, [appointments, users]);
+
+  const recentItems = useMemo(() => {
+    const recentUsers = [...users]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 2)
+      .map((user) => `${user.name} joined as ${user.role}`);
+
+    const recentAppointments = [...appointments]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 2)
+      .map(
+        (appointment) =>
+          `${appointment.patientName || "A patient"} booked ${appointment.doctorName || "a doctor"} on ${formatDate(appointment.date)}`,
+      );
+
+    const items = [...recentUsers, ...recentAppointments];
+
+    return items.length > 0 ? items.slice(0, 4) : ["No recent activity yet."];
+  }, [appointments, users]);
+
+  const systemStats = useMemo(() => {
+    const activeDoctors = users.filter(
+      (user) => user.role === "doctor" && user.isActive,
+    ).length;
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const appointmentsToday = appointments.filter((item) => item.date === todayKey).length;
+    const recentSignups = users.filter((user) => {
+      const createdAt = new Date(user.createdAt);
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+      return !Number.isNaN(createdAt.getTime()) && createdAt >= sevenDaysAgo;
+    }).length;
+
+    return [
+      { label: "Appointments Today", value: String(appointmentsToday) },
+      { label: "Active Doctors", value: String(activeDoctors) },
+      { label: "New Signups", value: String(recentSignups) },
+    ];
+  }, [appointments, users]);
+
   const handleOpenUsers = () => navigate("/admin/users");
 
   return (
     <div className="admin-page">
-      {/* Header */}
       <div className="admin-hero">
-        {/* Title and description */}
         <div className="admin-header">
+          <p className="admin-tag">Welcome back, {userName}</p>
           <p className="admin-tag">Admin Overview</p>
           <h2>Dashboard</h2>
           <p>
-            A simple snapshot of doctors, patients, revenue, and system
+            A live snapshot of doctors, patients, appointments, and system
             activity.
           </p>
         </div>
 
-        {/* Action button */}
         <div className="admin-hero-actions">
           <button type="button" onClick={handleOpenUsers}>
             Manage Users
@@ -52,9 +127,11 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      {isLoading ? <p>Loading admin data...</p> : null}
+      {!isLoading && errorMessage ? <p>{errorMessage}</p> : null}
+
       <div className="admin-stats">
-        {stats.map((item) => (
+        {dashboardStats.map((item) => (
           <div key={item.label} className="admin-stat-card">
             <span>{item.label}</span>
             <strong>{item.value}</strong>
@@ -62,7 +139,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Main Content */}
       <div className="admin-grid">
         <section className="admin-panel">
           <h3>Recent Activity</h3>
@@ -73,7 +149,6 @@ const Dashboard = () => {
           </ul>
         </section>
 
-        {/* System status with mini stats */}
         <section className="admin-panel">
           <h3>System Status</h3>
           <div className="admin-mini-stats">
@@ -91,11 +166,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-{
-  /*
-    Dashboard.jsx - The main dashboard page for the admin panel of the MediConnect application. 
-    It provides an overview of key metrics such as total doctors, patients, revenue, and pending requests. 
-    The dashboard also includes sections for recent activity and system status, giving admins a quick snapshot of the platform's performance and user engagement.
-*/
-}

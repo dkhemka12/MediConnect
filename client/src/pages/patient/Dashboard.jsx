@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyAppointments } from "../../services/appointmentService";
+import { getUserName } from "../../services/auth";
 import { fetchDoctors } from "../../services/userService";
 import "./Dashboard.css";
 
@@ -26,6 +27,7 @@ const formatStatus = (status) =>
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const userName = getUserName() || "Patient";
   const [stats, setStats] = useState([
     { label: "Available Doctors", value: "0" },
     { label: "Upcoming Visits", value: "0" },
@@ -78,6 +80,7 @@ const Dashboard = () => {
     <div className="patient-page">
       {/* Header */}
       <div className="patient-hero">
+        <p className="patient-tag">Welcome back, {userName}</p>
         <p className="patient-tag">Patient Overview</p>
         <h2>Dashboard</h2>
         <p>Keep track of your doctors, appointments, and reminders in one place.</p>

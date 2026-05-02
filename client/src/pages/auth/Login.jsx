@@ -43,6 +43,7 @@ const Login = () => {
       setAuthSession({
         token: response?.token,
         role: roleFromApi,
+        name: response?.data?.name || "",
       });
 
       const requestedPath = location.state?.from;
