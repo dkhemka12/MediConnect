@@ -7,6 +7,7 @@ import "./Doctors.css";
 
 const Doctors = () => {
   const navigate = useNavigate();
+
   const [doctorList, setDoctorList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -81,12 +82,14 @@ const Doctors = () => {
   return (
     <div className="doctor-page">
       <section className="doctor-hero">
-        <p className="doctor-hero-tag">Find the right doctor</p>
-        <h1>Browse doctors and book in a few clicks</h1>
-        <p className="doctor-hero-text">
-          Search by name or specialty, use the filters on the left, and keep the
-          layout simple for future backend data.
-        </p>
+        <div className="doctor-hero-inner">
+          <p className="doctor-hero-tag">Find the right doctor</p>
+          <h1>Browse doctors and book in a few clicks</h1>
+          <p className="doctor-hero-text">
+            Search by name or specialty, use the filters on the left, and keep
+            the layout simple for future backend data.
+          </p>
+        </div>
 
         <div className="doctor-search">
           <input
