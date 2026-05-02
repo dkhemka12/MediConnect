@@ -47,6 +47,7 @@ const Register = () => {
         setAuthSession({
           token: response.token,
           role: roleFromApi,
+          name: response?.data?.name || name,
         });
 
         navigate(

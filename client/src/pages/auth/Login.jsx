@@ -47,6 +47,7 @@ const Login = () => {
       setAuthSession({
         token: response?.token,
         role: roleFromApi,
+        name: response?.data?.name || "",
       });
 
       // If user was redirected here for login, return to requested path after success

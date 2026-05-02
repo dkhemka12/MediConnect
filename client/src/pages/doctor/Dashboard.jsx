@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyAppointments } from "../../services/appointmentService";
+import { getUserName } from "../../services/auth";
 import "./Dashboard.css";
 
 const toLabelDate = (isoDate) => {
@@ -83,6 +84,7 @@ const Dashboard = () => {
       {/* Header */}
       <div className="doctor-hero">
         {/* Title */}
+        <p className="doctor-tag">Welcome back, {userName}</p>
         <h2>Dashboard</h2>
 
         {/* Description */}

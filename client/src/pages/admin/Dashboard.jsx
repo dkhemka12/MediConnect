@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getMyAppointments } from "../../services/appointmentService";
+import { getUserName } from "../../services/auth";
+import { fetchUsers } from "../../services/userService";
 import "./Dashboard.css";
 
 /* =======================
@@ -31,19 +34,17 @@ const Dashboard = () => {
 
   return (
     <div className="admin-page">
-      {/* Header */}
       <div className="admin-hero">
-        {/* Title and description */}
         <div className="admin-header">
+          <p className="admin-tag">Welcome back, {userName}</p>
           <p className="admin-tag">Admin Overview</p>
           <h2>Dashboard</h2>
           <p>
-            A simple snapshot of doctors, patients, revenue, and system
+            A live snapshot of doctors, patients, appointments, and system
             activity.
           </p>
         </div>
 
-        {/* Action button */}
         <div className="admin-hero-actions">
           <button type="button" onClick={handleOpenUsers}>
             Manage Users
@@ -51,9 +52,11 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      {isLoading ? <p>Loading admin data...</p> : null}
+      {!isLoading && errorMessage ? <p>{errorMessage}</p> : null}
+
       <div className="admin-stats">
-        {stats.map((item) => (
+        {dashboardStats.map((item) => (
           <div key={item.label} className="admin-stat-card">
             <span>{item.label}</span>
             <strong>{item.value}</strong>
@@ -61,7 +64,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Main Content */}
       <div className="admin-grid">
         <section className="admin-panel">
           <h3>Recent Activity</h3>
@@ -72,7 +74,6 @@ const Dashboard = () => {
           </ul>
         </section>
 
-        {/* System status with mini stats */}
         <section className="admin-panel">
           <h3>System Status</h3>
           <div className="admin-mini-stats">
@@ -90,11 +91,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-{
-  /*
-    Dashboard.jsx - The main dashboard page for the admin panel of the MediConnect application. 
-    It provides an overview of key metrics such as total doctors, patients, revenue, and pending requests. 
-    The dashboard also includes sections for recent activity and system status, giving admins a quick snapshot of the platform's performance and user engagement.
-*/
-}
