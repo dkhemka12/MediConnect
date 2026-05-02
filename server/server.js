@@ -1,8 +1,10 @@
+
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
@@ -11,35 +13,19 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-const allowedOrigins = [process.env.CLIENT_URL].filter(Boolean);
+const CLIENT_ORIGIN = process.env.CLIENT_URL || "http://localhost:5173";
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (for health checks, server tools, etc).
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      const isLocalhost = /^http:\/\/localhost:\d+$/.test(origin);
-      if (allowedOrigins.includes(origin) || isLocalhost) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
-    },
+    origin: CLIENT_ORIGIN,
   }),
 );
 
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
-
+app.use("/api/auth", authRoutes);// 
 app.use("/api/users", userRoutes);
-
 app.use("/api/payments", require("./routes/paymentRoutes"));
-
 app.use("/api/appointments", appointmentRoutes);
 
 app.get("/api/health", (req, res) => {
