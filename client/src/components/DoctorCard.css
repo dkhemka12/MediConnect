@@ -143,7 +143,7 @@
 }
 
 /* Buttons container */
-.doctor-actions {
+.doctor-card .doctor-actions {
   display: flex;
   gap: 0.8rem;
   width: 100%;
@@ -188,7 +188,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
-  .doctor-actions {
+  .doctor-card .doctor-actions {
     flex-direction: column;
   }
 }

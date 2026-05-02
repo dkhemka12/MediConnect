@@ -41,7 +41,7 @@ const DoctorCard = ({ doctor, onViewProfile, onBookNow }) => {
             <div className="doctor-card-footer">
                 <div className="doctor-fee-row">
                     <span>Consultation</span>
-                    <strong>{doctor.fees || "₹1000"}</strong>
+                    <strong>{"₹1000"}</strong>
                 </div>
 
                 <div className="doctor-actions">
