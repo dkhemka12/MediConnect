@@ -9,8 +9,10 @@ import "./Appointments.css";
 const Appointments = () => {
   const navigate = useNavigate();
 
+  // Appointment list and loading state
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  // Error and action feedback messages
   const [error, setError] = useState("");
   const [actionError, setActionError] = useState("");
 
@@ -33,18 +35,20 @@ const Appointments = () => {
   const formatDate = (date) =>
     date
       ? new Date(date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      })
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })
       : "Date unavailable";
 
   const formatStatus = (status) =>
     status ? status[0].toUpperCase() + status.slice(1) : "Pending";
 
+  // Update appointment status (confirm, reject) and sync with backend
   const handleDecision = async (appointmentId, status) => {
     try {
       setActionError("");
+      // Call backend to update status
       const updated = await updateAppointmentStatus(appointmentId, status);
       setAppointments((current) =>
         current.map((item) => (item.id === appointmentId ? updated : item)),
@@ -59,7 +63,10 @@ const Appointments = () => {
       <div className="doctor-appointments-header">
         <div>
           <h2>Appointments</h2>
-          <p>Review requests, accept patients, or reject appointments that do not fit your schedule.</p>
+          <p>
+            Review requests, accept patients, or reject appointments that do not
+            fit your schedule.
+          </p>
         </div>
 
         <button onClick={() => navigate("/doctor/dashboard")}>
@@ -68,8 +75,12 @@ const Appointments = () => {
       </div>
 
       {loading && <p className="doctor-appointments-empty">Loading...</p>}
-      {error && !loading && <p className="doctor-appointments-empty">{error}</p>}
-      {actionError && !loading && <p className="doctor-appointments-empty">{actionError}</p>}
+      {error && !loading && (
+        <p className="doctor-appointments-empty">{error}</p>
+      )}
+      {actionError && !loading && (
+        <p className="doctor-appointments-empty">{actionError}</p>
+      )}
       {!loading && !error && appointments.length === 0 && (
         <p className="doctor-appointments-empty">No appointments found.</p>
       )}
@@ -88,8 +99,18 @@ const Appointments = () => {
                 <strong>{formatStatus(a.status)}</strong>
                 {a.status === "pending" ? (
                   <div className="appointment-actions">
-                    <button type="button" onClick={() => handleDecision(a.id, "approved")}>Accept</button>
-                    <button type="button" onClick={() => handleDecision(a.id, "cancelled")}>Reject</button>
+                    <button
+                      type="button"
+                      onClick={() => handleDecision(a.id, "approved")}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDecision(a.id, "cancelled")}
+                    >
+                      Reject
+                    </button>
                   </div>
                 ) : null}
               </div>

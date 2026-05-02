@@ -7,21 +7,29 @@ import "./BookAppointment.css";
 const BookAppointment = () => {
   const navigate = useNavigate();
 
+  // Extract doctor ID from URL params
   const { id: doctorIdParam } = useParams();
 
+  // Date and time selection state
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  // Form validation error message
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      navigate("/login", { replace: true, state: { from: `/patient/book-appointment/${doctorIdParam}` } });
+      navigate("/login", {
+        replace: true,
+        state: { from: `/patient/book-appointment/${doctorIdParam}` },
+      });
     }
   }, [doctorIdParam, navigate]);
 
   const handleSubmitAppointment = async () => {
     if (!isAuthenticated()) {
-      navigate("/login", { state: { from: `/patient/book-appointment/${doctorIdParam}` } });
+      navigate("/login", {
+        state: { from: `/patient/book-appointment/${doctorIdParam}` },
+      });
       return;
     }
 
@@ -30,9 +38,9 @@ const BookAppointment = () => {
       return;
     }
 
-    // Navigate to payment page instead of booking directly
+    // Pass appointment details to payment page via route state
     navigate(`/patient/payment/${doctorIdParam}`, {
-      state: { selectedDate, selectedTime }
+      state: { selectedDate, selectedTime },
     });
   };
 
@@ -52,12 +60,20 @@ const BookAppointment = () => {
         <div className="booking-form">
           <label>
             <span>Date</span>
-            <input type="date" value={selectedDate} onChange={handleDateChange} />
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
           </label>
 
           <label>
             <span>Time</span>
-            <input type="time" value={selectedTime} onChange={handleTimeChange} />
+            <input
+              type="time"
+              value={selectedTime}
+              onChange={handleTimeChange}
+            />
           </label>
         </div>
 
@@ -69,7 +85,9 @@ const BookAppointment = () => {
           <button className="booking-primary" onClick={handleSubmitAppointment}>
             Proceed to Payment
           </button>
-          <button className="booking-secondary" onClick={handleCancelBooking}>Cancel</button>
+          <button className="booking-secondary" onClick={handleCancelBooking}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>

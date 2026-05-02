@@ -5,16 +5,21 @@ import { isAuthenticated } from "../../services/auth";
 import { requestJson } from "../../services/api";
 import "./PaymentPage.css";
 //  this is the payment page where patient can pay for the appointment after selecting date and time. It uses Razorpay as the payment gateway and handles the payment process, including success and error scenarios.
+// Payment page for doctor appointment booking using Razorpay gateway
 const PaymentPage = () => {
   const navigate = useNavigate();
+  // Retrieve appointment details (date, time) from navigation state
   const location = useLocation();
   const { id: doctorIdParam } = useParams();
 
+  // Payment processing and success state
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Extract appointment details from route state (passed from BookAppointment)
   const { selectedDate, selectedTime } = location.state || {};
+  // Calculate total with tax
   const mockFee = 1000.0;
   const mockTax = 180.0;
   const total = mockFee + mockTax;
@@ -36,6 +41,7 @@ const PaymentPage = () => {
     setErrorMessage("");
 
     try {
+      // Load Razorpay script dynamically and trigger payment flow
       const data = await requestJson("/payments/create-order", {
         method: "POST",
         body: JSON.stringify({ amount: total }),
@@ -53,6 +59,7 @@ const PaymentPage = () => {
             setErrorMessage("Payment cancelled by user.");
           },
         },
+        // Razorpay success handler: create appointment after successful payment
         handler: async (response) => {
           try {
             setPaymentSuccess(true);

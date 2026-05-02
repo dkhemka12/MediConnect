@@ -3,23 +3,21 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
 /* =======================
-   Static Data (for UI)
+   Static Data (for UI demo)
    ======================= */
-
+// Dashboard stats displayed in cards
 const stats = [
   { label: "Total Doctors", value: "24" },
   { label: "Total Patients", value: "186" },
   { label: "Total Revenue", value: "₹12,450" },
   { label: "Pending Requests", value: "8" },
-];
-
+]; // Recent activity feed
 const recentItems = [
   "3 new doctors joined this week",
   "18 new patient accounts created",
   "Revenue increased by 12% this month",
   "8 appointment requests waiting for review",
-];
-
+]; // Real-time system metrics
 const systemStats = [
   { label: "Appointments Today", value: "42" },
   { label: "Active Doctors", value: "19" },
@@ -28,6 +26,7 @@ const systemStats = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  // Navigate to user management page
   const handleOpenUsers = () => navigate("/admin/users");
 
   return (

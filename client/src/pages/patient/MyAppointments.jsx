@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { cancelAppointment, getMyAppointments } from "../../services/appointmentService";
+import {
+  cancelAppointment,
+  getMyAppointments,
+} from "../../services/appointmentService";
 import "./MyAppointments.css";
 
-const APPOINTMENT_STATUSES = ["all", "confirmed", "pending", "completed", "cancelled"];
+// Appointment status filter options
+const APPOINTMENT_STATUSES = [
+  "all",
+  "confirmed",
+  "pending",
+  "completed",
+  "cancelled",
+];
 
 const toStatusLabel = (status) => {
   if (!status) return "Pending";
@@ -31,8 +41,10 @@ const toLabelDate = (isoDate) => {
 const MyAppointments = () => {
   const navigate = useNavigate();
 
+  // Status filter and appointment list state
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [appointmentList, setAppointmentList] = useState([]);
+  // Loading and error states
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -51,18 +63,25 @@ const MyAppointments = () => {
     loadAppointments();
   }, []);
 
+  // Calculate appointment statistics by status
   const stats = {
     total: appointmentList.length,
-    upcoming: appointmentList.filter((item) => ["confirmed", "pending"].includes(item.status)).length,
-    completed: appointmentList.filter((item) => item.status === "completed").length,
-    cancelled: appointmentList.filter((item) => item.status === "cancelled").length,
+    upcoming: appointmentList.filter((item) =>
+      ["confirmed", "pending"].includes(item.status),
+    ).length,
+    completed: appointmentList.filter((item) => item.status === "completed")
+      .length,
+    cancelled: appointmentList.filter((item) => item.status === "cancelled")
+      .length,
   };
 
+  // Filter appointments based on selected status
   const visibleAppointments =
     selectedStatus === "all"
       ? appointmentList
       : appointmentList.filter((item) => item.status === selectedStatus);
 
+  // Update appointment status to cancelled in state and backend
   const handleCancelAppointment = async (appointmentId) => {
     try {
       await cancelAppointment(appointmentId);
@@ -72,7 +91,7 @@ const MyAppointments = () => {
             return item;
           }
           return { ...item, status: "cancelled" };
-        })
+        }),
       );
     } catch (err) {
       setErrorMessage(err.message || "Could not cancel appointment.");
@@ -89,7 +108,10 @@ const MyAppointments = () => {
       <div className="my-appointments-hero">
         <p className="my-appointments-tag">Patient Care Planner</p>
         <h2>My Appointments</h2>
-        <p>Track your upcoming visits and keep your schedule organized in one simple view.</p>
+        <p>
+          Track your upcoming visits and keep your schedule organized in one
+          simple view.
+        </p>
 
         <div className="my-appointments-actions">
           <button type="button" onClick={handleOpenDoctors}>
@@ -122,7 +144,11 @@ const MyAppointments = () => {
       </div>
 
       {/* Filters */}
-      <div className="filter-row" role="tablist" aria-label="Filter appointments by status">
+      <div
+        className="filter-row"
+        role="tablist"
+        aria-label="Filter appointments by status"
+      >
         {APPOINTMENT_STATUSES.map((status) => (
           <button
             key={status}
@@ -136,8 +162,12 @@ const MyAppointments = () => {
       </div>
 
       {/* Loading and error states */}
-      {isLoading ? <p className="my-appointments-info">Loading appointments...</p> : null}
-      {!isLoading && errorMessage ? <p className="my-appointments-error">{errorMessage}</p> : null}
+      {isLoading ? (
+        <p className="my-appointments-info">Loading appointments...</p>
+      ) : null}
+      {!isLoading && errorMessage ? (
+        <p className="my-appointments-error">{errorMessage}</p>
+      ) : null}
 
       {/* Appointments List */}
       {!isLoading && visibleAppointments.length > 0 ? (
@@ -156,14 +186,16 @@ const MyAppointments = () => {
               </div>
 
               <div className="appointment-status-col">
-                <span
-                  className={`status-pill status-${appointment.status}`}
-                >
+                <span className={`status-pill status-${appointment.status}`}>
                   {toStatusLabel(appointment.status)}
                 </span>
 
-                {appointment.status === "confirmed" || appointment.status === "pending" ? (
-                  <button type="button" onClick={() => handleCancelAppointment(appointment.id)}>
+                {appointment.status === "confirmed" ||
+                appointment.status === "pending" ? (
+                  <button
+                    type="button"
+                    onClick={() => handleCancelAppointment(appointment.id)}
+                  >
                     Cancel Appointment
                   </button>
                 ) : null}

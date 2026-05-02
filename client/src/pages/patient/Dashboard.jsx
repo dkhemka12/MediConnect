@@ -26,24 +26,29 @@ const formatStatus = (status) =>
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  // Initialize dashboard stats with default values
   const [stats, setStats] = useState([
     { label: "Available Doctors", value: "0" },
     { label: "Upcoming Visits", value: "0" },
     { label: "Completed Visits", value: "0" },
     { label: "Cancelled Visits", value: "0" },
   ]);
+  // Display recent appointments (limited to 3)
   const [recentAppointments, setRecentAppointments] = useState([]);
+  // Loading and error state management
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const loadDashboard = async () => {
       try {
+        // Use Promise.all to fetch both doctors and appointments in parallel
         const [doctorList, appointmentList] = await Promise.all([
           fetchDoctors(),
           getMyAppointments(),
         ]);
 
+        // Calculate appointment counts by status
         const upcomingCount = appointmentList.filter((item) =>
           ["pending", "confirmed"].includes(item.status),
         ).length;
@@ -80,7 +85,9 @@ const Dashboard = () => {
       <div className="patient-hero">
         <p className="patient-tag">Patient Overview</p>
         <h2>Dashboard</h2>
-        <p>Keep track of your doctors, appointments, and reminders in one place.</p>
+        <p>
+          Keep track of your doctors, appointments, and reminders in one place.
+        </p>
         <div className="patient-actions">
           <button type="button" onClick={handleOpenDoctors}>
             Find Doctors
@@ -112,7 +119,8 @@ const Dashboard = () => {
             <ul>
               {recentAppointments.map((item) => (
                 <li key={item.id}>
-                  {item.doctorName} on {toLabelDate(item.date)} at {item.time} - {formatStatus(item.status)}
+                  {item.doctorName} on {toLabelDate(item.date)} at {item.time} -{" "}
+                  {formatStatus(item.status)}
                 </li>
               ))}
             </ul>
@@ -124,8 +132,14 @@ const Dashboard = () => {
 
         <section className="patient-panel">
           <h3>Quick Book</h3>
-          <p>Start by finding an active doctor and booking the next free slot.</p>
-          <button type="button" className="patient-main-btn" onClick={handleOpenDoctors}>
+          <p>
+            Start by finding an active doctor and booking the next free slot.
+          </p>
+          <button
+            type="button"
+            className="patient-main-btn"
+            onClick={handleOpenDoctors}
+          >
             Browse Doctors
           </button>
         </section>
