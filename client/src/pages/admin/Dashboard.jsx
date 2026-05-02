@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyAppointments } from "../../services/appointmentService";
 import { getUserName } from "../../services/auth";
-import { fetchUsers } from "../../services/userService";
 import "./Dashboard.css";
 
 /* =======================
@@ -29,6 +27,10 @@ const systemStats = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const userName = getUserName() || "Admin";
+  const isLoading = false;
+  const errorMessage = "";
+  const dashboardStats = stats;
   // Navigate to user management page
   const handleOpenUsers = () => navigate("/admin/users");
 

@@ -27,6 +27,7 @@ const formatStatus = (status) =>
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const userName = getUserName() || "Patient";
   // Initialize dashboard stats with default values
   const [stats, setStats] = useState([
     { label: "Available Doctors", value: "0" },
